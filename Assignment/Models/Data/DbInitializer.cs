@@ -28,10 +28,34 @@ namespace EnglishCenter.Models.Data
 
             var users = new User[]
             {
-                new User { Username = "admin", PasswordHash = "admin@123", RoleId = roles[0].RoleId, IsActive = true },
-                new User { Username = "giaovu01", PasswordHash = "giaovu@123", RoleId = roles[1].RoleId, IsActive = true },
-                new User { Username = "sv2026001", PasswordHash = "123456", RoleId = roles[2].RoleId, IsActive = true },
-                new User { Username = "sv2026002", PasswordHash = "123456", RoleId = roles[2].RoleId, IsActive = true }
+                new User
+                {
+                    Username = "admin",
+                    Password = BCrypt.Net.BCrypt.HashPassword("admin@123"),
+                    RoleId = roles[0].RoleId,
+                    IsActive = true
+                },
+                new User
+                {
+                    Username = "giaovu01",
+                    Password = BCrypt.Net.BCrypt.HashPassword("giaovu@123"),
+                    RoleId = roles[1].RoleId,
+                    IsActive = true
+                },
+                new User
+                {
+                    Username = "sv2026001",
+                    Password = BCrypt.Net.BCrypt.HashPassword("123456"),
+                    RoleId = roles[2].RoleId,
+                    IsActive = true
+                },
+                new User
+                {
+                    Username = "sv2026002",
+                    Password = BCrypt.Net.BCrypt.HashPassword("123456"),
+                    RoleId = roles[2].RoleId,
+                    IsActive = true
+                }
             };
             context.Users.AddRange(users);
             context.SaveChanges();

@@ -17,8 +17,8 @@ namespace Assignment.Models.Entities
         [Required(ErrorMessage = "Mật khẩu không được để trống")]
         [StringLength(255)]
         [DataType(DataType.Password)]
-        [Display(Name = "Mật khẩu mã hóa")]
-        public string PasswordHash { get; set; }
+        [Display(Name = "Mật khẩu")]
+        public string Password { get; set; }
 
         [Display(Name = "Trạng thái hoạt động")]
         public bool IsActive { get; set; } = true;
