@@ -1,0 +1,118 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Assignment.Models.Entities.Course
+
+@{
+    ViewData["Title"] = "Thêm mới Khóa học";
+}
+
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Thêm mới Khóa học</h1>
+        <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left fa-sm text-white-50"></i> Quay lại danh sách
+        </a>
+    </div>
+
+    <div class="card shadow mb-4 mx-auto p-0">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Thông tin Khóa học</h6>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3" role="alert"></div>
+
+                <div class="form-group">
+                    <label asp-for="CourseName" class="font-weight-bold">Tên khóa học <span class="text-danger">*</span></label>
+                    <input asp-for="CourseName" class="form-control" placeholder="VD: IELTS Intensive 6.5+" autofocus />
+                    <span asp-validation-for="CourseName" class="text-danger small"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label asp-for="BaseTuitionFee" class="font-weight-bold">Học phí chuẩn (VNĐ) <span class="text-danger">*</span></label>
+                        <input asp-for="BaseTuitionFee" type="number" class="form-control" placeholder="VD: 6500000" />
+                        <span asp-validation-for="BaseTuitionFee" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <label asp-for="TotalSessions" class="font-weight-bold">Tổng số buổi <span class="text-danger">*</span></label>
+                        <input asp-for="TotalSessions" type="number" class="form-control" placeholder="VD: 36" />
+                        <span asp-validation-for="TotalSessions" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <!-- Input tải file ảnh -->
+                <div class="form-group">
+                    <label asp-for="ThumbnailFile" class="font-weight-bold">Ảnh bìa khóa học</label>
+                    <input asp-for="ThumbnailFile" type="file" class="form-control-file border p-1 rounded" accept="image/*" onchange="previewImage(this);" />
+                    <span asp-validation-for="ThumbnailFile" class="text-danger small"></span>
+                    
+                    <div class="mt-2 text-center">
+                        <img id="imgPreview" src="https://placehold.co/300x160?text=Chua+Chon+Anh" 
+                             class="img-thumbnail" style="max-height: 180px; display: none;" alt="Preview" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DescriptionHtml" class="font-weight-bold">Giáo trình chi tiết / Mô tả</label>
+                    <textarea asp-for="DescriptionHtml" id="editor" class="form-control" rows="4" placeholder="Nhập tóm tắt giáo trình..."></textarea>
+                    <span asp-validation-for="DescriptionHtml" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox small">
+                        <input asp-for="IsActive" class="custom-control-input" id="customCheckActive" checked />
+                        <label class="custom-control-label font-weight-bold text-gray-900" for="customCheckActive">
+                            Đang tuyển sinh
+                        </label>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary shadow-sm">Hủy bỏ</a>
+                    <button type="submit" class="btn btn-primary shadow-sm">
+                        <i class="fas fa-save mr-1"></i> Lưu khóa học
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                toolbar: [
+                    'heading', '|',
+                    'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|',
+                    'insertTable', 'undo', 'redo'
+                ]
+            })
+            .then(editor => {
+                editor.editing.view.change(writer => {
+                    writer.setStyle('min-height', '220px', editor.editing.view.document.getRoot());
+                });
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imgPreview').attr('src', e.target.result).show();
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}
