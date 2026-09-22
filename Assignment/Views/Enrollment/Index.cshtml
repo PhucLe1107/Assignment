@@ -1,0 +1,233 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Assignment.Models.Common.PagedList<Assignment.Models.Entities.Enrollment>
+
+@{
+    ViewData["Title"] = "Quản lý Ghi danh Lớp học";
+}
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Quản lý Ghi danh Lớp học</h1>
+        <a asp-controller="Enrollment" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus fa-sm text-white-50"></i> Đăng ký lớp mới
+        </a>
+    </div>
+
+    <!-- Thông báo kết quả -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle mr-1"></i> @TempData["SuccessMessage"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle mr-1"></i> @TempData["ErrorMessage"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <!-- DataTales Card -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách Đăng ký Lớp học</h6>
+        </div>
+        <div class="card-body">
+
+            <!-- Thanh tìm kiếm dữ liệu (dùng param search và page) -->
+            <div class="row mb-3">
+                <div class="col-sm-12 col-md-10">
+                    <form asp-controller="Enrollment" asp-action="Index" method="get">
+                        <div class="form-row">
+                            <div class="col-md-4 mb-2">
+                                <input type="text" name="search" class="form-control form-control-sm" 
+                                       placeholder="Tìm tên/mã học viên, mã lớp..." value="@ViewData["CurrentSearch"]" />
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <select name="classId" asp-items="ViewBag.ClassList" class="form-control form-control-sm">
+                                    <option value="">-- Tất cả lớp học --</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <select name="paymentStatus" class="form-control form-control-sm">
+                                    <option value="">-- Tình trạng học phí --</option>
+                                    <option value="DaNopDu" selected="@((string?)ViewData["CurrentPaymentStatus"] == "DaNopDu")">Đã nộp đủ</option>
+                                    <option value="ConNo" selected="@((string?)ViewData["CurrentPaymentStatus"] == "ConNo")">Còn nợ học phí</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 mb-2">
+                                <button class="btn btn-primary btn-sm" type="submit">
+                                    <i class="fas fa-search fa-sm"></i> Lọc
+                                </button>
+                                @if (!string.IsNullOrEmpty(ViewData["CurrentSearch"] as string) || ViewData["CurrentClassId"] != null || !string.IsNullOrEmpty(ViewData["CurrentPaymentStatus"] as string))
+                                {
+                                    <a asp-controller="Enrollment" asp-action="Index" class="btn btn-secondary btn-sm">Xóa lọc</a>
+                                }
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Học viên</th>
+                            <th>Lớp học</th>
+                            <th>Ngày ghi danh</th>
+                            <th>Học phí thực tế</th>
+                            <th>Đã đóng</th>
+                            <th>Học phí</th>
+                            <th>Trạng thái học</th>
+                            <th class="text-center" style="width: 170px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Học viên</th>
+                            <th>Lớp học</th>
+                            <th>Ngày ghi danh</th>
+                            <th>Học phí thực tế</th>
+                            <th>Đã đóng</th>
+                            <th>Học phí</th>
+                            <th>Trạng thái học</th>
+                            <th class="text-center">Thao tác</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                decimal remaining = item.ActualFee - item.PaidAmount;
+                                <tr>
+                                    <td class="align-middle">
+                                        <strong>@item.Student?.FullName</strong>
+                                        <div class="small text-muted">@item.Student?.StudentCode | @item.Student?.PhoneNumber</div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <strong>@item.Class?.ClassCode</strong> - @item.Class?.ClassName
+                                        <div class="small text-muted font-italic">@item.Class?.Course?.CourseName</div>
+                                    </td>
+                                    <td class="align-middle">@item.EnrollmentDate.ToString("dd/MM/yyyy")</td>
+                                    <td class="align-middle font-weight-bold text-dark">@item.ActualFee.ToString("N0") đ</td>
+                                    <td class="align-middle text-success font-weight-bold">@item.PaidAmount.ToString("N0") đ</td>
+                                    <td class="align-middle text-center">
+                                        @if (item.PaymentStatus == "DaNopDu" || remaining <= 0)
+                                        {
+                                            <span class="badge badge-success px-2 py-1">Đã nộp đủ</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-warning text-dark px-2 py-1" title="Còn nợ: @remaining.ToString("N0") đ">
+                                                Còn nợ (@remaining.ToString("N0") đ)
+                                            </span>
+                                        }
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        @switch (item.LearningStatus)
+                                        {
+                                            case "DangHoc":
+                                                <span class="badge badge-primary px-2 py-1">Đang học</span>
+                                                break;
+                                            case "HoanThanh":
+                                                <span class="badge badge-success px-2 py-1">Hoàn thành</span>
+                                                break;
+                                            case "BaoLuu":
+                                                <span class="badge badge-info px-2 py-1">Bảo lưu</span>
+                                                break;
+                                            case "NghiHoc":
+                                                <span class="badge badge-danger px-2 py-1">Nghỉ học</span>
+                                                break;
+                                            default:
+                                                <span class="badge badge-secondary px-2 py-1">@item.LearningStatus</span>
+                                                break;
+                                        }
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <a asp-action="Details" asp-route-id="@item.EnrollmentId" class="btn btn-info btn-circle btn-sm" title="Xem chi tiết">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@item.EnrollmentId" class="btn btn-warning btn-circle btn-sm" title="Chỉnh sửa">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.EnrollmentId" class="btn btn-danger btn-circle btn-sm" title="Xóa / Hủy ghi danh">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="8" class="text-center text-muted py-3">Không tìm thấy thông tin ghi danh nào.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Phân trang SB Admin 2 (page và search) -->
+            <div class="row mt-3">
+                <div class="col-sm-12 col-md-5">
+                    <div class="dataTables_info text-muted small" role="status" aria-live="polite">
+                        Hiển thị trang @(Model?.PageIndex ?? 1) / @(Model?.TotalPages == 0 ? 1 : Model?.TotalPages) (Tổng số: @(Model?.TotalItems ?? 0) lượt đăng ký)
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers d-flex justify-content-md-end">
+                        <ul class="pagination pagination-sm mb-0">
+                            <!-- Nút Trước -->
+                            <li class="paginate_button page-item previous @(Model != null && !Model.HasPreviousPage ? "disabled" : "")">
+                                <a asp-action="Index" 
+                                   asp-route-page="@((Model?.PageIndex ?? 1) - 1)" 
+                                   asp-route-search="@ViewData["CurrentSearch"]" 
+                                   asp-route-classId="@ViewData["CurrentClassId"]"
+                                   asp-route-paymentStatus="@ViewData["CurrentPaymentStatus"]"
+                                   class="page-link">Trước</a>
+                            </li>
+
+                            <!-- Các số trang -->
+                            @for (int i = 1; i <= (Model?.TotalPages ?? 1); i++)
+                            {
+                                <li class="paginate_button page-item @(i == Model?.PageIndex ? "active" : "")">
+                                    <a asp-action="Index" 
+                                       asp-route-page="@i" 
+                                       asp-route-search="@ViewData["CurrentSearch"]" 
+                                       asp-route-classId="@ViewData["CurrentClassId"]"
+                                       asp-route-paymentStatus="@ViewData["CurrentPaymentStatus"]"
+                                       class="page-link">@i</a>
+                                </li>
+                            }
+
+                            <!-- Nút Sau -->
+                            <li class="paginate_button page-item next @(Model != null && !Model.HasNextPage ? "disabled" : "")">
+                                <a asp-action="Index" 
+                                   asp-route-page="@((Model?.PageIndex ?? 1) + 1)" 
+                                   asp-route-search="@ViewData["CurrentSearch"]" 
+                                   asp-route-classId="@ViewData["CurrentClassId"]"
+                                   asp-route-paymentStatus="@ViewData["CurrentPaymentStatus"]"
+                                   class="page-link">Sau</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
