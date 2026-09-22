@@ -1,0 +1,204 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Assignment.Models.Common.PagedList<Assignment.Models.Entities.Grade>
+
+@{
+    ViewData["Title"] = "Sổ điểm Học viên";
+}
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Sổ điểm Học viên</h1>
+        <a asp-controller="Grade" asp-action="EnterGrades" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-clipboard-check fa-sm text-white-50 mr-1"></i> Nhập điểm theo lớp
+        </a>
+    </div>
+
+    <!-- Thông báo kết quả -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle mr-1"></i> @TempData["SuccessMessage"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <!-- DataTales Card -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách Kết quả học tập</h6>
+        </div>
+        <div class="card-body">
+
+            <!-- Bộ lọc tìm kiếm dùng search và page -->
+            <div class="row mb-3">
+                <div class="col-sm-12 col-md-10">
+                    <form asp-controller="Grade" asp-action="Index" method="get">
+                        <div class="form-row">
+                            <div class="col-md-4 mb-2">
+                                <input type="text" name="search" class="form-control form-control-sm" 
+                                       placeholder="Tìm tên/mã học viên, mã lớp..." value="@ViewData["CurrentSearch"]" />
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <select name="classId" asp-items="ViewBag.ClassList" class="form-control form-control-sm">
+                                    <option value="">-- Tất cả lớp học --</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <select name="examType" class="form-control form-control-sm">
+                                    <option value="">-- Tất cả kỳ thi --</option>
+                                    <option value="GiuaKy" selected="@((string?)ViewData["CurrentExamType"] == "GiuaKy")">Giữa kỳ</option>
+                                    <option value="CuoiKy" selected="@((string?)ViewData["CurrentExamType"] == "CuoiKy")">Cuối khóa</option>
+                                    <option value="PlacementTest" selected="@((string?)ViewData["CurrentExamType"] == "PlacementTest")">Đầu vào</option>
+                                    <option value="ProgressTest1" selected="@((string?)ViewData["CurrentExamType"] == "ProgressTest1")">Test tiến độ 1</option>
+                                    <option value="ProgressTest2" selected="@((string?)ViewData["CurrentExamType"] == "ProgressTest2")">Test tiến độ 2</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 mb-2">
+                                <button class="btn btn-primary btn-sm" type="submit">
+                                    <i class="fas fa-search fa-sm"></i> Lọc
+                                </button>
+                                @if (!string.IsNullOrEmpty(ViewData["CurrentSearch"] as string) || ViewData["CurrentClassId"] != null || !string.IsNullOrEmpty(ViewData["CurrentExamType"] as string))
+                                {
+                                    <a asp-controller="Grade" asp-action="Index" class="btn btn-secondary btn-sm">Xóa</a>
+                                }
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                    <thead class="thead-light text-center">
+                        <tr>
+                            <th class="text-left">Học viên</th>
+                            <th class="text-left">Lớp học</th>
+                            <th>Kỳ thi</th>
+                            <th style="width: 75px;">Nghe (L)</th>
+                            <th style="width: 75px;">Đọc (R)</th>
+                            <th style="width: 75px;">Viết (W)</th>
+                            <th style="width: 75px;">Nói (S)</th>
+                            <th style="width: 85px;">Overall</th>
+                            <th class="text-left">Nhận xét</th>
+                            <th style="width: 110px;">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr class="text-center">
+                            <th class="text-left">Học viên</th>
+                            <th class="text-left">Lớp học</th>
+                            <th>Kỳ thi</th>
+                            <th>Nghe (L)</th>
+                            <th>Đọc (R)</th>
+                            <th>Viết (W)</th>
+                            <th>Nói (S)</th>
+                            <th>Overall</th>
+                            <th class="text-left">Nhận xét</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="align-middle">
+                                        <strong>@item.Enrollment?.Student?.FullName</strong>
+                                        <div class="small text-muted">@item.Enrollment?.Student?.StudentCode</div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <strong>@item.Enrollment?.Class?.ClassCode</strong>
+                                        <div class="small text-muted">@item.Enrollment?.Class?.ClassName</div>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="badge badge-light border">@item.ExamType</span>
+                                    </td>
+                                    <td class="align-middle text-center">@(item.ListeningScore?.ToString() ?? "-")</td>
+                                    <td class="align-middle text-center">@(item.ReadingScore?.ToString() ?? "-")</td>
+                                    <td class="align-middle text-center">@(item.WritingScore?.ToString() ?? "-")</td>
+                                    <td class="align-middle text-center">@(item.SpeakingScore?.ToString() ?? "-")</td>
+                                    <td class="align-middle text-center font-weight-bold text-primary">
+                                        @(item.OverallScore?.ToString() ?? "-")
+                                    </td>
+                                    <td class="align-middle small text-muted">@(string.IsNullOrEmpty(item.TeacherFeedback) ? "-" : item.TeacherFeedback)</td>
+                                    <td class="align-middle text-center">
+                                        <a asp-action="EnterGrades" 
+                                           asp-route-classId="@item.Enrollment?.ClassId" 
+                                           asp-route-examType="@item.ExamType" 
+                                           class="btn btn-warning btn-circle btn-sm" title="Sửa cả bảng điểm kỳ này">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.GradeId" class="btn btn-danger btn-circle btn-sm" title="Xóa dòng điểm này">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="10" class="text-center text-muted py-3">Chưa có kết quả điểm số nào phù hợp.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Phân trang SB Admin 2 -->
+            <div class="row mt-3">
+                <div class="col-sm-12 col-md-5">
+                    <div class="dataTables_info text-muted small" role="status" aria-live="polite">
+                        Hiển thị trang @(Model?.PageIndex ?? 1) / @(Model?.TotalPages == 0 ? 1 : Model?.TotalPages) (Tổng: @(Model?.TotalItems ?? 0) kết quả)
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers d-flex justify-content-md-end">
+                        <ul class="pagination pagination-sm mb-0">
+                            <!-- Nút Trước -->
+                            <li class="paginate_button page-item previous @(Model != null && !Model.HasPreviousPage ? "disabled" : "")">
+                                <a asp-action="Index" 
+                                   asp-route-page="@((Model?.PageIndex ?? 1) - 1)" 
+                                   asp-route-search="@ViewData["CurrentSearch"]" 
+                                   asp-route-classId="@ViewData["CurrentClassId"]"
+                                   asp-route-examType="@ViewData["CurrentExamType"]"
+                                   class="page-link">Trước</a>
+                            </li>
+
+                            <!-- Các số trang -->
+                            @for (int i = 1; i <= (Model?.TotalPages ?? 1); i++)
+                            {
+                                <li class="paginate_button page-item @(i == Model?.PageIndex ? "active" : "")">
+                                    <a asp-action="Index" 
+                                       asp-route-page="@i" 
+                                       asp-route-search="@ViewData["CurrentSearch"]" 
+                                       asp-route-classId="@ViewData["CurrentClassId"]"
+                                       asp-route-examType="@ViewData["CurrentExamType"]"
+                                       class="page-link">@i</a>
+                                </li>
+                            }
+
+                            <!-- Nút Sau -->
+                            <li class="paginate_button page-item next @(Model != null && !Model.HasNextPage ? "disabled" : "")">
+                                <a asp-action="Index" 
+                                   asp-route-page="@((Model?.PageIndex ?? 1) + 1)" 
+                                   asp-route-search="@ViewData["CurrentSearch"]" 
+                                   asp-route-classId="@ViewData["CurrentClassId"]"
+                                   asp-route-examType="@ViewData["CurrentExamType"]"
+                                   class="page-link">Sau</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
