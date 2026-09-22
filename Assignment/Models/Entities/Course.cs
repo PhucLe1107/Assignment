@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 
 namespace Assignment.Models.Entities
 {
@@ -15,7 +16,11 @@ namespace Assignment.Models.Entities
 
         [StringLength(255)]
         [Display(Name = "Ảnh bìa khóa học")]
-        public string ThumbnailUrl { get; set; }
+        public string? ThumbnailUrl { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Chọn tệp ảnh bìa")]
+        public IFormFile? ThumbnailFile { get; set; }
 
         [Required(ErrorMessage = "Học phí chuẩn không được để trống")]
         [Range(0, 100000000, ErrorMessage = "Học phí phải lớn hơn hoặc bằng 0")]
@@ -27,13 +32,14 @@ namespace Assignment.Models.Entities
         [Display(Name = "Tổng số buổi học")]
         public int TotalSessions { get; set; }
 
+        [Required(ErrorMessage = "Giáo trình chi tiết không được để trống")]
         [Display(Name = "Giáo trình chi tiết")]
         [Column(TypeName = "ntext")]
-        public string DescriptionHtml { get; set; }
+        public string? DescriptionHtml { get; set; }
 
         [Display(Name = "Đang tuyển sinh")]
         public bool IsActive { get; set; } = true;
 
-        public virtual ICollection<Class> Classes { get; set; }
+        public virtual ICollection<Class>? Classes { get; set; }
     }
 }
