@@ -1,0 +1,177 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Assignment.Models.AttendanceSheetViewModel
+
+@{
+    ViewData["Title"] = "Điểm danh Lớp học";
+}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Điểm danh Lớp học</h1>
+        <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
+            <i class="fas fa-list fa-sm text-white-50 mr-1"></i> Xem lịch sử điểm danh
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle mr-1"></i> @TempData["SuccessMessage"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <!-- Form Chọn lớp & buổi để load bảng -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Bộ lọc chọn buổi học cần điểm danh</h6>
+        </div>
+        <div class="card-body">
+            <form asp-action="TakeAttendance" method="get">
+                <div class="form-row align-items-end">
+                    <div class="col-md-5 mb-2">
+                        <label class="font-weight-bold">Chọn lớp học:</label>
+                        <select name="classId" asp-items="ViewBag.ClassId" class="form-control form-control-sm" required>
+                            <option value="">-- Chọn lớp học --</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label class="font-weight-bold">Buổi học số:</label>
+                        <input type="number" name="sessionNumber" class="form-control form-control-sm" 
+                               value="@Model.SessionNumber" min="1" max="200" required />
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <label class="font-weight-bold">Ngày học:</label>
+                        <input type="date" name="attendanceDate" class="form-control form-control-sm" 
+                               value="@Model.AttendanceDate.ToString("yyyy-MM-dd")" required />
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <button type="submit" class="btn btn-primary btn-sm btn-block">
+                            <i class="fas fa-filter fa-sm mr-1"></i> Nạp danh sách
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bảng điểm danh học viên -->
+    @if (Model.ClassId > 0)
+    {
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    Danh sách học viên: <span class="text-dark">@Model.ClassName (@Model.ClassCode)</span>
+                    - Buổi số: <span class="badge badge-info font-weight-bold">@Model.SessionNumber @(Model.TotalSessions > 0 ? $"/ {Model.TotalSessions}" : "")</span>
+                </h6>
+                <div>
+                    <button type="button" class="btn btn-sm btn-outline-success mr-1" onclick="checkAll(true)">
+                        <i class="fas fa-check-double mr-1"></i> Có mặt tất cả
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="checkAll(false)">
+                        <i class="fas fa-times mr-1"></i> Vắng tất cả
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                @if (Model.Students != null && Model.Students.Any())
+                {
+                    <form asp-action="SaveAttendance" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="ClassId" />
+                        <input type="hidden" asp-for="ClassName" />
+                        <input type="hidden" asp-for="ClassCode" />
+                        <input type="hidden" asp-for="SessionNumber" />
+                        <input type="hidden" asp-for="AttendanceDate" />
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th style="width: 50px;" class="text-center">STT</th>
+                                        <th style="width: 120px;">Mã học viên</th>
+                                        <th>Họ và Tên</th>
+                                        <th style="width: 140px;">Số điện thoại</th>
+                                        <th style="width: 150px;" class="text-center">Trạng thái</th>
+                                        <th>Ghi chú</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.Students.Count; i++)
+                                    {
+                                        <tr>
+                                            <td class="text-center align-middle font-weight-bold">@(i + 1)</td>
+                                            <td class="align-middle">
+                                                <strong>@Model.Students[i].StudentCode</strong>
+                                                <input type="hidden" asp-for="@Model.Students[i].EnrollmentId" />
+                                                <input type="hidden" asp-for="@Model.Students[i].AttendanceId" />
+                                                <input type="hidden" asp-for="@Model.Students[i].StudentCode" />
+                                                <input type="hidden" asp-for="@Model.Students[i].FullName" />
+                                            </td>
+                                            <td class="align-middle font-weight-bold text-gray-800">
+                                                @Model.Students[i].FullName
+                                            </td>
+                                            <td class="align-middle">@Model.Students[i].PhoneNumber</td>
+                                            <td class="text-center align-middle">
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" class="custom-control-input chk-present" 
+                                                           id="customSwitch_@i" 
+                                                           name="Students[@i].IsPresent" 
+                                                           value="true" 
+                                                           @(Model.Students[i].IsPresent ? "checked" : "") />
+                                                    <input type="hidden" name="Students[@i].IsPresent" value="false" />
+                                                    <label class="custom-control-label font-weight-bold @(Model.Students[i].IsPresent ? "text-success" : "text-danger")" 
+                                                           for="customSwitch_@i" id="lblSwitch_@i">
+                                                        @(Model.Students[i].IsPresent ? "Có mặt" : "Vắng")
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle">
+                                                <input asp-for="@Model.Students[i].Note" class="form-control form-control-sm" placeholder="Lý do vắng, đi trễ..." />
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="submit" class="btn btn-primary shadow-sm px-4">
+                                <i class="fas fa-save mr-1"></i> Lưu kết quả điểm danh
+                            </button>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-user-slash fa-3x mb-2 text-gray-300"></i>
+                        <p>Lớp học này hiện chưa có học viên nào đang tham gia học.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function checkAll(isPresent) {
+            $('.chk-present').prop('checked', isPresent).trigger('change');
+        }
+
+        $(document).on('change', '.chk-present', function () {
+            var label = $(this).siblings('label');
+            if ($(this).is(':checked')) {
+                label.text('Có mặt').removeClass('text-danger').addClass('text-success');
+            } else {
+                label.text('Vắng').removeClass('text-success').addClass('text-danger');
+            }
+        });
+    </script>
+}
