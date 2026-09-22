@@ -1,0 +1,119 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Assignment.Models.Entities.Enrollment
+
+@{
+    ViewData["Title"] = "Chi tiết Ghi danh #" + Model.EnrollmentId;
+    decimal debt = Model.ActualFee - Model.PaidAmount;
+}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Chi tiết Ghi danh #@Model.EnrollmentId</h1>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.EnrollmentId" class="btn btn-sm btn-warning shadow-sm mr-2">
+                <i class="fas fa-pen fa-sm text-white-50 mr-1"></i> Sửa thông tin
+            </a>
+            <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
+                <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> Quay lại
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Thông tin học viên & lớp học -->
+        <div class="col-xl-6 col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Học viên & Lớp học</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered mb-0">
+                        <tbody>
+                            <tr>
+                                <th class="bg-light" style="width: 35%;">Học viên</th>
+                                <td>
+                                    <strong>@Model.Student?.FullName</strong>
+                                    <div><small class="text-muted">Mã: @Model.Student?.StudentCode | SĐT: @Model.Student?.PhoneNumber</small></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Lớp học</th>
+                                <td>
+                                    <strong>@Model.Class?.ClassCode</strong> - @Model.Class?.ClassName
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Khóa học</th>
+                                <td class="text-primary font-weight-bold">@Model.Class?.Course?.CourseName</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Lịch học / Phòng</th>
+                                <td>@Model.Class?.Schedule | Phòng: @(Model.Class?.Room ?? "Chưa xếp")</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Ngày đăng ký</th>
+                                <td>@Model.EnrollmentDate.ToString("dd/MM/yyyy HH:mm")</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Trạng thái học</th>
+                                <td><span class="badge badge-info px-2 py-1">@Model.LearningStatus</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thống kê tài chính học phí -->
+        <div class="col-xl-6 col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Tình trạng học phí</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered mb-3">
+                            <tbody>
+                                <tr>
+                                    <th class="bg-light" style="width: 45%;">Học phí thực tế</th>
+                                    <td class="font-weight-bold text-dark">@Model.ActualFee.ToString("N0") VNĐ</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">Đã thanh toán</th>
+                                    <td class="font-weight-bold text-success">@Model.PaidAmount.ToString("N0") VNĐ</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">Số tiền còn nợ</th>
+                                    <td class="font-weight-bold @(debt > 0 ? "text-danger" : "text-muted")">
+                                        @(debt > 0 ? debt.ToString("N0") + " VNĐ" : "0 VNĐ (Đã hoàn tất)")
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">Trạng thái công nợ</th>
+                                    <td>
+                                        @if (Model.PaymentStatus == "DaNopDu" || debt <= 0)
+                                        {
+                                            <span class="badge badge-success px-2 py-1">Đã nộp đủ</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-warning text-dark px-2 py-1">Còn nợ học phí</span>
+                                        }
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="alert alert-light border small text-muted">
+                        <i class="fas fa-info-circle mr-1"></i> Số buổi đã điểm danh: <strong>@(Model.Attendances?.Count ?? 0)</strong> | Số cột điểm đã nhập: <strong>@(Model.Grades?.Count ?? 0)</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

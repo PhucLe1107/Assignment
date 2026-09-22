@@ -1,0 +1,107 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Assignment.Models.Entities.Enrollment
+
+@{
+    ViewData["Title"] = "Đăng ký Lớp học";
+}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Đăng ký Lớp học mới</h1>
+        <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> Quay lại danh sách
+        </a>
+    </div>
+
+    <div class="card shadow mb-4 p-0">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Thông tin ghi danh</h6>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3" role="alert"></div>
+
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label asp-for="StudentId" class="font-weight-bold">Chọn Học viên <span class="text-danger">*</span></label>
+                        <select asp-for="StudentId" class="form-control" asp-items="ViewBag.StudentId">
+                            <option value="">-- Tìm và chọn học viên --</option>
+                        </select>
+                        <span asp-validation-for="StudentId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <label asp-for="ClassId" class="font-weight-bold">Chọn Lớp học <span class="text-danger">*</span></label>
+                        <select asp-for="ClassId" id="classSelect" class="form-control" asp-items="ViewBag.ClassId">
+                            <option value="">-- Chọn lớp học --</option>
+                        </select>
+                        <span asp-validation-for="ClassId" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label asp-for="ActualFee" class="font-weight-bold">Học phí thực tế cần nộp (VNĐ) <span class="text-danger">*</span></label>
+                        <input asp-for="ActualFee" id="actualFeeInput" type="number" class="form-control" placeholder="Học phí áp dụng sau giảm giá/ưu đãi" />
+                        <span asp-validation-for="ActualFee" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <label asp-for="PaidAmount" class="font-weight-bold">Số tiền đã nộp đợt 1 (VNĐ)</label>
+                        <input asp-for="PaidAmount" type="number" class="form-control" placeholder="Nhập số tiền đã thanh toán ngay lúc đăng ký" />
+                        <span asp-validation-for="PaidAmount" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label asp-for="EnrollmentDate" class="font-weight-bold">Ngày đăng ký</label>
+                        <input asp-for="EnrollmentDate" type="date" class="form-control" value="@Model.EnrollmentDate.ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="EnrollmentDate" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <label asp-for="LearningStatus" class="font-weight-bold">Trạng thái học ban đầu</label>
+                        <select asp-for="LearningStatus" class="form-control">
+                            <option value="DangHoc">Đang học</option>
+                            <option value="BaoLuu">Bảo lưu</option>
+                            <option value="NghiHoc">Nghỉ học</option>
+                        </select>
+                        <span asp-validation-for="LearningStatus" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary shadow-sm">Hủy bỏ</a>
+                    <button type="submit" class="btn btn-primary shadow-sm">
+                        <i class="fas fa-save mr-1"></i> Xác nhận ghi danh
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Tự động lấy học phí chuẩn của khóa học khi đổi lớp học
+        $('#classSelect').change(function () {
+            var selectedClassId = $(this).val();
+            if (selectedClassId) {
+                $.getJSON('/Enrollment/GetClassDefaultFee?classId=' + selectedClassId, function (data) {
+                    if (data && data.success && data.fee > 0) {
+                        $('#actualFeeInput').val(data.fee);
+                    }
+                });
+            }
+        });
+    </script>
+}
