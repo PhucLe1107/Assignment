@@ -4,21 +4,21 @@
 @model Assignment.Models.UserEditViewModel
 
 @{
-    ViewData["Title"] = "Chỉnh sửa Tài khoản";
+    ViewData["Title"] = L["Chỉnh sửa Tài khoản"];
 }
 
 <div class="container-fluid">
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Cập nhật Tài khoản</h1>
+        <h1 class="h3 mb-0 text-gray-800">@L["Cập nhật Tài khoản"]</h1>
         <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
-            <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> Quay lại
+            <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> @L["Quay lại"]
         </a>
     </div>
 
     <div class="card shadow mb-4 mx-auto p-0 border-left-warning">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-warning">Tài khoản: @Model.Username</h6>
+            <h6 class="m-0 font-weight-bold text-warning">@L["Tài khoản"]: @Model.Username</h6>
         </div>
         <div class="card-body">
             <form asp-action="Edit" method="post">
@@ -28,12 +28,12 @@
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
                 <div class="form-group">
-                    <label class="font-weight-bold">Tên đăng nhập:</label>
+                    <label class="font-weight-bold">@L["Tên đăng nhập"]:</label>
                     <input class="form-control" value="@Model.Username" disabled />
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="RoleId" class="font-weight-bold">Vai trò hệ thống <span class="text-danger">*</span></label>
+                    <label asp-for="RoleId" class="font-weight-bold">@L["Vai trò hệ thống"] <span class="text-danger">*</span></label>
                     <select asp-for="RoleId" asp-items="ViewBag.RoleId" class="form-control" id="roleSelect"></select>
                     <span asp-validation-for="RoleId" class="text-danger small"></span>
                 </div>
@@ -41,41 +41,41 @@
                 <div class="form-group" id="studentLinkGroup" style="display: none;">
                     <div class="card bg-light border-left-info p-3">
                         <label class="font-weight-bold text-gray-800">
-                            <i class="fas fa-user-graduate text-info mr-1"></i> Hồ sơ Học viên liên kết
+                            <i class="fas fa-user-graduate text-info mr-1"></i> @L["Hồ sơ Học viên liên kết"]
                         </label>
                         @if (!string.IsNullOrEmpty(Model.LinkedStudentName))
                         {
                             <div class="alert alert-info py-2 mb-2">
-                                Đang gắn với: <strong>@Model.LinkedStudentName</strong> (Mã: @Model.LinkedStudentCode)
+                                @L["Đang gắn với"]: <strong>@Model.LinkedStudentName</strong> (@L["Mã"]: @Model.LinkedStudentCode)
                             </div>
                         }
                         <select asp-for="StudentId" asp-items="ViewBag.UnlinkedStudents" class="form-control" id="studentSelect">
-                            <option value="">-- Đổi sang học viên khác (nếu cần) --</option>
+                            <option value="">-- @L["Đổi sang học viên khác (nếu cần)"] --</option>
                         </select>
                         <span asp-validation-for="StudentId" class="text-danger small"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="NewPassword" class="font-weight-bold">Mật khẩu mới</label>
-                    <input asp-for="NewPassword" class="form-control" placeholder="Để trống nếu không muốn đổi mật khẩu" />
-                    <small class="text-muted">Chỉ nhập khi bạn muốn thiết lập lại mật khẩu mới cho người dùng này.</small>
+                    <label asp-for="NewPassword" class="font-weight-bold">@L["Mật khẩu mới"]</label>
+                    <input asp-for="NewPassword" class="form-control" placeholder="@L["Để trống nếu không muốn đổi mật khẩu"]" />
+                    <small class="text-muted">@L["Chỉ nhập khi bạn muốn thiết lập lại mật khẩu mới cho người dùng này."]</small>
                     <span asp-validation-for="NewPassword" class="text-danger small d-block"></span>
                 </div>
 
                 <div class="form-group">
                     <div class="custom-control custom-checkbox">
                         <input asp-for="IsActive" class="custom-control-input" id="isActiveCheck" />
-                        <label class="custom-control-label font-weight-bold" for="isActiveCheck">Tài khoản đang hoạt động</label>
+                        <label class="custom-control-label font-weight-bold" for="isActiveCheck">@L["Tài khoản đang hoạt động"]</label>
                     </div>
                 </div>
 
                 <hr />
 
                 <div class="d-flex justify-content-between">
-                    <a asp-action="Index" class="btn btn-secondary shadow-sm">Hủy bỏ</a>
+                    <a asp-action="Index" class="btn btn-secondary shadow-sm">@L["Hủy bỏ"]</a>
                     <button type="submit" class="btn btn-warning shadow-sm">
-                        <i class="fas fa-check mr-1"></i> Lưu cập nhật
+                        <i class="fas fa-check mr-1"></i> @L["Lưu cập nhật"]
                     </button>
                 </div>
             </form>
@@ -88,8 +88,7 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         function checkRole() {
-            var selectedText = $('#roleSelect option:selected').text().trim();
-            if (selectedText === 'SinhVien') {
+            if ($('#roleSelect').val() === '@ViewBag.StudentRoleId') {
                 $('#studentLinkGroup').slideDown(200);
             } else {
                 $('#studentLinkGroup').slideUp(200);

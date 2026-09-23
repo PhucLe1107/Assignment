@@ -454,4 +454,76 @@
   <data name="đ" xml:space="preserve"><value>VND</value></data>
   <data name="Ảnh bìa" xml:space="preserve"><value>Cover image</value></data>
   <data name="Ảnh bìa hiện tại" xml:space="preserve"><value>Current cover image</value></data>
+  <data name="Admin" xml:space="preserve"><value>Admin</value></data>
+  <data name="Bạn có chắc chắn muốn đặt lại mật khẩu cho tài khoản [{0}]?" xml:space="preserve"><value>Are you sure you want to reset the password for account [{0}]?</value></data>
+  <data name="Bạn có chắc muốn xóa tài khoản này?" xml:space="preserve"><value>Are you sure you want to delete this account?</value></data>
+  <data name="Bạn không thể tự khóa tài khoản của chính mình!" xml:space="preserve"><value>You cannot lock your own account!</value></data>
+  <data name="Bảo mật" xml:space="preserve"><value>Security</value></data>
+  <data name="Chưa gắn hồ sơ" xml:space="preserve"><value>No profile linked</value></data>
+  <data name="Chỉ hiển thị các học viên chưa được cấp tài khoản. Chọn học viên sẽ tự điền tên đăng nhập theo Mã học viên." xml:space="preserve"><value>Only students without an account are listed. Selecting a student fills in the username with their student ID.</value></data>
+  <data name="Chỉ nhập khi bạn muốn thiết lập lại mật khẩu mới cho người dùng này." xml:space="preserve"><value>Only fill this in if you want to set a new password for this user.</value></data>
+  <data name="Chỉnh sửa Tài khoản" xml:space="preserve"><value>Edit account</value></data>
+  <data name="Chỉnh sửa vai trò" xml:space="preserve"><value>Edit role</value></data>
+  <data name="Chọn Học viên liên kết" xml:space="preserve"><value>Select linked student</value></data>
+  <data name="Chọn hồ sơ học viên chưa có tài khoản" xml:space="preserve"><value>Select a student without an account</value></data>
+  <data name="Cảnh báo xóa tài khoản" xml:space="preserve"><value>Account deletion warning</value></data>
+  <data name="Cập nhật Tài khoản" xml:space="preserve"><value>Update account</value></data>
+  <data name="Cập nhật tài khoản [{0}] thành công!" xml:space="preserve"><value>Account [{0}] updated successfully!</value></data>
+  <data name="Danh sách Tài khoản Người dùng" xml:space="preserve"><value>User accounts</value></data>
+  <data name="Giáo vụ" xml:space="preserve"><value>Academic staff</value></data>
+  <data name="Hiển thị trang {0} / {1} (Tổng số: {2} tài khoản)" xml:space="preserve"><value>Page {0} of {1} ({2} accounts total)</value></data>
+  <data name="Hoạt động" xml:space="preserve"><value>Active</value></data>
+  <data name="Học viên liên kết" xml:space="preserve"><value>Linked student</value></data>
+  <data name="Học viên này đã được cấp tài khoản khác trước đó!" xml:space="preserve"><value>This student already has another account!</value></data>
+  <data name="Hồ sơ Học viên liên kết" xml:space="preserve"><value>Linked student profile</value></data>
+  <data name="Không liên kết học viên" xml:space="preserve"><value>No linked student</value></data>
+  <data name="Không thể xóa tài khoản của chính bạn đang đăng nhập!" xml:space="preserve"><value>You cannot delete the account you are signed in with!</value></data>
+  <data name="Không tìm thấy tài khoản nào." xml:space="preserve"><value>No accounts found.</value></data>
+  <data name="Không áp dụng (Cán bộ)" xml:space="preserve"><value>Not applicable (staff)</value></data>
+  <data name="Kích hoạt tài khoản ngay" xml:space="preserve"><value>Activate account now</value></data>
+  <data name="Lưu cập nhật" xml:space="preserve"><value>Save changes</value></data>
+  <data name="Lưu tài khoản" xml:space="preserve"><value>Save account</value></data>
+  <data name="Mật khẩu mới" xml:space="preserve"><value>New password</value></data>
+  <data name="Mật khẩu mới (Bỏ trống nếu không muốn đổi)" xml:space="preserve"><value>New password (leave blank to keep current)</value></data>
+  <data name="Mật khẩu mới tối thiểu 6 ký tự" xml:space="preserve"><value>New password must be at least 6 characters</value></data>
+  <data name="Mật khẩu tối thiểu 6 ký tự" xml:space="preserve"><value>Password must be at least 6 characters</value></data>
+  <data name="Mật khẩu xác nhận không trùng khớp." xml:space="preserve"><value>The confirmation password does not match.</value></data>
+  <data name="Nhấn để khóa tài khoản" xml:space="preserve"><value>Click to lock the account</value></data>
+  <data name="Nhấn để mở khóa" xml:space="preserve"><value>Click to unlock</value></data>
+  <data name="Nhập lại mật khẩu trên" xml:space="preserve"><value>Re-enter the password above</value></data>
+  <data name="Nếu tài khoản này đang gắn với một học viên, việc xóa sẽ bị chặn để bảo vệ dữ liệu đào tạo." xml:space="preserve"><value>If this account is linked to a student, deletion is blocked to protect training data.</value></data>
+  <data name="Quản lý Tài khoản" xml:space="preserve"><value>Account management</value></data>
+  <data name="Quản lý Tài khoản Hệ thống" xml:space="preserve"><value>System account management</value></data>
+  <data name="Thông tin tài khoản" xml:space="preserve"><value>Account information</value></data>
+  <data name="Tài khoản Sinh viên bắt buộc phải liên kết với một hồ sơ Học viên!" xml:space="preserve"><value>A student account must be linked to a student profile!</value></data>
+  <data name="Tài khoản [{0}] đang gắn với hồ sơ học viên [{1}]! Vui lòng xóa học viên hoặc hủy liên kết trước khi xóa tài khoản." xml:space="preserve"><value>Account [{0}] is linked to student profile [{1}]! Delete the student or unlink it before deleting the account.</value></data>
+  <data name="Tài khoản có vai trò Sinh viên bắt buộc phải liên kết với một hồ sơ Học viên!" xml:space="preserve"><value>An account with the Student role must be linked to a student profile!</value></data>
+  <data name="Tài khoản đang hoạt động" xml:space="preserve"><value>Account is active</value></data>
+  <data name="Tên đăng nhập này đã được sử dụng!" xml:space="preserve"><value>This username is already taken!</value></data>
+  <data name="Tên đăng nhập từ 3 đến 50 ký tự" xml:space="preserve"><value>Username must be 3 to 50 characters</value></data>
+  <data name="Tìm username, họ tên, mã SV..." xml:space="preserve"><value>Search username, name, student ID...</value></data>
+  <data name="Tạo mới Tài khoản" xml:space="preserve"><value>New account</value></data>
+  <data name="Tạo mới Tài khoản Người dùng" xml:space="preserve"><value>Create user account</value></data>
+  <data name="Tạo thành công tài khoản [{0}]!" xml:space="preserve"><value>Account [{0}] created successfully!</value></data>
+  <data name="Tạo tài khoản mới" xml:space="preserve"><value>Create account</value></data>
+  <data name="Tất cả vai trò" xml:space="preserve"><value>All roles</value></data>
+  <data name="Tối thiểu 6 ký tự" xml:space="preserve"><value>At least 6 characters</value></data>
+  <data name="VD: giaovu_lananh hoặc HV2026-001" xml:space="preserve"><value>e.g. giaovu_lananh or HV2026-001</value></data>
+  <data name="Vai trò hệ thống" xml:space="preserve"><value>System role</value></data>
+  <data name="Xác nhận mật khẩu" xml:space="preserve"><value>Confirm password</value></data>
+  <data name="Xóa Tài khoản Người dùng" xml:space="preserve"><value>Delete user account</value></data>
+  <data name="Xóa tài khoản" xml:space="preserve"><value>Delete account</value></data>
+  <data name="Đang gắn với" xml:space="preserve"><value>Linked to</value></data>
+  <data name="Đang hoạt động" xml:space="preserve"><value>Active</value></data>
+  <data name="Đã khóa" xml:space="preserve"><value>Locked</value></data>
+  <data name="Đã khóa tài khoản [{0}] thành công!" xml:space="preserve"><value>Account [{0}] locked successfully!</value></data>
+  <data name="Đã kích hoạt tài khoản [{0}] thành công!" xml:space="preserve"><value>Account [{0}] activated successfully!</value></data>
+  <data name="Đã reset mật khẩu tài khoản [{0}] về mặc định: [123456]!" xml:space="preserve"><value>Password for account [{0}] reset to default: [123456]!</value></data>
+  <data name="Đã xóa vĩnh viễn tài khoản [{0}]!" xml:space="preserve"><value>Account [{0}] permanently deleted!</value></data>
+  <data name="Đã xảy ra lỗi khi tạo tài khoản: {0}" xml:space="preserve"><value>An error occurred while creating the account: {0}</value></data>
+  <data name="Đặt lại MK" xml:space="preserve"><value>Reset PW</value></data>
+  <data name="Đặt lại mật khẩu" xml:space="preserve"><value>Reset password</value></data>
+  <data name="Để trống nếu không muốn đổi mật khẩu" xml:space="preserve"><value>Leave blank to keep the current password</value></data>
+  <data name="Đối tượng liên kết" xml:space="preserve"><value>Linked to</value></data>
+  <data name="Đổi sang học viên khác (nếu cần)" xml:space="preserve"><value>Switch to another student (if needed)</value></data>
 </root>

@@ -15,6 +15,14 @@ public static class DisplayLabels
         _ => code ?? string.Empty
     };
 
+    public static string Role(string? code) => code switch
+    {
+        "Admin" => "Admin",
+        "GiaoVu" => "Giáo vụ",
+        "SinhVien" => "Sinh viên",
+        _ => code ?? string.Empty
+    };
+
     // Kỳ kiểm tra có thể do người dùng tự nhập nên mã lạ được giữ nguyên
     public static string ExamType(string? code) => code switch
     {

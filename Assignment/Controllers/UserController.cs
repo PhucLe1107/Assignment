@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+using Assignment.Localization;
 using Assignment.Models;
 using Assignment.Models.Common;
 using Assignment.Models.Data;
@@ -13,10 +15,12 @@ namespace Assignment.Controllers
     public class UserController : Controller
     {
         private readonly EnglishCenterDbContext _context;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
-        public UserController(EnglishCenterDbContext context)
+        public UserController(EnglishCenterDbContext context, IStringLocalizer<SharedResource> localizer)
         {
             _context = context;
+            _localizer = localizer;
         }
 
         // GET: /User?search=...&roleId=...&page=1
@@ -26,7 +30,7 @@ namespace Assignment.Controllers
             ViewData["CurrentSearch"] = search;
             ViewData["CurrentRoleId"] = roleId;
 
-            ViewBag.Roles = new SelectList(await _context.Roles.ToListAsync(), "RoleId", "RoleName", roleId);
+            ViewBag.Roles = new SelectList(LocalizeRoles(await _context.Roles.ToListAsync()), "RoleId", "Name", roleId);
 
             var query = _context.Users
                 .Include(u => u.Role)
@@ -74,14 +78,14 @@ namespace Assignment.Controllers
             {
                 if (!model.StudentId.HasValue || model.StudentId.Value <= 0)
                 {
-                    ModelState.AddModelError("StudentId", "Tài khoản có vai trò Sinh viên bắt buộc phải liên kết với một hồ sơ Học viên!");
+                    ModelState.AddModelError("StudentId", _localizer["Tài khoản có vai trò Sinh viên bắt buộc phải liên kết với một hồ sơ Học viên!"]);
                 }
                 else
                 {
                     bool studentAlreadyHasAccount = await _context.Students.AnyAsync(s => s.StudentId == model.StudentId.Value && s.UserId != null);
                     if (studentAlreadyHasAccount)
                     {
-                        ModelState.AddModelError("StudentId", "Học viên này đã được cấp tài khoản khác trước đó!");
+                        ModelState.AddModelError("StudentId", _localizer["Học viên này đã được cấp tài khoản khác trước đó!"]);
                     }
                 }
             }
@@ -93,7 +97,7 @@ namespace Assignment.Controllers
 
             if (await _context.Users.AnyAsync(u => u.Username == model.Username.Trim()))
             {
-                ModelState.AddModelError("Username", "Tên đăng nhập này đã được sử dụng!");
+                ModelState.AddModelError("Username", _localizer["Tên đăng nhập này đã được sử dụng!"]);
             }
 
             if (ModelState.IsValid)
@@ -124,13 +128,13 @@ namespace Assignment.Controllers
                     }
 
                     await transaction.CommitAsync();
-                    TempData["SuccessMessage"] = $"Tạo thành công tài khoản [{user.Username}]!";
+                    TempData["SuccessMessage"] = _localizer["Tạo thành công tài khoản [{0}]!", user.Username].Value;
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
                     await transaction.RollbackAsync();
-                    ModelState.AddModelError("", "Đã xảy ra lỗi khi tạo tài khoản: " + ex.Message);
+                    ModelState.AddModelError("", _localizer["Đã xảy ra lỗi khi tạo tài khoản: {0}", ex.Message]);
                 }
             }
 
@@ -187,7 +191,7 @@ namespace Assignment.Controllers
                 int? currentStudentId = user.Student?.StudentId ?? model.StudentId;
                 if (!currentStudentId.HasValue || currentStudentId.Value <= 0)
                 {
-                    ModelState.AddModelError("StudentId", "Tài khoản Sinh viên bắt buộc phải liên kết với một hồ sơ Học viên!");
+                    ModelState.AddModelError("StudentId", _localizer["Tài khoản Sinh viên bắt buộc phải liên kết với một hồ sơ Học viên!"]);
                 }
             }
 
@@ -229,13 +233,13 @@ namespace Assignment.Controllers
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
 
-                    TempData["SuccessMessage"] = $"Cập nhật tài khoản [{user.Username}] thành công!";
+                    TempData["SuccessMessage"] = _localizer["Cập nhật tài khoản [{0}] thành công!", user.Username].Value;
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
                     await transaction.RollbackAsync();
-                    ModelState.AddModelError("", "Đã có lỗi xảy ra: " + ex.Message);
+                    ModelState.AddModelError("", _localizer["Đã có lỗi xảy ra: {0}", ex.Message]);
                 }
             }
 
@@ -253,13 +257,15 @@ namespace Assignment.Controllers
             {
                 if (user.Username == User.Identity?.Name)
                 {
-                    TempData["ErrorMessage"] = "Bạn không thể tự khóa tài khoản của chính mình!";
+                    TempData["ErrorMessage"] = _localizer["Bạn không thể tự khóa tài khoản của chính mình!"].Value;
                     return RedirectToAction(nameof(Index));
                 }
 
                 user.IsActive = !user.IsActive;
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = $"Đã {(user.IsActive ? "kích hoạt" : "khóa")} tài khoản [{user.Username}] thành công!";
+                TempData["SuccessMessage"] = user.IsActive
+                    ? _localizer["Đã kích hoạt tài khoản [{0}] thành công!", user.Username].Value
+                    : _localizer["Đã khóa tài khoản [{0}] thành công!", user.Username].Value;
             }
             return RedirectToAction(nameof(Index));
         }
@@ -274,7 +280,7 @@ namespace Assignment.Controllers
             {
                 user.Password = BCrypt.Net.BCrypt.HashPassword("123456");
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = $"Đã reset mật khẩu tài khoản [{user.Username}] về mặc định: [123456]!";
+                TempData["SuccessMessage"] = _localizer["Đã reset mật khẩu tài khoản [{0}] về mặc định: [123456]!", user.Username].Value;
             }
             return RedirectToAction(nameof(Index));
         }
@@ -308,19 +314,19 @@ namespace Assignment.Controllers
             {
                 if (user.Username == User.Identity?.Name)
                 {
-                    TempData["ErrorMessage"] = "Không thể xóa tài khoản của chính bạn đang đăng nhập!";
+                    TempData["ErrorMessage"] = _localizer["Không thể xóa tài khoản của chính bạn đang đăng nhập!"].Value;
                     return RedirectToAction(nameof(Index));
                 }
 
                 if (user.Student != null)
                 {
-                    TempData["ErrorMessage"] = $"Tài khoản [{user.Username}] đang gắn với hồ sơ học viên [{user.Student.FullName}]! Vui lòng xóa học viên hoặc hủy liên kết trước khi xóa tài khoản.";
+                    TempData["ErrorMessage"] = _localizer["Tài khoản [{0}] đang gắn với hồ sơ học viên [{1}]! Vui lòng xóa học viên hoặc hủy liên kết trước khi xóa tài khoản.", user.Username, user.Student.FullName].Value;
                     return RedirectToAction(nameof(Index));
                 }
 
                 _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = $"Đã xóa vĩnh viễn tài khoản [{user.Username}]!";
+                TempData["SuccessMessage"] = _localizer["Đã xóa vĩnh viễn tài khoản [{0}]!", user.Username].Value;
             }
             return RedirectToAction(nameof(Index));
         }
@@ -328,7 +334,9 @@ namespace Assignment.Controllers
         private async Task LoadDropdownData(int? selectedRoleId = null, int? selectedStudentId = null)
         {
             var roles = await _context.Roles.ToListAsync();
-            ViewBag.RoleId = new SelectList(roles, "RoleId", "RoleName", selectedRoleId);
+            ViewBag.RoleId = new SelectList(LocalizeRoles(roles), "RoleId", "Name", selectedRoleId);
+            // Script trong view so sánh theo RoleId vì tên vai trò hiển thị đã được dịch
+            ViewBag.StudentRoleId = roles.FirstOrDefault(r => r.RoleName == "SinhVien")?.RoleId;
 
             var unlinkedStudents = await _context.Students
                 .Where(s => s.UserId == null || (selectedStudentId.HasValue && s.StudentId == selectedStudentId.Value))
@@ -338,5 +346,8 @@ namespace Assignment.Controllers
 
             ViewBag.UnlinkedStudents = new SelectList(unlinkedStudents, "StudentId", "DisplayText", selectedStudentId);
         }
+
+        private IEnumerable<object> LocalizeRoles(IEnumerable<Role> roles) =>
+            roles.Select(r => new { r.RoleId, Name = _localizer[DisplayLabels.Role(r.RoleName)].Value });
     }
 }
