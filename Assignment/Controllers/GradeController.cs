@@ -39,9 +39,9 @@ namespace Assignment.Controllers
             );
 
             var query = _context.Grades
-                .Include(g => g.Enrollment)
+                .Include(g => g.Enrollment!)
                     .ThenInclude(e => e.Student)
-                .Include(g => g.Enrollment)
+                .Include(g => g.Enrollment!)
                     .ThenInclude(e => e.Class)
                         .ThenInclude(c => c.Course)
                 .AsNoTracking()
@@ -49,14 +49,14 @@ namespace Assignment.Controllers
 
             if (!string.IsNullOrWhiteSpace(search))
             {
-                query = query.Where(g => g.Enrollment.Student.FullName.Contains(search)
-                                      || g.Enrollment.Student.StudentCode.Contains(search)
-                                      || g.Enrollment.Class.ClassCode.Contains(search));
+                query = query.Where(g => g.Enrollment!.Student.FullName.Contains(search)
+                                      || g.Enrollment!.Student.StudentCode.Contains(search)
+                                      || g.Enrollment!.Class.ClassCode.Contains(search));
             }
 
             if (classId.HasValue && classId.Value > 0)
             {
-                query = query.Where(g => g.Enrollment.ClassId == classId.Value);
+                query = query.Where(g => g.Enrollment!.ClassId == classId.Value);
             }
 
             if (!string.IsNullOrWhiteSpace(examType))
@@ -106,7 +106,7 @@ namespace Assignment.Controllers
                         .ToList();
 
                     var existingGrades = await _context.Grades
-                        .Where(g => g.Enrollment.ClassId == targetClass.ClassId && g.ExamType == model.ExamType)
+                        .Where(g => g.Enrollment!.ClassId == targetClass.ClassId && g.ExamType == model.ExamType)
                         .ToDictionaryAsync(g => g.EnrollmentId);
 
                     foreach (var en in activeEnrollments)
@@ -222,9 +222,9 @@ namespace Assignment.Controllers
             if (id == null) return NotFound();
 
             var grade = await _context.Grades
-                .Include(g => g.Enrollment)
+                .Include(g => g.Enrollment!)
                     .ThenInclude(e => e.Student)
-                .Include(g => g.Enrollment)
+                .Include(g => g.Enrollment!)
                     .ThenInclude(e => e.Class)
                 .FirstOrDefaultAsync(m => m.GradeId == id);
 

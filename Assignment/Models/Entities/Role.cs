@@ -11,8 +11,8 @@ namespace Assignment.Models.Entities
         [Required(ErrorMessage = "Tên vai trò không được để trống")]
         [StringLength(50, ErrorMessage = "Tên vai trò không quá 50 ký tự")]
         [Display(Name = "Tên vai trò")]
-        public string RoleName { get; set; }
+        public string RoleName { get; set; } = string.Empty;
 
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<User> Users { get; set; } = new List<User>();
     }
 }

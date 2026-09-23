@@ -13,12 +13,12 @@ namespace Assignment.Models.Entities
         [Required(ErrorMessage = "Mã sinh viên không được để trống")]
         [StringLength(20, ErrorMessage = "Mã sinh viên không quá 20 ký tự")]
         [Display(Name = "Mã sinh viên")]
-        public string StudentCode { get; set; }
+        public string StudentCode { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Họ và tên không được để trống")]
         [StringLength(100, ErrorMessage = "Họ và tên không quá 100 ký tự")]
         [Display(Name = "Họ và tên")]
-        public string FullName { get; set; }
+        public string FullName { get; set; } = string.Empty;
 
         [DataType(DataType.Date)]
         [Display(Name = "Ngày sinh")]
@@ -31,13 +31,13 @@ namespace Assignment.Models.Entities
         [EmailAddress(ErrorMessage = "Địa chỉ email không đúng định dạng")]
         [StringLength(100)]
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Số điện thoại không được để trống")]
         [RegularExpression(@"^0\d{9}$", ErrorMessage = "Số điện thoại phải gồm 10 chữ số và bắt đầu bằng số 0")]
         [StringLength(15)]
         [Display(Name = "Số điện thoại")]
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = string.Empty;
 
         [StringLength(200)]
         [Display(Name = "Địa chỉ")]

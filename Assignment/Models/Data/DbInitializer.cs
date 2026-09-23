@@ -1,6 +1,5 @@
 ﻿using Assignment.Models.Data;
 using Assignment.Models.Entities;
-using Assignment.Models.Entities;
 using System;
 using System.Linq;
 

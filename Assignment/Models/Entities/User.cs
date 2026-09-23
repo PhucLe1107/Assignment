@@ -12,13 +12,13 @@ namespace Assignment.Models.Entities
         [Required(ErrorMessage = "Tên đăng nhập không được để trống")]
         [StringLength(50, MinimumLength = 4, ErrorMessage = "Tên đăng nhập phải từ 4 đến 50 ký tự")]
         [Display(Name = "Tên đăng nhập")]
-        public string Username { get; set; }
+        public string Username { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Mật khẩu không được để trống")]
         [StringLength(255)]
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu")]
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty;
 
         [Display(Name = "Trạng thái hoạt động")]
         public bool IsActive { get; set; } = true;
@@ -28,8 +28,8 @@ namespace Assignment.Models.Entities
         public int RoleId { get; set; }
 
         [ForeignKey("RoleId")]
-        public virtual Role Role { get; set; }
+        public virtual Role Role { get; set; } = null!;
 
-        public virtual Student Student { get; set; }
+        public virtual Student? Student { get; set; }
     }
 }

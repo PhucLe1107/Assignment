@@ -58,7 +58,7 @@ namespace Assignment.Controllers
 
             var student = await _context.Students
                 .Include(s => s.User)
-                .Include(s => s.Enrollments)
+                .Include(s => s.Enrollments!)
                     .ThenInclude(e => e.Class)
                         .ThenInclude(c => c.Course)
                 .FirstOrDefaultAsync(m => m.StudentId == id);
@@ -259,7 +259,7 @@ namespace Assignment.Controllers
             if (id == null) return NotFound();
 
             var student = await _context.Students
-                .Include(s => s.Enrollments)
+                .Include(s => s.Enrollments!)
                     .ThenInclude(e => e.Class)
                 .FirstOrDefaultAsync(m => m.StudentId == id);
 

@@ -20,6 +20,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
+    <!-- CodeGeneration.Design 10.0.2 kéo NuGet.* 6.12.1 dính GHSA-g4vj-cjjj-v7hg; ép toàn bộ NuGet.* lên bản mới nhất -->
+    <PackageReference Include="NuGet.Packaging" Version="7.9.0" PrivateAssets="all" />
+    <PackageReference Include="NuGet.Protocol" Version="7.9.0" PrivateAssets="all" />
+    <PackageReference Include="NuGet.ProjectModel" Version="7.9.0" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>
