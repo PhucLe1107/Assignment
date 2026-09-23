@@ -1,0 +1,140 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Assignment.Models.Entities.Student
+
+@{
+    ViewData["Title"] = "Chi tiết Học viên - " + Model.FullName;
+}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Hồ sơ Học viên: @Model.FullName</h1>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.StudentId" class="btn btn-sm btn-warning shadow-sm mr-2">
+                <i class="fas fa-pen fa-sm text-white-50 mr-1"></i> Chỉnh sửa
+            </a>
+            <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
+                <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> Quay lại
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Thông tin cá nhân -->
+        <div class="col-xl-4 col-lg-5 mb-4">
+            <div class="card shadow mb-4 text-center">
+                <div class="card-body">
+                    <img src="@(string.IsNullOrEmpty(Model.AvatarUrl) ? "/img/undraw_profile.svg" : Model.AvatarUrl)" 
+                         class="rounded-circle mb-3" style="width: 130px; height: 130px; object-fit: cover; border: 4px solid #eaecf4;" alt="Avatar" />
+                    <h5 class="font-weight-bold text-gray-900 mb-1">@Model.FullName</h5>
+                    <p class="badge badge-primary px-3 py-1">@Model.StudentCode</p>
+
+                    <table class="table table-bordered text-left mt-3 mb-0 small">
+                        <tbody>
+                            <tr>
+                                <th class="bg-light" style="width: 40%;">Tài khoản:</th>
+                                <td>
+                                    @if (Model.User != null)
+                                    {
+                                        <span class="text-success font-weight-bold">
+                                            <i class="fas fa-user-check mr-1"></i>@Model.User.Username
+                                        </span>
+                                        <div><span class="badge badge-info mt-1">Vai trò: SinhVien</span></div>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted font-italic">Chưa cấp tài khoản</span>
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Giới tính:</th>
+                                <td>@(Model.Gender ? "Nam" : "Nữ")</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Ngày sinh:</th>
+                                <td>@(Model.DateOfBirth?.ToString("dd/MM/yyyy") ?? "-")</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Số điện thoại:</th>
+                                <td><strong>@Model.PhoneNumber</strong></td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Email:</th>
+                                <td>@Model.Email</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Địa chỉ:</th>
+                                <td>@(string.IsNullOrEmpty(Model.Address) ? "Chưa cập nhật" : Model.Address)</td>
+                            </tr>
+                            <tr>
+                                <th class="bg-light">Trình độ:</th>
+                                <td><span class="badge badge-light border">@Model.EntryLevel</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lịch sử đăng ký lớp học -->
+        <div class="col-xl-8 col-lg-7 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Các lớp học đã tham gia (@(Model.Enrollments?.Count ?? 0))</h6>
+                    <a asp-controller="Enrollment" asp-action="Create" asp-route-studentId="@Model.StudentId" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-plus fa-sm mr-1"></i> Ghi danh lớp mới
+                    </a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0" width="100%" cellspacing="0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Mã lớp</th>
+                                    <th>Tên lớp</th>
+                                    <th>Khóa học</th>
+                                    <th>Học phí</th>
+                                    <th>Trạng thái học</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Enrollments != null && Model.Enrollments.Any())
+                                {
+                                    foreach (var e in Model.Enrollments)
+                                    {
+                                        <tr>
+                                            <td><strong>@e.Class?.ClassCode</strong></td>
+                                            <td>@e.Class?.ClassName</td>
+                                            <td><span class="badge badge-light border">@e.Class?.Course?.CourseName</span></td>
+                                            <td>
+                                                @if (e.PaymentStatus == "DaNopDu")
+                                                {
+                                                    <span class="badge badge-success">Đã nộp đủ</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-warning text-dark">Còn nợ</span>
+                                                }
+                                            </td>
+                                            <td><span class="badge badge-info">@e.LearningStatus</span></td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-3">Học viên này chưa tham gia lớp học nào.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
