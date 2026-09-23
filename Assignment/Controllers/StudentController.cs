@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Assignment.Models.Common;
 using Assignment.Models.Data;
 using Assignment.Models.Entities;
@@ -12,11 +13,13 @@ namespace Assignment.Controllers
     {
         private readonly EnglishCenterDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
-        public StudentController(EnglishCenterDbContext context, IWebHostEnvironment webHostEnvironment)
+        public StudentController(EnglishCenterDbContext context, IWebHostEnvironment webHostEnvironment, IStringLocalizer<SharedResource> localizer)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _localizer = localizer;
         }
 
         // GET: /Student?search=abc&page=1
@@ -85,22 +88,22 @@ namespace Assignment.Controllers
             // 1. Kiểm tra trùng thông tin
             if (await _context.Students.AnyAsync(s => s.StudentCode == student.StudentCode))
             {
-                ModelState.AddModelError("StudentCode", "Mã sinh viên này đã tồn tại.");
+                ModelState.AddModelError("StudentCode", _localizer["Mã sinh viên này đã tồn tại."]);
             }
             if (await _context.Students.AnyAsync(s => s.Email == student.Email))
             {
-                ModelState.AddModelError("Email", "Địa chỉ email này đã được sử dụng.");
+                ModelState.AddModelError("Email", _localizer["Địa chỉ email này đã được sử dụng."]);
             }
             if (await _context.Students.AnyAsync(s => s.PhoneNumber == student.PhoneNumber))
             {
-                ModelState.AddModelError("PhoneNumber", "Số điện thoại này đã được sử dụng.");
+                ModelState.AddModelError("PhoneNumber", _localizer["Số điện thoại này đã được sử dụng."]);
             }
 
             string usernameToCreate = string.IsNullOrWhiteSpace(accountUsername) ? student.StudentCode.Trim() : accountUsername.Trim();
 
             if (createAccount && await _context.Users.AnyAsync(u => u.Username == usernameToCreate))
             {
-                ModelState.AddModelError("", $"Tên đăng nhập '{usernameToCreate}' đã có người sử dụng.");
+                ModelState.AddModelError("", _localizer["Tên đăng nhập '{0}' đã có người sử dụng.", usernameToCreate]);
             }
 
             // Xử lý upload Avatar
@@ -156,14 +159,14 @@ namespace Assignment.Controllers
                     await transaction.CommitAsync();
 
                     TempData["SuccessMessage"] = createAccount
-                        ? $"Thêm học viên thành công! Tài khoản: {usernameToCreate} (MK: 123456)"
-                        : "Thêm mới học viên thành công!";
+                        ? _localizer["Thêm học viên thành công! Tài khoản: {0} (MK: 123456)", usernameToCreate].Value
+                        : _localizer["Thêm mới học viên thành công!"].Value;
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
                     await transaction.RollbackAsync();
-                    ModelState.AddModelError("", "Đã có lỗi xảy ra: " + ex.Message);
+                    ModelState.AddModelError("", _localizer["Đã có lỗi xảy ra: {0}", ex.Message]);
                 }
             }
 
@@ -191,17 +194,17 @@ namespace Assignment.Controllers
 
             if (await _context.Students.AnyAsync(s => s.StudentCode == student.StudentCode && s.StudentId != id))
             {
-                ModelState.AddModelError("StudentCode", "Mã sinh viên này đã tồn tại trên hệ thống.");
+                ModelState.AddModelError("StudentCode", _localizer["Mã sinh viên này đã tồn tại trên hệ thống."]);
             }
 
             if (await _context.Students.AnyAsync(s => s.Email == student.Email && s.StudentId != id))
             {
-                ModelState.AddModelError("Email", "Địa chỉ email này đã được sử dụng bởi học viên khác.");
+                ModelState.AddModelError("Email", _localizer["Địa chỉ email này đã được sử dụng bởi học viên khác."]);
             }
 
             if (await _context.Students.AnyAsync(s => s.PhoneNumber == student.PhoneNumber && s.StudentId != id))
             {
-                ModelState.AddModelError("PhoneNumber", "Số điện thoại này đã được sử dụng bởi học viên khác.");
+                ModelState.AddModelError("PhoneNumber", _localizer["Số điện thoại này đã được sử dụng bởi học viên khác."]);
             }
 
             // Xử lý upload ảnh mới nếu có
@@ -236,7 +239,7 @@ namespace Assignment.Controllers
                 {
                     _context.Students.Update(student);
                     await _context.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "Cập nhật thông tin học viên thành công!";
+                    TempData["SuccessMessage"] = _localizer["Cập nhật thông tin học viên thành công!"].Value;
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
@@ -278,13 +281,13 @@ namespace Assignment.Controllers
             {
                 if (student.Enrollments != null && student.Enrollments.Any())
                 {
-                    TempData["ErrorMessage"] = "Không thể xóa học viên này vì đang có dữ liệu đăng ký lớp học!";
+                    TempData["ErrorMessage"] = _localizer["Không thể xóa học viên này vì đang có dữ liệu đăng ký lớp học!"].Value;
                     return RedirectToAction(nameof(Index));
                 }
 
                 _context.Students.Remove(student);
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Đã xóa hồ sơ học viên thành công!";
+                TempData["SuccessMessage"] = _localizer["Đã xóa hồ sơ học viên thành công!"].Value;
             }
 
             return RedirectToAction(nameof(Index));

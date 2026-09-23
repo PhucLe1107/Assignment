@@ -4,16 +4,19 @@
 @model Assignment.Models.Common.PagedList<Assignment.Models.Entities.Student>
 
 @{
-    ViewData["Title"] = "Quản lý Học viên";
+    ViewData["Title"] = L["Quản lý Học viên"];
+    var pageIndex = Model?.PageIndex ?? 1;
+    var totalPages = Math.Max(Model?.TotalPages ?? 0, 1);
+    var totalItems = Model?.TotalItems ?? 0;
 }
 
 <div class="container-fluid">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Quản lý Học viên</h1>
+        <h1 class="h3 mb-0 text-gray-800">@L["Quản lý Học viên"]</h1>
         <a asp-controller="Student" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-user-plus fa-sm text-white-50"></i> Thêm mới Học viên
+            <i class="fas fa-user-plus fa-sm text-white-50"></i> @L["Thêm mới Học viên"]
         </a>
     </div>
 
@@ -40,7 +43,7 @@
     <!-- DataTales Card -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary">Danh sách Hồ sơ Học viên</h6>
+            <h6 class="m-0 font-weight-bold text-primary">@L["Danh sách Hồ sơ Học viên"]</h6>
         </div>
         <div class="card-body">
 
@@ -50,14 +53,14 @@
                     <form asp-controller="Student" asp-action="Index" method="get">
                         <div class="input-group">
                             <input type="text" name="search" class="form-control form-control-sm" 
-                                   placeholder="Tìm theo mã SV, họ tên, email, SĐT..." value="@ViewData["CurrentSearch"]" />
+                                   placeholder="@L["Tìm theo mã SV, họ tên, email, SĐT..."]" value="@ViewData["CurrentSearch"]" />
                             <div class="input-group-append">
                                 <button class="btn btn-primary btn-sm" type="submit">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                                 @if (!string.IsNullOrEmpty(ViewData["CurrentSearch"] as string))
                                 {
-                                    <a asp-controller="Student" asp-action="Index" class="btn btn-secondary btn-sm">Xóa lọc</a>
+                                    <a asp-controller="Student" asp-action="Index" class="btn btn-secondary btn-sm">@L["Xóa lọc"]</a>
                                 }
                             </div>
                         </div>
@@ -69,28 +72,28 @@
                 <table class="table table-bordered" width="100%" cellspacing="0">
                     <thead class="thead-light">
                         <tr>
-                            <th style="width: 60px;">Ảnh</th>
-                            <th>Mã SV</th>
-                            <th>Họ và Tên</th>
-                            <th>Tài khoản</th>
-                            <th>Liên hệ</th>
-                            <th>Giới tính</th>
-                            <th>Ngày sinh</th>
-                            <th>Trình độ</th>
-                            <th class="text-center" style="width: 170px;">Thao tác</th>
+                            <th style="width: 60px;">@L["Ảnh"]</th>
+                            <th>@L["Mã SV"]</th>
+                            <th>@L["Họ và tên"]</th>
+                            <th>@L["Tài khoản"]</th>
+                            <th>@L["Liên hệ"]</th>
+                            <th>@L["Giới tính"]</th>
+                            <th>@L["Ngày sinh"]</th>
+                            <th>@L["Trình độ"]</th>
+                            <th class="text-center" style="width: 170px;">@L["Thao tác"]</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Ảnh</th>
-                            <th>Mã SV</th>
-                            <th>Họ và Tên</th>
-                            <th>Tài khoản</th>
-                            <th>Liên hệ</th>
-                            <th>Giới tính</th>
-                            <th>Ngày sinh</th>
-                            <th>Trình độ</th>
-                            <th class="text-center">Thao tác</th>
+                            <th>@L["Ảnh"]</th>
+                            <th>@L["Mã SV"]</th>
+                            <th>@L["Họ và tên"]</th>
+                            <th>@L["Tài khoản"]</th>
+                            <th>@L["Liên hệ"]</th>
+                            <th>@L["Giới tính"]</th>
+                            <th>@L["Ngày sinh"]</th>
+                            <th>@L["Trình độ"]</th>
+                            <th class="text-center">@L["Thao tác"]</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -108,14 +111,14 @@
                                     <td class="align-middle text-center">
                                         @if (item.UserId != null)
                                         {
-                                            <span class="badge badge-success px-2 py-1" title="Đã có tài khoản đăng nhập (Role: SinhVien)">
-                                                <i class="fas fa-check-circle mr-1"></i>Đã cấp TK
+                                            <span class="badge badge-success px-2 py-1" title="@L["Đã có tài khoản đăng nhập (Role: SinhVien)"]">
+                                                <i class="fas fa-check-circle mr-1"></i>@L["Đã cấp TK"]
                                             </span>
                                         }
                                         else
                                         {
-                                            <span class="badge badge-secondary px-2 py-1" title="Chưa liên kết tài khoản">
-                                                Chưa có TK
+                                            <span class="badge badge-secondary px-2 py-1" title="@L["Chưa liên kết tài khoản"]">
+                                                @L["Chưa có TK"]
                                             </span>
                                         }
                                     </td>
@@ -126,11 +129,11 @@
                                     <td class="align-middle">
                                         @if (item.Gender)
                                         {
-                                            <span class="badge badge-primary px-2 py-1"><i class="fas fa-mars mr-1"></i>Nam</span>
+                                            <span class="badge badge-primary px-2 py-1"><i class="fas fa-mars mr-1"></i>@L["Nam"]</span>
                                         }
                                         else
                                         {
-                                            <span class="badge badge-danger px-2 py-1"><i class="fas fa-venus mr-1"></i>Nữ</span>
+                                            <span class="badge badge-danger px-2 py-1"><i class="fas fa-venus mr-1"></i>@L["Nữ"]</span>
                                         }
                                     </td>
                                     <td class="align-middle">
@@ -140,13 +143,13 @@
                                         <span class="badge badge-light border">@item.EntryLevel</span>
                                     </td>
                                     <td class="text-center align-middle">
-                                        <a asp-action="Details" asp-route-id="@item.StudentId" class="btn btn-info btn-circle btn-sm" title="Xem hồ sơ">
+                                        <a asp-action="Details" asp-route-id="@item.StudentId" class="btn btn-info btn-circle btn-sm" title="@L["Xem hồ sơ"]">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a asp-action="Edit" asp-route-id="@item.StudentId" class="btn btn-warning btn-circle btn-sm" title="Chỉnh sửa">
+                                        <a asp-action="Edit" asp-route-id="@item.StudentId" class="btn btn-warning btn-circle btn-sm" title="@L["Chỉnh sửa"]">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <a asp-action="Delete" asp-route-id="@item.StudentId" class="btn btn-danger btn-circle btn-sm" title="Xóa">
+                                        <a asp-action="Delete" asp-route-id="@item.StudentId" class="btn btn-danger btn-circle btn-sm" title="@L["Xóa"]">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
@@ -156,7 +159,7 @@
                         else
                         {
                             <tr>
-                                <td colspan="9" class="text-center text-muted py-3">Không có hồ sơ học viên nào phù hợp.</td>
+                                <td colspan="9" class="text-center text-muted py-3">@L["Không có hồ sơ học viên nào phù hợp."]</td>
                             </tr>
                         }
                     </tbody>
@@ -167,7 +170,7 @@
             <div class="row mt-3">
                 <div class="col-sm-12 col-md-5">
                     <div class="dataTables_info text-muted small" role="status" aria-live="polite">
-                        Hiển thị trang @(Model?.PageIndex ?? 1) / @(Model?.TotalPages == 0 ? 1 : Model?.TotalPages) (Tổng số: @(Model?.TotalItems ?? 0) học viên)
+                        @L["Hiển thị trang {0} / {1} (Tổng số: {2} học viên)", pageIndex, totalPages, totalItems]
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-7">
@@ -178,7 +181,7 @@
                                 <a asp-action="Index" 
                                    asp-route-page="@((Model?.PageIndex ?? 1) - 1)" 
                                    asp-route-search="@ViewData["CurrentSearch"]" 
-                                   class="page-link">Trước</a>
+                                   class="page-link">@L["Trước"]</a>
                             </li>
 
                             <!-- Các số trang -->

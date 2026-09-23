@@ -4,44 +4,44 @@
 @model Assignment.Models.Entities.Attendance
 
 @{
-    ViewData["Title"] = "Xóa dòng Điểm danh";
+    ViewData["Title"] = L["Xóa dòng Điểm danh"];
 }
 
 <div class="container-fluid">
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-danger">Xóa bản ghi Điểm danh</h1>
+        <h1 class="h3 mb-0 text-danger">@L["Xóa bản ghi Điểm danh"]</h1>
         <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
-            <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> Quay lại
+            <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> @L["Quay lại"]
         </a>
     </div>
 
     <div class="card shadow mb-4 col-lg-6 mx-auto border-left-danger p-0">
         <div class="card-header py-3 bg-danger text-white">
-            <h6 class="m-0 font-weight-bold">Xác nhận xóa</h6>
+            <h6 class="m-0 font-weight-bold">@L["Xác nhận xóa"]</h6>
         </div>
         <div class="card-body">
             <div class="bg-light p-3 rounded mb-3">
                 <div class="row mb-2">
-                    <div class="col-sm-4 font-weight-bold">Học viên:</div>
+                    <div class="col-sm-4 font-weight-bold">@L["Học viên"]:</div>
                     <div class="col-sm-8 text-primary font-weight-bold">@Model.Enrollment?.Student?.FullName</div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-sm-4 font-weight-bold">Lớp học:</div>
+                    <div class="col-sm-4 font-weight-bold">@L["Lớp học"]:</div>
                     <div class="col-sm-8">@Model.Enrollment?.Class?.ClassName</div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-sm-4 font-weight-bold">Buổi số:</div>
-                    <div class="col-sm-8 font-weight-bold text-dark">Buổi @Model.SessionNumber</div>
+                    <div class="col-sm-4 font-weight-bold">@L["Buổi số"]:</div>
+                    <div class="col-sm-8 font-weight-bold text-dark">@L["Buổi"] @Model.SessionNumber</div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-sm-4 font-weight-bold">Ngày học:</div>
-                    <div class="col-sm-8">@Model.AttendanceDate.ToString("dd/MM/yyyy")</div>
+                    <div class="col-sm-4 font-weight-bold">@L["Ngày học"]:</div>
+                    <div class="col-sm-8">@Model.AttendanceDate.ToString("d")</div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-4 font-weight-bold">Trạng thái:</div>
+                    <div class="col-sm-4 font-weight-bold">@L["Trạng thái"]:</div>
                     <div class="col-sm-8">
-                        @(Model.IsPresent ? "Có mặt" : "Vắng mặt")
+                        @(Model.IsPresent ? L["Có mặt"].Value : L["Vắng mặt"].Value)
                     </div>
                 </div>
             </div>
@@ -50,9 +50,9 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" asp-for="AttendanceId" />
                 <div class="d-flex justify-content-between">
-                    <a asp-action="Index" class="btn btn-secondary shadow-sm">Hủy</a>
+                    <a asp-action="Index" class="btn btn-secondary shadow-sm">@L["Hủy"]</a>
                     <button type="submit" class="btn btn-danger shadow-sm">
-                        <i class="fas fa-trash mr-1"></i> Xác nhận xóa
+                        <i class="fas fa-trash mr-1"></i> @L["Xác nhận xóa"]
                     </button>
                 </div>
             </form>

@@ -4,20 +4,20 @@
 @model Assignment.Models.Entities.Course
 
 @{
-    ViewData["Title"] = "Chi tiết Khóa học - " + Model.CourseName;
+    ViewData["Title"] = L["Chi tiết Khóa học"].Value + " - " + Model.CourseName;
 }
 
 <div class="container-fluid">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Chi tiết Khóa học</h1>
+        <h1 class="h3 mb-0 text-gray-800">@L["Chi tiết Khóa học"]</h1>
         <div>
             <a asp-action="Edit" asp-route-id="@Model.CourseId" class="btn btn-sm btn-warning shadow-sm mr-2">
-                <i class="fas fa-pen fa-sm text-white-50 mr-1"></i> Chỉnh sửa
+                <i class="fas fa-pen fa-sm text-white-50 mr-1"></i> @L["Chỉnh sửa"]
             </a>
             <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
-                <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> Quay lại danh sách
+                <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> @L["Quay lại danh sách"]
             </a>
         </div>
     </div>
@@ -27,7 +27,7 @@
         <div class="col-xl-4 col-lg-5 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Ảnh bìa khóa học</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">@L["Ảnh bìa khóa học"]</h6>
                 </div>
                 <div class="card-body text-center">
                     <div class="mb-3">
@@ -41,13 +41,13 @@
                         @if (Model.IsActive)
                         {
                             <span class="badge badge-success px-3 py-2" style="font-size: 0.9rem;">
-                                <i class="fas fa-check-circle mr-1"></i> Đang mở tuyển sinh
+                                <i class="fas fa-check-circle mr-1"></i> @L["Đang mở tuyển sinh"]
                             </span>
                         }
                         else
                         {
                             <span class="badge badge-secondary px-3 py-2" style="font-size: 0.9rem;">
-                                <i class="fas fa-pause-circle mr-1"></i> Tạm ngưng tuyển sinh
+                                <i class="fas fa-pause-circle mr-1"></i> @L["Tạm ngưng tuyển sinh"]
                             </span>
                         }
                     </div>
@@ -60,10 +60,10 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                Tổng số lớp đang mở
+                                @L["Tổng số lớp đang mở"]
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                @(Model.Classes?.Count ?? 0) Lớp học
+                                @(Model.Classes?.Count ?? 0) @L["Lớp học"]
                             </div>
                         </div>
                         <div class="col-auto">
@@ -78,32 +78,32 @@
         <div class="col-xl-8 col-lg-7 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Thông số đào tạo & Học phí</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">@L["Thông số đào tạo & Học phí"]</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered mb-0">
                             <tbody>
                                 <tr>
-                                    <th class="bg-light" style="width: 30%;">Mã khóa học (ID)</th>
+                                    <th class="bg-light" style="width: 30%;">@L["Mã khóa học (ID)"]</th>
                                     <td><strong>#@Model.CourseId</strong></td>
                                 </tr>
                                 <tr>
-                                    <th class="bg-light">Tên khóa học</th>
+                                    <th class="bg-light">@L["Tên khóa học"]</th>
                                     <td class="text-primary font-weight-bold" style="font-size: 1.1rem;">@Model.CourseName</td>
                                 </tr>
                                 <tr>
-                                    <th class="bg-light">Học phí niêm yết</th>
+                                    <th class="bg-light">@L["Học phí niêm yết"]</th>
                                     <td class="text-danger font-weight-bold" style="font-size: 1.1rem;">
                                         @Model.BaseTuitionFee.ToString("N0") VNĐ
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="bg-light">Tổng thời lượng</th>
-                                    <td><strong>@Model.TotalSessions buổi</strong></td>
+                                    <th class="bg-light">@L["Tổng thời lượng"]</th>
+                                    <td><strong>@L["{0} buổi", Model.TotalSessions]</strong></td>
                                 </tr>
                                 <tr>
-                                    <th class="bg-light align-middle">Giáo trình chi tiết</th>
+                                    <th class="bg-light align-middle">@L["Giáo trình chi tiết"]</th>
                                     <td class="text-gray-800" style="white-space: pre-line;">
                                         @if (!string.IsNullOrWhiteSpace(Model.DescriptionHtml))
                                         {
@@ -111,7 +111,7 @@
                                         }
                                         else
                                         {
-                                            <span class="text-muted font-italic">Chưa có thông tin giáo trình chi tiết.</span>
+                                            <span class="text-muted font-italic">@L["Chưa có thông tin giáo trình chi tiết."]</span>
                                         }
                                     </td>
                                 </tr>
@@ -124,9 +124,9 @@
             <!-- Bảng danh sách các lớp học thuộc khóa này -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-primary">Các lớp học trực thuộc (@(Model.Classes?.Count ?? 0))</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">@L["Các lớp học trực thuộc"] (@(Model.Classes?.Count ?? 0))</h6>
                     <a asp-controller="Class" asp-action="Create" asp-route-courseId="@Model.CourseId" class="btn btn-sm btn-outline-primary">
-                        <i class="fas fa-plus fa-sm mr-1"></i> Mở lớp mới
+                        <i class="fas fa-plus fa-sm mr-1"></i> @L["Mở lớp mới"]
                     </a>
                 </div>
                 <div class="card-body p-0">
@@ -134,11 +134,11 @@
                         <table class="table table-hover mb-0" width="100%" cellspacing="0">
                             <thead class="thead-light">
                                 <tr>
-                                    <th>Mã lớp</th>
-                                    <th>Tên lớp</th>
-                                    <th>Giảng viên</th>
-                                    <th>Phòng</th>
-                                    <th>Lịch học</th>
+                                    <th>@L["Mã lớp"]</th>
+                                    <th>@L["Tên lớp"]</th>
+                                    <th>@L["Giảng viên"]</th>
+                                    <th>@L["Phòng"]</th>
+                                    <th>@L["Lịch học"]</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -159,7 +159,7 @@
                                 {
                                     <tr>
                                         <td colspan="5" class="text-center text-muted py-3">
-                                            Khóa học này hiện chưa mở lớp nào.
+                                            @L["Khóa học này hiện chưa mở lớp nào."]
                                         </td>
                                     </tr>
                                 }

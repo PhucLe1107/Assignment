@@ -9,7 +9,7 @@ For more information on enabling MVC for empty projects, visit https://go.micros
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-graduation-cap"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">@L["Trung tâm Anh ngữ"]</div>
     </a>
 
     <!-- Divider -->
@@ -21,19 +21,19 @@ For more information on enabling MVC for empty projects, visit https://go.micros
         <li class="nav-item">
             <a class="nav-link" asp-controller="StudentPortal" asp-action="MyLearning">
                 <i class="fas fa-fw fa-book-reader"></i>
-                <span>Khóa học của tôi</span>
+                <span>@L["Khóa học của tôi"]</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-controller="StudentPortal" asp-action="MyAttendance">
                 <i class="fas fa-fw fa-calendar-check"></i>
-                <span>Kết quả điểm danh</span>
+                <span>@L["Kết quả điểm danh"]</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-controller="StudentPortal" asp-action="MyGrades">
                 <i class="fas fa-fw fa-clipboard-list"></i>
-                <span>Bảng điểm cá nhân</span>
+                <span>@L["Bảng điểm cá nhân"]</span>
             </a>
         </li>
     }
@@ -43,37 +43,37 @@ For more information on enabling MVC for empty projects, visit https://go.micros
         <li class="nav-item">
             <a class="nav-link" asp-controller="Course" asp-action="Index">
                 <i class="fas fa-fw fa-book-open"></i>
-                <span>Khóa học</span>
+                <span>@L["Khóa học"]</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-controller="Class" asp-action="Index">
                 <i class="fas fa-fw fa-chalkboard-teacher"></i>
-                <span>Lớp học</span>
+                <span>@L["Lớp học"]</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-controller="Student" asp-action="Index">
                 <i class="fas fa-fw fa-user-graduate"></i>
-                <span>Học viên</span>
+                <span>@L["Học viên"]</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-controller="Enrollment" asp-action="Index">
                 <i class="fas fa-fw fa-user-check"></i>
-                <span>Ghi danh</span>
+                <span>@L["Ghi danh"]</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-controller="Attendance" asp-action="Index">
                 <i class="fas fa-fw fa-calendar-alt"></i>
-                <span>Điểm danh</span>
+                <span>@L["Điểm danh"]</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-controller="Grade" asp-action="Index">
                 <i class="fas fa-fw fa-award"></i>
-                <span>Sổ điểm</span>
+                <span>@L["Sổ điểm"]</span>
             </a>
         </li>
         @if (User.IsInRole("Admin"))

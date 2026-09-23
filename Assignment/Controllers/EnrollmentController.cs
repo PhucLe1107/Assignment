@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Assignment.Models.Common;
 using Assignment.Models.Data;
 using Assignment.Models.Entities;
+using Microsoft.Extensions.Localization;
 
 namespace Assignment.Controllers
 {
@@ -12,10 +13,12 @@ namespace Assignment.Controllers
     public class EnrollmentController : Controller
     {
         private readonly EnglishCenterDbContext _context;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
-        public EnrollmentController(EnglishCenterDbContext context)
+        public EnrollmentController(EnglishCenterDbContext context, IStringLocalizer<SharedResource> localizer)
         {
             _context = context;
+            _localizer = localizer;
         }
 
         // GET: /Enrollment?search=abc&classId=1&paymentStatus=ConNo&page=1
@@ -129,7 +132,7 @@ namespace Assignment.Controllers
 
             if (isAlreadyEnrolled)
             {
-                ModelState.AddModelError("", "Học viên này đã được ghi danh vào lớp học được chọn!");
+                ModelState.AddModelError("", _localizer["Học viên này đã được ghi danh vào lớp học được chọn!"]);
             }
 
             var targetClass = await _context.Classes
@@ -138,7 +141,7 @@ namespace Assignment.Controllers
 
             if (targetClass != null && (targetClass.Enrollments?.Count ?? 0) >= targetClass.MaxCapacity)
             {
-                ModelState.AddModelError("ClassId", $"Lớp học đã đủ sĩ số tối đa ({targetClass.MaxCapacity} học viên). Không thể thêm mới!");
+                ModelState.AddModelError("ClassId", _localizer["Lớp học đã đủ sĩ số tối đa ({0} học viên). Không thể thêm mới!", targetClass.MaxCapacity]);
             }
 
             if (enrollment.PaidAmount >= enrollment.ActualFee && enrollment.ActualFee > 0)
@@ -159,7 +162,7 @@ namespace Assignment.Controllers
             {
                 _context.Enrollments.Add(enrollment);
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Ghi danh học viên vào lớp thành công!";
+                TempData["SuccessMessage"] = _localizer["Ghi danh học viên vào lớp thành công!"].Value;
                 return RedirectToAction(nameof(Index));
             }
 
@@ -199,7 +202,7 @@ namespace Assignment.Controllers
 
             if (isDuplicate)
             {
-                ModelState.AddModelError("", "Học viên này đã tồn tại trong lớp đã chọn!");
+                ModelState.AddModelError("", _localizer["Học viên này đã tồn tại trong lớp đã chọn!"]);
             }
 
             // Tự động chuẩn hóa trạng thái học phí
@@ -223,7 +226,7 @@ namespace Assignment.Controllers
                 {
                     _context.Enrollments.Update(enrollment);
                     await _context.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "Cập nhật thông tin ghi danh thành công!";
+                    TempData["SuccessMessage"] = _localizer["Cập nhật thông tin ghi danh thành công!"].Value;
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
@@ -269,13 +272,13 @@ namespace Assignment.Controllers
                 if ((enrollment.Attendances != null && enrollment.Attendances.Any()) ||
                     (enrollment.Grades != null && enrollment.Grades.Any()))
                 {
-                    TempData["ErrorMessage"] = "Không thể hủy ghi danh vì học viên này đã có dữ liệu điểm danh hoặc bảng điểm!";
+                    TempData["ErrorMessage"] = _localizer["Không thể hủy ghi danh vì học viên này đã có dữ liệu điểm danh hoặc bảng điểm!"].Value;
                     return RedirectToAction(nameof(Index));
                 }
 
                 _context.Enrollments.Remove(enrollment);
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Đã hủy ghi danh học viên khỏi lớp thành công!";
+                TempData["SuccessMessage"] = _localizer["Đã hủy ghi danh học viên khỏi lớp thành công!"].Value;
             }
 
             return RedirectToAction(nameof(Index));

@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="English Center Management" xml:space="preserve"><value>English Center Management</value></data>
+  <data name="Trung tâm Anh ngữ" xml:space="preserve"><value>English Center</value></data>
+  <data name="Chọn ngôn ngữ" xml:space="preserve"><value>Select language</value></data>
+  <data name="Tiếng Việt" xml:space="preserve"><value>Vietnamese</value></data>
+  <data name="English" xml:space="preserve"><value>English</value></data>
+  <data name="Đăng nhập" xml:space="preserve"><value>Sign in</value></data>
+  <data name="Đăng xuất" xml:space="preserve"><value>Sign out</value></data>
+  <data name="Chào mừng trở lại!" xml:space="preserve"><value>Welcome back!</value></data>
+  <data name="Tên đăng nhập..." xml:space="preserve"><value>Username...</value></data>
+  <data name="Mật khẩu" xml:space="preserve"><value>Password</value></data>
+  <data name="Ghi nhớ đăng nhập" xml:space="preserve"><value>Remember me</value></data>
+  <data name="Quên mật khẩu?" xml:space="preserve"><value>Forgot password?</value></data>
+  <data name="Tạo tài khoản!" xml:space="preserve"><value>Create an account!</value></data>
+  <data name="Bảng điều khiển" xml:space="preserve"><value>Dashboard</value></data>
+  <data name="Lớp học" xml:space="preserve"><value>Classes</value></data>
+  <data name="Ghi danh" xml:space="preserve"><value>Enrollments</value></data>
+  <data name="Khóa học" xml:space="preserve"><value>Courses</value></data>
+  <data name="Điểm danh" xml:space="preserve"><value>Attendance</value></data>
+  <data name="Điểm số" xml:space="preserve"><value>Grades</value></data>
+  <data name="Tìm kiếm" xml:space="preserve"><value>Search</value></data>
+  <data name="Tìm kiếm..." xml:space="preserve"><value>Search...</value></data>
+  <data name="Hồ sơ" xml:space="preserve"><value>Profile</value></data>
+  <data name="Cài đặt" xml:space="preserve"><value>Settings</value></data>
+  <data name="Nhật ký hoạt động" xml:space="preserve"><value>Activity log</value></data>
+  <data name="Quay lại" xml:space="preserve"><value>Back</value></data>
+  <data name="Hủy" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Hủy bỏ" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Lưu" xml:space="preserve"><value>Save</value></data>
+  <data name="Cập nhật" xml:space="preserve"><value>Update</value></data>
+  <data name="Chỉnh sửa" xml:space="preserve"><value>Edit</value></data>
+  <data name="Xóa" xml:space="preserve"><value>Delete</value></data>
+  <data name="Xóa lọc" xml:space="preserve"><value>Clear filters</value></data>
+  <data name="Xem chi tiết" xml:space="preserve"><value>View details</value></data>
+  <data name="Thao tác" xml:space="preserve"><value>Actions</value></data>
+  <data name="Không có dữ liệu." xml:space="preserve"><value>No data found.</value></data>
+
+  <data name="Tài khoản không tồn tại hoặc đã bị khóa." xml:space="preserve"><value>The account does not exist or has been disabled.</value></data>
+  <data name="Mật khẩu không đúng." xml:space="preserve"><value>The password is incorrect.</value></data>
+  <data name="Thêm mới khóa học thành công!" xml:space="preserve"><value>Course created successfully!</value></data>
+  <data name="Cập nhật khóa học thành công!" xml:space="preserve"><value>Course updated successfully!</value></data>
+  <data name="Không thể xóa vì khóa học đã có các lớp học liên kết!" xml:space="preserve"><value>This course cannot be deleted because it has linked classes.</value></data>
+  <data name="Đã xóa khóa học thành công!" xml:space="preserve"><value>Course deleted successfully!</value></data>
+  <data name="Mã lớp này đã tồn tại trên hệ thống." xml:space="preserve"><value>This class code already exists.</value></data>
+  <data name="Thêm mới lớp học thành công!" xml:space="preserve"><value>Class created successfully!</value></data>
+  <data name="Cập nhật lớp học thành công!" xml:space="preserve"><value>Class updated successfully!</value></data>
+  <data name="Không thể xóa lớp học vì đã có học viên đăng ký!" xml:space="preserve"><value>This class cannot be deleted because students are enrolled.</value></data>
+  <data name="Đã xóa lớp học thành công!" xml:space="preserve"><value>Class deleted successfully!</value></data>
+  <data name="Học viên này đã được ghi danh vào lớp học được chọn!" xml:space="preserve"><value>This student is already enrolled in the selected class.</value></data>
+  <data name="Lớp học đã đủ sĩ số tối đa ({0} học viên). Không thể thêm mới!" xml:space="preserve"><value>The class has reached its maximum capacity ({0} students). A new enrollment cannot be added.</value></data>
+  <data name="Ghi danh học viên vào lớp thành công!" xml:space="preserve"><value>Student enrolled successfully!</value></data>
+  <data name="Học viên này đã tồn tại trong lớp đã chọn!" xml:space="preserve"><value>This student is already in the selected class.</value></data>
+  <data name="Cập nhật thông tin ghi danh thành công!" xml:space="preserve"><value>Enrollment updated successfully!</value></data>
+  <data name="Không thể hủy ghi danh vì học viên này đã có dữ liệu điểm danh hoặc bảng điểm!" xml:space="preserve"><value>This enrollment cannot be removed because attendance or grade data already exists.</value></data>
+  <data name="Đã hủy ghi danh học viên khỏi lớp thành công!" xml:space="preserve"><value>Enrollment removed successfully!</value></data>
+  <data name="Vui lòng chọn lớp học!" xml:space="preserve"><value>Please select a class.</value></data>
+  <data name="Lưu điểm danh Buổi {0} thành công!" xml:space="preserve"><value>Attendance for session {0} saved successfully!</value></data>
+  <data name="Đã xóa bản ghi điểm danh thành công!" xml:space="preserve"><value>Attendance record deleted successfully!</value></data>
+  <data name="Lưu sổ điểm kỳ [{0}] thành công!" xml:space="preserve"><value>Grades for exam [{0}] saved successfully!</value></data>
+  <data name="Đã xóa bản ghi điểm thành công!" xml:space="preserve"><value>Grade record deleted successfully!</value></data>
+
+  <data name="Vui lòng nhập tên đăng nhập" xml:space="preserve"><value>Please enter a username.</value></data>
+  <data name="Vui lòng nhập mật khẩu" xml:space="preserve"><value>Please enter a password.</value></data>
+  <data name="Tên đăng nhập không được để trống" xml:space="preserve"><value>Username is required.</value></data>
+  <data name="Tên đăng nhập phải từ 4 đến 50 ký tự" xml:space="preserve"><value>Username must be between 4 and 50 characters.</value></data>
+  <data name="Mật khẩu không được để trống" xml:space="preserve"><value>Password is required.</value></data>
+  <data name="Vui lòng chọn vai trò" xml:space="preserve"><value>Please select a role.</value></data>
+  <data name="Tên vai trò không được để trống" xml:space="preserve"><value>Role name is required.</value></data>
+  <data name="Tên vai trò không quá 50 ký tự" xml:space="preserve"><value>Role name cannot exceed 50 characters.</value></data>
+  <data name="Mã sinh viên không được để trống" xml:space="preserve"><value>Student code is required.</value></data>
+  <data name="Mã sinh viên không quá 20 ký tự" xml:space="preserve"><value>Student code cannot exceed 20 characters.</value></data>
+  <data name="Họ và tên không được để trống" xml:space="preserve"><value>Full name is required.</value></data>
+  <data name="Họ và tên không quá 100 ký tự" xml:space="preserve"><value>Full name cannot exceed 100 characters.</value></data>
+  <data name="Email không được để trống" xml:space="preserve"><value>Email is required.</value></data>
+  <data name="Địa chỉ email không đúng định dạng" xml:space="preserve"><value>Email address is invalid.</value></data>
+  <data name="Số điện thoại không được để trống" xml:space="preserve"><value>Phone number is required.</value></data>
+  <data name="Số điện thoại phải gồm 10 chữ số và bắt đầu bằng số 0" xml:space="preserve"><value>Phone number must contain 10 digits and start with 0.</value></data>
+  <data name="Tên khóa học không được để trống" xml:space="preserve"><value>Course name is required.</value></data>
+  <data name="Tên khóa học không quá 100 ký tự" xml:space="preserve"><value>Course name cannot exceed 100 characters.</value></data>
+  <data name="Học phí chuẩn không được để trống" xml:space="preserve"><value>Base tuition fee is required.</value></data>
+  <data name="Học phí phải lớn hơn hoặc bằng 0" xml:space="preserve"><value>Tuition fee must be greater than or equal to 0.</value></data>
+  <data name="Tổng số buổi không được để trống" xml:space="preserve"><value>Total sessions is required.</value></data>
+  <data name="Số buổi học phải từ 1 đến 200" xml:space="preserve"><value>Total sessions must be between 1 and 200.</value></data>
+  <data name="Giáo trình chi tiết không được để trống" xml:space="preserve"><value>Course description is required.</value></data>
+  <data name="Mã lớp không được để trống" xml:space="preserve"><value>Class code is required.</value></data>
+  <data name="Mã lớp không quá 20 ký tự" xml:space="preserve"><value>Class code cannot exceed 20 characters.</value></data>
+  <data name="Tên lớp không được để trống" xml:space="preserve"><value>Class name is required.</value></data>
+  <data name="Vui lòng chọn khóa học" xml:space="preserve"><value>Please select a course.</value></data>
+  <data name="Lịch học không được để trống" xml:space="preserve"><value>Schedule is required.</value></data>
+  <data name="Ngày khai giảng không được để trống" xml:space="preserve"><value>Start date is required.</value></data>
+  <data name="Sĩ số phải từ 1 đến 100 học viên" xml:space="preserve"><value>Capacity must be between 1 and 100 students.</value></data>
+  <data name="Vui lòng chọn lớp học" xml:space="preserve"><value>Please select a class.</value></data>
+  <data name="Vui lòng nhập buổi học số" xml:space="preserve"><value>Please enter the session number.</value></data>
+  <data name="Buổi học phải từ 1 đến 200" xml:space="preserve"><value>Session number must be between 1 and 200.</value></data>
+  <data name="Vui lòng chọn ngày điểm danh" xml:space="preserve"><value>Please select an attendance date.</value></data>
+  <data name="Vui lòng chọn hoặc nhập kỳ kiểm tra" xml:space="preserve"><value>Please select or enter an exam type.</value></data>
+  <data name="Điểm không hợp lệ (0 - 990)" xml:space="preserve"><value>Score must be between 0 and 990.</value></data>
+  <data name="Vui lòng chọn thông tin ghi danh của học viên" xml:space="preserve"><value>Please select a student enrollment.</value></data>
+  <data name="Kỳ kiểm tra không được để trống" xml:space="preserve"><value>Exam type is required.</value></data>
+  <data name="Tên kỳ kiểm tra không quá 50 ký tự" xml:space="preserve"><value>Exam type cannot exceed 50 characters.</value></data>
+  <data name="Điểm Nghe không hợp lệ (từ 0 đến 990)" xml:space="preserve"><value>Listening score must be between 0 and 990.</value></data>
+  <data name="Điểm Đọc không hợp lệ (từ 0 đến 990)" xml:space="preserve"><value>Reading score must be between 0 and 990.</value></data>
+  <data name="Điểm Viết không hợp lệ (từ 0 đến 990)" xml:space="preserve"><value>Writing score must be between 0 and 990.</value></data>
+  <data name="Điểm Nói không hợp lệ (từ 0 đến 990)" xml:space="preserve"><value>Speaking score must be between 0 and 990.</value></data>
+  <data name="Điểm tổng kết không hợp lệ (từ 0 đến 990)" xml:space="preserve"><value>Overall score must be between 0 and 990.</value></data>
+  <data name="Nhận xét tối đa 500 ký tự" xml:space="preserve"><value>Teacher feedback cannot exceed 500 characters.</value></data>
+  <data name="Thêm mới Khóa học" xml:space="preserve"><value>Add course</value></data>
+  <data name="Quay lại danh sách" xml:space="preserve"><value>Back to list</value></data>
+  <data name="Thông tin Khóa học" xml:space="preserve"><value>Course information</value></data>
+  <data name="Tên khóa học" xml:space="preserve"><value>Course name</value></data>
+  <data name="Học phí chuẩn (VNĐ)" xml:space="preserve"><value>Base tuition fee (VND)</value></data>
+  <data name="Tổng số buổi" xml:space="preserve"><value>Total sessions</value></data>
+  <data name="Ảnh bìa khóa học" xml:space="preserve"><value>Course cover image</value></data>
+  <data name="Giáo trình chi tiết / Mô tả" xml:space="preserve"><value>Detailed curriculum / Description</value></data>
+  <data name="Nhập tóm tắt giáo trình..." xml:space="preserve"><value>Enter a curriculum summary...</value></data>
+  <data name="Đang tuyển sinh" xml:space="preserve"><value>Open for enrollment</value></data>
+  <data name="Lưu khóa học" xml:space="preserve"><value>Save course</value></data>
+  <data name="Chỉnh sửa Khóa học" xml:space="preserve"><value>Edit course</value></data>
+  <data name="Cập nhật Khóa học" xml:space="preserve"><value>Update course</value></data>
+  <data name="Thông tin" xml:space="preserve"><value>Information</value></data>
+  <data name="Tải ảnh mới (bỏ trống nếu muốn giữ nguyên ảnh cũ):" xml:space="preserve"><value>Upload a new image (leave blank to keep the current image):</value></data>
+  <data name="Giáo trình chi tiết" xml:space="preserve"><value>Detailed curriculum</value></data>
+  <data name="Cập nhật thay đổi" xml:space="preserve"><value>Save changes</value></data>
+  <data name="Xóa Khóa học" xml:space="preserve"><value>Delete course</value></data>
+  <data name="Xác nhận xóa Khóa học" xml:space="preserve"><value>Confirm course deletion</value></data>
+  <data name="Cảnh báo hành động xóa" xml:space="preserve"><value>Deletion warning</value></data>
+  <data name="Bạn có chắc chắn muốn xóa khóa học này?" xml:space="preserve"><value>Are you sure you want to delete this course?</value></data>
+  <data name="Hành động này sẽ xóa dữ liệu vĩnh viễn khỏi CSDL nếu khóa học chưa có lớp liên kết." xml:space="preserve"><value>This action permanently deletes the data if the course has no linked classes.</value></data>
+  <data name="Học phí" xml:space="preserve"><value>Tuition fee</value></data>
+  <data name="Số buổi" xml:space="preserve"><value>Sessions</value></data>
+  <data name="Đồng ý xóa" xml:space="preserve"><value>Delete</value></data>
+  <data name="Chi tiết Khóa học" xml:space="preserve"><value>Course details</value></data>
+  <data name="Đang mở tuyển sinh" xml:space="preserve"><value>Open for enrollment</value></data>
+  <data name="Tạm ngưng tuyển sinh" xml:space="preserve"><value>Enrollment paused</value></data>
+  <data name="Tổng số lớp đang mở" xml:space="preserve"><value>Total active classes</value></data>
+  <data name="Thông số đào tạo &amp; Học phí" xml:space="preserve"><value>Course details &amp; tuition</value></data>
+  <data name="Mã khóa học (ID)" xml:space="preserve"><value>Course ID</value></data>
+  <data name="Học phí niêm yết" xml:space="preserve"><value>Listed tuition fee</value></data>
+  <data name="Tổng thời lượng" xml:space="preserve"><value>Total duration</value></data>
+  <data name="Chưa có thông tin giáo trình chi tiết." xml:space="preserve"><value>No detailed curriculum is available.</value></data>
+  <data name="Các lớp học trực thuộc" xml:space="preserve"><value>Classes in this course</value></data>
+  <data name="Mở lớp mới" xml:space="preserve"><value>Open new class</value></data>
+  <data name="Mã lớp" xml:space="preserve"><value>Class code</value></data>
+  <data name="Tên lớp" xml:space="preserve"><value>Class name</value></data>
+  <data name="Giảng viên" xml:space="preserve"><value>Instructor</value></data>
+  <data name="Phòng" xml:space="preserve"><value>Room</value></data>
+  <data name="Lịch học" xml:space="preserve"><value>Schedule</value></data>
+  <data name="Khóa học này hiện chưa mở lớp nào." xml:space="preserve"><value>This course has no classes yet.</value></data>
+  <data name="Quản lý Khóa học" xml:space="preserve"><value>Course management</value></data>
+  <data name="Danh sách Khóa học hiện có" xml:space="preserve"><value>Available courses</value></data>
+  <data name="Tìm kiếm khóa học..." xml:space="preserve"><value>Search courses...</value></data>
+  <data name="Ảnh" xml:space="preserve"><value>Image</value></data>
+  <data name="Học phí gốc" xml:space="preserve"><value>Base tuition</value></data>
+  <data name="Trạng thái" xml:space="preserve"><value>Status</value></data>
+  <data name="Đang mở" xml:space="preserve"><value>Open</value></data>
+  <data name="Tạm đóng" xml:space="preserve"><value>Paused</value></data>
+  <data name="Không có dữ liệu phù hợp." xml:space="preserve"><value>No matching data.</value></data>
+  <data name="Hiển thị trang {0} / {1} (Tổng số: {2} khóa học)" xml:space="preserve"><value>Page {0} of {1} ({2} courses total)</value></data>
+  <data name="Trước" xml:space="preserve"><value>Previous</value></data>
+  <data name="Sau" xml:space="preserve"><value>Next</value></data>
+  <data name="Mở lớp học mới" xml:space="preserve"><value>Open new class</value></data>
+  <data name="Thông tin lớp học" xml:space="preserve"><value>Class information</value></data>
+  <data name="Tên lớp học" xml:space="preserve"><value>Class name</value></data>
+  <data name="Khóa học đào tạo" xml:space="preserve"><value>Course</value></data>
+  <data name="Chọn khóa học" xml:space="preserve"><value>Select a course</value></data>
+  <data name="Giảng viên phụ trách" xml:space="preserve"><value>Instructor</value></data>
+  <data name="Thời khóa biểu" xml:space="preserve"><value>Schedule</value></data>
+  <data name="Phòng học" xml:space="preserve"><value>Classroom</value></data>
+  <data name="Ngày khai giảng" xml:space="preserve"><value>Start date</value></data>
+  <data name="Ngày bế giảng (Dự kiến)" xml:space="preserve"><value>Expected end date</value></data>
+  <data name="Sĩ số tối đa" xml:space="preserve"><value>Maximum capacity</value></data>
+  <data name="Lưu thông tin lớp" xml:space="preserve"><value>Save class</value></data>
+  <data name="Chỉnh sửa Lớp học" xml:space="preserve"><value>Edit class</value></data>
+  <data name="Cập nhật Lớp học" xml:space="preserve"><value>Update class</value></data>
+  <data name="Xóa Lớp học" xml:space="preserve"><value>Delete class</value></data>
+  <data name="Xác nhận xóa Lớp học" xml:space="preserve"><value>Confirm class deletion</value></data>
+  <data name="Cảnh báo xóa dữ liệu" xml:space="preserve"><value>Deletion warning</value></data>
+  <data name="Bạn có chắc chắn muốn xóa lớp học này?" xml:space="preserve"><value>Are you sure you want to delete this class?</value></data>
+  <data name="Chỉ có thể xóa lớp nếu chưa có học viên nào được xếp lớp/ghi danh." xml:space="preserve"><value>A class can only be deleted when it has no enrolled students.</value></data>
+  <data name="Sĩ số hiện tại" xml:space="preserve"><value>Current enrollment</value></data>
+  <data name="Xác nhận xóa" xml:space="preserve"><value>Confirm deletion</value></data>
+  <data name="Chi tiết Lớp học" xml:space="preserve"><value>Class details</value></data>
+  <data name="Thông số đào tạo" xml:space="preserve"><value>Class details</value></data>
+  <data name="Chưa xếp giảng viên" xml:space="preserve"><value>Instructor not assigned</value></data>
+  <data name="Chưa có phòng" xml:space="preserve"><value>Room not assigned</value></data>
+  <data name="Khai giảng" xml:space="preserve"><value>Start date</value></data>
+  <data name="Sĩ số" xml:space="preserve"><value>Enrollment</value></data>
+  <data name="Danh sách học viên theo lớp" xml:space="preserve"><value>Students in this class</value></data>
+  <data name="Ghi danh học viên" xml:space="preserve"><value>Enroll student</value></data>
+  <data name="Mã SV" xml:space="preserve"><value>Student code</value></data>
+  <data name="Ngày đăng ký" xml:space="preserve"><value>Enrollment date</value></data>
+  <data name="Trạng thái học" xml:space="preserve"><value>Learning status</value></data>
+  <data name="DangHoc" xml:space="preserve"><value>Studying</value></data>
+  <data name="HoanThanh" xml:space="preserve"><value>Completed</value></data>
+  <data name="BaoLuu" xml:space="preserve"><value>Deferred</value></data>
+  <data name="NghiHoc" xml:space="preserve"><value>Withdrawn</value></data>
+  <data name="Chưa có học viên nào ghi danh vào lớp học này." xml:space="preserve"><value>No students are enrolled in this class.</value></data>
+  <data name="Quản lý Lớp học" xml:space="preserve"><value>Class management</value></data>
+  <data name="Danh sách Lớp học" xml:space="preserve"><value>Class list</value></data>
+  <data name="Tìm theo mã lớp, tên lớp, giảng viên..." xml:space="preserve"><value>Search by class code, class name, or instructor...</value></data>
+  <data name="Tất cả khóa học" xml:space="preserve"><value>All courses</value></data>
+  <data name="Lọc" xml:space="preserve"><value>Filter</value></data>
+  <data name="Lịch học / Phòng" xml:space="preserve"><value>Schedule / Room</value></data>
+  <data name="Chưa xếp GV" xml:space="preserve"><value>Instructor not assigned</value></data>
+  <data name="Chưa xếp phòng" xml:space="preserve"><value>Room not assigned</value></data>
+  <data name="Không có lớp học nào phù hợp." xml:space="preserve"><value>No matching classes.</value></data>
+  <data name="Hiển thị trang {0} / {1} (Tổng: {2} lớp)" xml:space="preserve"><value>Page {0} of {1} ({2} classes total)</value></data>
+  <data name="Đăng ký Lớp học" xml:space="preserve"><value>Class enrollment</value></data>
+  <data name="Đăng ký Lớp học mới" xml:space="preserve"><value>New class enrollment</value></data>
+  <data name="Thông tin ghi danh" xml:space="preserve"><value>Enrollment information</value></data>
+  <data name="Chọn Học viên" xml:space="preserve"><value>Select student</value></data>
+  <data name="Tìm và chọn học viên" xml:space="preserve"><value>Find and select a student</value></data>
+  <data name="Chọn lớp học" xml:space="preserve"><value>Select a class</value></data>
+  <data name="Học phí thực tế cần nộp (VNĐ)" xml:space="preserve"><value>Actual tuition due (VND)</value></data>
+  <data name="Học phí áp dụng sau giảm giá/ưu đãi" xml:space="preserve"><value>Tuition after discounts or promotions</value></data>
+  <data name="Số tiền đã nộp đợt 1 (VNĐ)" xml:space="preserve"><value>Initial payment (VND)</value></data>
+  <data name="Nhập số tiền đã thanh toán ngay lúc đăng ký" xml:space="preserve"><value>Enter the amount paid at enrollment</value></data>
+  <data name="Trạng thái học ban đầu" xml:space="preserve"><value>Initial learning status</value></data>
+  <data name="Đang học" xml:space="preserve"><value>Studying</value></data>
+  <data name="Bảo lưu" xml:space="preserve"><value>Deferred</value></data>
+  <data name="Nghỉ học" xml:space="preserve"><value>Withdrawn</value></data>
+  <data name="Xác nhận ghi danh" xml:space="preserve"><value>Confirm enrollment</value></data>
+  <data name="Cập nhật Ghi danh" xml:space="preserve"><value>Update enrollment</value></data>
+  <data name="Cập nhật thông tin Ghi danh" xml:space="preserve"><value>Update enrollment information</value></data>
+  <data name="Mã ghi danh" xml:space="preserve"><value>Enrollment ID</value></data>
+  <data name="Học viên" xml:space="preserve"><value>Student</value></data>
+  <data name="Học phí thực tế (VNĐ)" xml:space="preserve"><value>Actual tuition (VND)</value></data>
+  <data name="Số tiền đã nộp (VNĐ)" xml:space="preserve"><value>Amount paid (VND)</value></data>
+  <data name="Hoàn thành khóa học" xml:space="preserve"><value>Course completed</value></data>
+  <data name="Lưu thay đổi" xml:space="preserve"><value>Save changes</value></data>
+  <data name="Hủy Ghi danh Lớp học" xml:space="preserve"><value>Cancel class enrollment</value></data>
+  <data name="Cảnh báo hủy hồ sơ ghi danh" xml:space="preserve"><value>Enrollment cancellation warning</value></data>
+  <data name="Bạn có chắc muốn rút học viên khỏi lớp này?" xml:space="preserve"><value>Are you sure you want to remove this student from the class?</value></data>
+  <data name="Hệ thống chỉ cho phép hủy nếu học viên chưa có lịch sử điểm danh và chưa vào bảng điểm." xml:space="preserve"><value>An enrollment can only be removed when it has no attendance or grade history.</value></data>
+  <data name="Học phí thực tế" xml:space="preserve"><value>Actual tuition</value></data>
+  <data name="Đã nộp" xml:space="preserve"><value>Amount paid</value></data>
+  <data name="Chi tiết Ghi danh" xml:space="preserve"><value>Enrollment details</value></data>
+  <data name="Sửa thông tin" xml:space="preserve"><value>Edit information</value></data>
+  <data name="Học viên &amp; Lớp học" xml:space="preserve"><value>Student &amp; class</value></data>
+  <data name="Mã" xml:space="preserve"><value>Code</value></data>
+  <data name="SĐT" xml:space="preserve"><value>Phone</value></data>
+  <data name="Chưa xếp" xml:space="preserve"><value>Not assigned</value></data>
+  <data name="Tình trạng học phí" xml:space="preserve"><value>Tuition status</value></data>
+  <data name="Đã thanh toán" xml:space="preserve"><value>Paid</value></data>
+  <data name="Số tiền còn nợ" xml:space="preserve"><value>Outstanding amount</value></data>
+  <data name="VNĐ" xml:space="preserve"><value>VND</value></data>
+  <data name="0 VNĐ (Đã hoàn tất)" xml:space="preserve"><value>0 VND (Paid in full)</value></data>
+  <data name="Trạng thái công nợ" xml:space="preserve"><value>Payment status</value></data>
+  <data name="Đã nộp đủ" xml:space="preserve"><value>Paid in full</value></data>
+  <data name="Còn nợ học phí" xml:space="preserve"><value>Outstanding tuition</value></data>
+  <data name="Số buổi đã điểm danh" xml:space="preserve"><value>Attendance records</value></data>
+  <data name="Số cột điểm đã nhập" xml:space="preserve"><value>Grade records</value></data>
+  <data name="Quản lý Ghi danh Lớp học" xml:space="preserve"><value>Enrollment management</value></data>
+  <data name="Đăng ký lớp mới" xml:space="preserve"><value>New enrollment</value></data>
+  <data name="Danh sách Đăng ký Lớp học" xml:space="preserve"><value>Class enrollments</value></data>
+  <data name="Tìm tên/mã học viên, mã lớp..." xml:space="preserve"><value>Search student name/code or class code...</value></data>
+  <data name="Tất cả lớp học" xml:space="preserve"><value>All classes</value></data>
+  <data name="Ngày ghi danh" xml:space="preserve"><value>Enrollment date</value></data>
+  <data name="Đã đóng" xml:space="preserve"><value>Paid</value></data>
+  <data name="Còn nợ" xml:space="preserve"><value>Outstanding</value></data>
+  <data name="Hoàn thành" xml:space="preserve"><value>Completed</value></data>
+  <data name="Xóa / Hủy ghi danh" xml:space="preserve"><value>Delete / cancel enrollment</value></data>
+  <data name="Không tìm thấy thông tin ghi danh nào." xml:space="preserve"><value>No enrollments found.</value></data>
+  <data name="Hiển thị trang {0} / {1} (Tổng số: {2} lượt đăng ký)" xml:space="preserve"><value>Page {0} of {1} ({2} enrollments total)</value></data>
+  <data name="Buổi" xml:space="preserve"><value>Session</value></data>
+  <data name="Buổi học số" xml:space="preserve"><value>Session number</value></data>
+  <data name="Buổi số" xml:space="preserve"><value>Session</value></data>
+  <data name="Buổi số..." xml:space="preserve"><value>Session no...</value></data>
+  <data name="Bảng điểm" xml:space="preserve"><value>Grade sheet</value></data>
+  <data name="Bộ lọc chọn buổi học cần điểm danh" xml:space="preserve"><value>Select the session to take attendance</value></data>
+  <data name="Chuyên cần" xml:space="preserve"><value>Attendance</value></data>
+  <data name="Chưa có kết quả điểm số nào phù hợp." xml:space="preserve"><value>No matching grade records found.</value></data>
+  <data name="Chọn Lớp học và Kỳ kiểm tra" xml:space="preserve"><value>Select class and exam</value></data>
+  <data name="Chọn tệp ảnh bìa" xml:space="preserve"><value>Choose cover image</value></data>
+  <data name="Cuối khóa" xml:space="preserve"><value>Final</value></data>
+  <data name="Có mặt" xml:space="preserve"><value>Present</value></data>
+  <data name="Có mặt tất cả" xml:space="preserve"><value>Mark all present</value></data>
+  <data name="Danh sách Kết quả học tập" xml:space="preserve"><value>Academic results</value></data>
+  <data name="Danh sách học viên" xml:space="preserve"><value>Student list</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Ghi chú" xml:space="preserve"><value>Note</value></data>
+  <data name="Giáo viên đứng lớp" xml:space="preserve"><value>Instructor</value></data>
+  <data name="Giới tính" xml:space="preserve"><value>Gender</value></data>
+  <data name="Giữa kỳ" xml:space="preserve"><value>Mid-term</value></data>
+  <data name="Hiển thị trang {0} / {1} (Tổng số: {2} bản ghi)" xml:space="preserve"><value>Page {0} of {1} ({2} records total)</value></data>
+  <data name="Hiển thị trang {0} / {1} (Tổng: {2} kết quả)" xml:space="preserve"><value>Page {0} of {1} ({2} results total)</value></data>
+  <data name="Họ và tên" xml:space="preserve"><value>Full name</value></data>
+  <data name="Học phí niêm yết (VNĐ)" xml:space="preserve"><value>Listed tuition (VND)</value></data>
+  <data name="Hồ sơ ghi danh" xml:space="preserve"><value>Enrollment record</value></data>
+  <data name="Không tìm thấy dữ liệu điểm danh nào." xml:space="preserve"><value>No attendance records found.</value></data>
+  <data name="Kiểm tra giữa kỳ (Mid-term)" xml:space="preserve"><value>Mid-term test</value></data>
+  <data name="Kiểm tra đầu vào (Placement)" xml:space="preserve"><value>Placement test</value></data>
+  <data name="Kỳ" xml:space="preserve"><value>Exam</value></data>
+  <data name="Kỳ kiểm tra" xml:space="preserve"><value>Exam</value></data>
+  <data name="Kỳ thi" xml:space="preserve"><value>Exam</value></data>
+  <data name="Lý do vắng, đi trễ..." xml:space="preserve"><value>Reason for absence, lateness...</value></data>
+  <data name="Lưu kết quả điểm danh" xml:space="preserve"><value>Save attendance</value></data>
+  <data name="Lưu toàn bộ bảng điểm" xml:space="preserve"><value>Save all grades</value></data>
+  <data name="Lịch sử Điểm danh" xml:space="preserve"><value>Attendance history</value></data>
+  <data name="Lớp học này hiện chưa có học viên nào đang tham gia học." xml:space="preserve"><value>This class has no active students yet.</value></data>
+  <data name="Lớp học này hiện chưa có học viên nào đang theo học." xml:space="preserve"><value>This class has no active students yet.</value></data>
+  <data name="Mã HV" xml:space="preserve"><value>Student ID</value></data>
+  <data name="Mã học viên" xml:space="preserve"><value>Student ID</value></data>
+  <data name="Mã sinh viên" xml:space="preserve"><value>Student ID</value></data>
+  <data name="Nghe (L)" xml:space="preserve"><value>Listening (L)</value></data>
+  <data name="Ngày học" xml:space="preserve"><value>Session date</value></data>
+  <data name="Ngày sinh" xml:space="preserve"><value>Date of birth</value></data>
+  <data name="Ngày điểm danh" xml:space="preserve"><value>Attendance date</value></data>
+  <data name="Nhận xét" xml:space="preserve"><value>Feedback</value></data>
+  <data name="Nhận xét của giáo viên" xml:space="preserve"><value>Teacher feedback</value></data>
+  <data name="Nhận xét tiến bộ..." xml:space="preserve"><value>Progress feedback...</value></data>
+  <data name="Nhập điểm Lớp học" xml:space="preserve"><value>Enter class grades</value></data>
+  <data name="Nhập điểm theo lớp" xml:space="preserve"><value>Enter grades by class</value></data>
+  <data name="Nhật ký Điểm danh học viên" xml:space="preserve"><value>Student attendance log</value></data>
+  <data name="Nói (S)" xml:space="preserve"><value>Speaking (S)</value></data>
+  <data name="Nạp danh sách" xml:space="preserve"><value>Load list</value></data>
+  <data name="STT" xml:space="preserve"><value>No.</value></data>
+  <data name="Sinh viên" xml:space="preserve"><value>Student</value></data>
+  <data name="Số điện thoại" xml:space="preserve"><value>Phone number</value></data>
+  <data name="Sổ điểm Học viên" xml:space="preserve"><value>Student gradebook</value></data>
+  <data name="Sổ điểm tổng hợp" xml:space="preserve"><value>Gradebook</value></data>
+  <data name="Sửa cả buổi này" xml:space="preserve"><value>Edit this whole session</value></data>
+  <data name="Sửa cả bảng điểm kỳ này" xml:space="preserve"><value>Edit this exam's grade sheet</value></data>
+  <data name="Test tiến độ 1" xml:space="preserve"><value>Progress test 1</value></data>
+  <data name="Test tiến độ 2" xml:space="preserve"><value>Progress test 2</value></data>
+  <data name="Thi cuối khóa (Final Exam)" xml:space="preserve"><value>Final exam</value></data>
+  <data name="Trình độ đầu vào" xml:space="preserve"><value>Entry level</value></data>
+  <data name="Trạng thái hoạt động" xml:space="preserve"><value>Active status</value></data>
+  <data name="Trạng thái học tập" xml:space="preserve"><value>Learning status</value></data>
+  <data name="Tài khoản liên kết" xml:space="preserve"><value>Linked account</value></data>
+  <data name="Tên vai trò" xml:space="preserve"><value>Role name</value></data>
+  <data name="Tên đăng nhập" xml:space="preserve"><value>Username</value></data>
+  <data name="Tìm theo tên/mã học viên, mã lớp..." xml:space="preserve"><value>Search by student name/ID or class code...</value></data>
+  <data name="Tải bảng điểm" xml:space="preserve"><value>Load grade sheet</value></data>
+  <data name="Tất cả kỳ thi" xml:space="preserve"><value>All exams</value></data>
+  <data name="Tổng số buổi học" xml:space="preserve"><value>Total sessions</value></data>
+  <data name="Vai trò" xml:space="preserve"><value>Role</value></data>
+  <data name="Viết (W)" xml:space="preserve"><value>Writing (W)</value></data>
+  <data name="Vắng" xml:space="preserve"><value>Absent</value></data>
+  <data name="Vắng mặt" xml:space="preserve"><value>Absent</value></data>
+  <data name="Vắng tất cả" xml:space="preserve"><value>Mark all absent</value></data>
+  <data name="Xem lịch sử điểm danh" xml:space="preserve"><value>View attendance history</value></data>
+  <data name="Xác nhận xóa bản ghi điểm" xml:space="preserve"><value>Confirm grade record deletion</value></data>
+  <data name="Xóa Cột Điểm" xml:space="preserve"><value>Delete grade</value></data>
+  <data name="Xóa bản ghi Điểm danh" xml:space="preserve"><value>Delete attendance record</value></data>
+  <data name="Xóa dòng này" xml:space="preserve"><value>Delete this row</value></data>
+  <data name="Xóa dòng Điểm danh" xml:space="preserve"><value>Delete attendance row</value></data>
+  <data name="Xóa dòng điểm này" xml:space="preserve"><value>Delete this grade row</value></data>
+  <data name="Xóa Điểm Học Viên" xml:space="preserve"><value>Delete student grade</value></data>
+  <data name="Điểm 4 kỹ năng" xml:space="preserve"><value>4-skill scores</value></data>
+  <data name="Điểm Nghe (Listening)" xml:space="preserve"><value>Listening score</value></data>
+  <data name="Điểm Nói (Speaking)" xml:space="preserve"><value>Speaking score</value></data>
+  <data name="Điểm Viết (Writing)" xml:space="preserve"><value>Writing score</value></data>
+  <data name="Điểm danh Lớp học" xml:space="preserve"><value>Class attendance</value></data>
+  <data name="Điểm danh theo lớp" xml:space="preserve"><value>Take attendance by class</value></data>
+  <data name="Điểm tổng kết" xml:space="preserve"><value>Overall score</value></data>
+  <data name="Điểm tổng kết / Trung bình" xml:space="preserve"><value>Overall / average score</value></data>
+  <data name="Điểm Đọc (Reading)" xml:space="preserve"><value>Reading score</value></data>
+  <data name="Đăng ký" xml:space="preserve"><value>Enrollment</value></data>
+  <data name="Đầu vào" xml:space="preserve"><value>Placement</value></data>
+  <data name="Địa chỉ" xml:space="preserve"><value>Address</value></data>
+  <data name="Đọc (R)" xml:space="preserve"><value>Reading (R)</value></data>
+  <data name="Ảnh đại diện" xml:space="preserve"><value>Avatar</value></data>
+  <data name="{0} buổi" xml:space="preserve"><value>{0} sessions</value></data>
+  <data name="{0} học viên" xml:space="preserve"><value>{0} students</value></data>
+  <data name="Advanced (Nâng cao)" xml:space="preserve"><value>Advanced</value></data>
+  <data name="Beginner (Cơ bản)" xml:space="preserve"><value>Beginner</value></data>
+  <data name="Beginner (Mất gốc / Cơ bản)" xml:space="preserve"><value>Beginner (starter / basic)</value></data>
+  <data name="Bạn có chắc chắn muốn xóa hồ sơ học viên này?" xml:space="preserve"><value>Are you sure you want to delete this student profile?</value></data>
+  <data name="Bảng điểm cá nhân" xml:space="preserve"><value>My grades</value></data>
+  <data name="Chi tiết Học viên" xml:space="preserve"><value>Student details</value></data>
+  <data name="Chưa có TK" xml:space="preserve"><value>No account</value></data>
+  <data name="Chưa cấp tài khoản" xml:space="preserve"><value>No account issued</value></data>
+  <data name="Chưa cập nhật" xml:space="preserve"><value>Not provided</value></data>
+  <data name="Chưa liên kết tài khoản" xml:space="preserve"><value>No linked account</value></data>
+  <data name="Chỉ có thể xóa nếu học viên chưa từng ghi danh vào bất kỳ lớp học nào." xml:space="preserve"><value>A student can only be deleted if they have never enrolled in any class.</value></data>
+  <data name="Chỉnh sửa Học viên" xml:space="preserve"><value>Edit student</value></data>
+  <data name="Chọn ảnh..." xml:space="preserve"><value>Choose image...</value></data>
+  <data name="Các lớp học đã tham gia ({0})" xml:space="preserve"><value>Enrolled classes ({0})</value></data>
+  <data name="Cập nhật Học viên" xml:space="preserve"><value>Update student</value></data>
+  <data name="Cập nhật thông tin học viên thành công!" xml:space="preserve"><value>Student updated successfully!</value></data>
+  <data name="Danh sách Hồ sơ Học viên" xml:space="preserve"><value>Student profiles</value></data>
+  <data name="Elementary (Sơ cấp)" xml:space="preserve"><value>Elementary</value></data>
+  <data name="Email liên lạc" xml:space="preserve"><value>Contact email</value></data>
+  <data name="Ghi danh lớp mới" xml:space="preserve"><value>Enroll in new class</value></data>
+  <data name="Hiển thị trang {0} / {1} (Tổng số: {2} học viên)" xml:space="preserve"><value>Page {0} of {1} ({2} students total)</value></data>
+  <data name="Học viên này chưa tham gia lớp học nào." xml:space="preserve"><value>This student has not joined any class yet.</value></data>
+  <data name="Hồ sơ Học viên" xml:space="preserve"><value>Student profile</value></data>
+  <data name="Intermediate (Trung cấp)" xml:space="preserve"><value>Intermediate</value></data>
+  <data name="Khóa học của tôi" xml:space="preserve"><value>My courses</value></data>
+  <data name="Không có hồ sơ học viên nào phù hợp." xml:space="preserve"><value>No matching student profiles found.</value></data>
+  <data name="Không thể xóa học viên này vì đang có dữ liệu đăng ký lớp học!" xml:space="preserve"><value>Cannot delete this student because they have class enrollments!</value></data>
+  <data name="Kết quả điểm danh" xml:space="preserve"><value>My attendance</value></data>
+  <data name="Liên hệ" xml:space="preserve"><value>Contact</value></data>
+  <data name="Lưu thông tin học viên" xml:space="preserve"><value>Save student</value></data>
+  <data name="Mã sinh viên này đã tồn tại trên hệ thống." xml:space="preserve"><value>This student ID already exists in the system.</value></data>
+  <data name="Mã sinh viên này đã tồn tại." xml:space="preserve"><value>This student ID already exists.</value></data>
+  <data name="Mật khẩu khởi tạo" xml:space="preserve"><value>Initial password</value></data>
+  <data name="Mặc định" xml:space="preserve"><value>Default</value></data>
+  <data name="Mặc định lấy theo Mã HV" xml:space="preserve"><value>Defaults to student ID</value></data>
+  <data name="Nam" xml:space="preserve"><value>Male</value></data>
+  <data name="Nguyễn Văn A" xml:space="preserve"><value>John Doe</value></data>
+  <data name="Nữ" xml:space="preserve"><value>Female</value></data>
+  <data name="Pre-Intermediate (Tiền trung cấp)" xml:space="preserve"><value>Pre-Intermediate</value></data>
+  <data name="Quản lý Học viên" xml:space="preserve"><value>Student management</value></data>
+  <data name="Số lớp đã đăng ký" xml:space="preserve"><value>Enrolled classes</value></data>
+  <data name="Số nhà, đường, quận/huyện, tỉnh/thành..." xml:space="preserve"><value>Street, district, city/province...</value></data>
+  <data name="Số điện thoại này đã được sử dụng bởi học viên khác." xml:space="preserve"><value>This phone number is already used by another student.</value></data>
+  <data name="Số điện thoại này đã được sử dụng." xml:space="preserve"><value>This phone number is already in use.</value></data>
+  <data name="Sổ điểm" xml:space="preserve"><value>Gradebook</value></data>
+  <data name="Thêm học viên thành công! Tài khoản: {0} (MK: 123456)" xml:space="preserve"><value>Student added successfully! Account: {0} (password: 123456)</value></data>
+  <data name="Thêm mới Học viên" xml:space="preserve"><value>Add student</value></data>
+  <data name="Thêm mới học viên thành công!" xml:space="preserve"><value>Student added successfully!</value></data>
+  <data name="Thông tin cá nhân học viên" xml:space="preserve"><value>Student personal information</value></data>
+  <data name="Trình độ" xml:space="preserve"><value>Level</value></data>
+  <data name="Tài khoản" xml:space="preserve"><value>Account</value></data>
+  <data name="Tài khoản này sẽ mang Role" xml:space="preserve"><value>This account will have the role</value></data>
+  <data name="Tên đăng nhập '{0}' đã có người sử dụng." xml:space="preserve"><value>Username '{0}' is already taken.</value></data>
+  <data name="Tên đăng nhập (Username)" xml:space="preserve"><value>Username</value></data>
+  <data name="Tìm theo mã SV, họ tên, email, SĐT..." xml:space="preserve"><value>Search by student ID, name, email, phone...</value></data>
+  <data name="Tải ảnh đại diện" xml:space="preserve"><value>Upload avatar</value></data>
+  <data name="Tự động cấp tài khoản đăng nhập hệ thống cho học viên" xml:space="preserve"><value>Automatically create a login account for the student</value></data>
+  <data name="Upper-Intermediate (Trung cao cấp)" xml:space="preserve"><value>Upper-Intermediate</value></data>
+  <data name="Xem hồ sơ" xml:space="preserve"><value>View profile</value></data>
+  <data name="Xác nhận xóa Học viên" xml:space="preserve"><value>Confirm student deletion</value></data>
+  <data name="Xóa Học viên" xml:space="preserve"><value>Delete student</value></data>
+  <data name="{0} lớp" xml:space="preserve"><value>{0} classes</value></data>
+  <data name="Đã có lỗi xảy ra: {0}" xml:space="preserve"><value>An error occurred: {0}</value></data>
+  <data name="Đã có tài khoản đăng nhập (Role: SinhVien)" xml:space="preserve"><value>Has a login account (Role: SinhVien)</value></data>
+  <data name="Đã cấp TK" xml:space="preserve"><value>Account issued</value></data>
+  <data name="Đã xóa hồ sơ học viên thành công!" xml:space="preserve"><value>Student profile deleted successfully!</value></data>
+  <data name="Để trống hệ thống sẽ tự lấy theo" xml:space="preserve"><value>If left blank, the system uses the</value></data>
+  <data name="Địa chỉ cư trú" xml:space="preserve"><value>Residential address</value></data>
+  <data name="Địa chỉ email này đã được sử dụng bởi học viên khác." xml:space="preserve"><value>This email is already used by another student.</value></data>
+  <data name="Địa chỉ email này đã được sử dụng." xml:space="preserve"><value>This email is already in use.</value></data>
+  <data name="Đổi ảnh..." xml:space="preserve"><value>Change image...</value></data>
+  <data name="để học viên tự đăng nhập xem điểm, chuyên cần và khóa học." xml:space="preserve"><value>so the student can sign in to view grades, attendance and courses.</value></data>
+  <data name="Ảnh chân dung" xml:space="preserve"><value>Portrait photo</value></data>
+</root>

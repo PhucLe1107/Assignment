@@ -4,19 +4,19 @@
 @model Assignment.Models.Entities.Student
 
 @{
-    ViewData["Title"] = "Chi tiết Học viên - " + Model.FullName;
+    ViewData["Title"] = L["Chi tiết Học viên"] + " - " + Model.FullName;
 }
 
 <div class="container-fluid">
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Hồ sơ Học viên: @Model.FullName</h1>
+        <h1 class="h3 mb-0 text-gray-800">@L["Hồ sơ Học viên"]: @Model.FullName</h1>
         <div>
             <a asp-action="Edit" asp-route-id="@Model.StudentId" class="btn btn-sm btn-warning shadow-sm mr-2">
-                <i class="fas fa-pen fa-sm text-white-50 mr-1"></i> Chỉnh sửa
+                <i class="fas fa-pen fa-sm text-white-50 mr-1"></i> @L["Chỉnh sửa"]
             </a>
             <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
-                <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> Quay lại
+                <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> @L["Quay lại"]
             </a>
         </div>
     </div>
@@ -34,31 +34,31 @@
                     <table class="table table-bordered text-left mt-3 mb-0 small">
                         <tbody>
                             <tr>
-                                <th class="bg-light" style="width: 40%;">Tài khoản:</th>
+                                <th class="bg-light" style="width: 40%;">@L["Tài khoản"]:</th>
                                 <td>
                                     @if (Model.User != null)
                                     {
                                         <span class="text-success font-weight-bold">
                                             <i class="fas fa-user-check mr-1"></i>@Model.User.Username
                                         </span>
-                                        <div><span class="badge badge-info mt-1">Vai trò: SinhVien</span></div>
+                                        <div><span class="badge badge-info mt-1">@L["Vai trò"]: SinhVien</span></div>
                                     }
                                     else
                                     {
-                                        <span class="text-muted font-italic">Chưa cấp tài khoản</span>
+                                        <span class="text-muted font-italic">@L["Chưa cấp tài khoản"]</span>
                                     }
                                 </td>
                             </tr>
                             <tr>
-                                <th class="bg-light">Giới tính:</th>
-                                <td>@(Model.Gender ? "Nam" : "Nữ")</td>
+                                <th class="bg-light">@L["Giới tính"]:</th>
+                                <td>@(Model.Gender ? L["Nam"] : L["Nữ"])</td>
                             </tr>
                             <tr>
-                                <th class="bg-light">Ngày sinh:</th>
+                                <th class="bg-light">@L["Ngày sinh"]:</th>
                                 <td>@(Model.DateOfBirth?.ToString("dd/MM/yyyy") ?? "-")</td>
                             </tr>
                             <tr>
-                                <th class="bg-light">Số điện thoại:</th>
+                                <th class="bg-light">@L["Số điện thoại"]:</th>
                                 <td><strong>@Model.PhoneNumber</strong></td>
                             </tr>
                             <tr>
@@ -66,11 +66,11 @@
                                 <td>@Model.Email</td>
                             </tr>
                             <tr>
-                                <th class="bg-light">Địa chỉ:</th>
-                                <td>@(string.IsNullOrEmpty(Model.Address) ? "Chưa cập nhật" : Model.Address)</td>
+                                <th class="bg-light">@L["Địa chỉ"]:</th>
+                                <td>@(string.IsNullOrEmpty(Model.Address) ? L["Chưa cập nhật"].Value : Model.Address)</td>
                             </tr>
                             <tr>
-                                <th class="bg-light">Trình độ:</th>
+                                <th class="bg-light">@L["Trình độ"]:</th>
                                 <td><span class="badge badge-light border">@Model.EntryLevel</span></td>
                             </tr>
                         </tbody>
@@ -83,9 +83,9 @@
         <div class="col-xl-8 col-lg-7 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-primary">Các lớp học đã tham gia (@(Model.Enrollments?.Count ?? 0))</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">@L["Các lớp học đã tham gia ({0})", Model.Enrollments?.Count ?? 0]</h6>
                     <a asp-controller="Enrollment" asp-action="Create" asp-route-studentId="@Model.StudentId" class="btn btn-sm btn-outline-primary">
-                        <i class="fas fa-plus fa-sm mr-1"></i> Ghi danh lớp mới
+                        <i class="fas fa-plus fa-sm mr-1"></i> @L["Ghi danh lớp mới"]
                     </a>
                 </div>
                 <div class="card-body p-0">
@@ -93,11 +93,11 @@
                         <table class="table table-hover mb-0" width="100%" cellspacing="0">
                             <thead class="thead-light">
                                 <tr>
-                                    <th>Mã lớp</th>
-                                    <th>Tên lớp</th>
-                                    <th>Khóa học</th>
-                                    <th>Học phí</th>
-                                    <th>Trạng thái học</th>
+                                    <th>@L["Mã lớp"]</th>
+                                    <th>@L["Tên lớp"]</th>
+                                    <th>@L["Khóa học"]</th>
+                                    <th>@L["Học phí"]</th>
+                                    <th>@L["Trạng thái học"]</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -112,21 +112,21 @@
                                             <td>
                                                 @if (e.PaymentStatus == "DaNopDu")
                                                 {
-                                                    <span class="badge badge-success">Đã nộp đủ</span>
+                                                    <span class="badge badge-success">@L["Đã nộp đủ"]</span>
                                                 }
                                                 else
                                                 {
-                                                    <span class="badge badge-warning text-dark">Còn nợ</span>
+                                                    <span class="badge badge-warning text-dark">@L["Còn nợ"]</span>
                                                 }
                                             </td>
-                                            <td><span class="badge badge-info">@e.LearningStatus</span></td>
+                                            <td><span class="badge badge-info">@L[e.LearningStatus ?? ""]</span></td>
                                         </tr>
                                     }
                                 }
                                 else
                                 {
                                     <tr>
-                                        <td colspan="5" class="text-center text-muted py-3">Học viên này chưa tham gia lớp học nào.</td>
+                                        <td colspan="5" class="text-center text-muted py-3">@L["Học viên này chưa tham gia lớp học nào."]</td>
                                     </tr>
                                 }
                             </tbody>
