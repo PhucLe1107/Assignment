@@ -27,7 +27,7 @@
             <div class="card shadow mb-4 text-center">
                 <div class="card-body">
                     <img src="@(string.IsNullOrEmpty(Model.AvatarUrl) ? "/img/undraw_profile.svg" : Model.AvatarUrl)" 
-                         class="rounded-circle mb-3" style="width: 130px; height: 130px; object-fit: cover; border: 4px solid #eaecf4;" alt="Avatar" />
+                         class="rounded-circle mb-3" style="width: 130px; height: 130px; object-fit: cover; border: 4px solid #eaecf4;" alt="@L["Ảnh đại diện"]" />
                     <h5 class="font-weight-bold text-gray-900 mb-1">@Model.FullName</h5>
                     <p class="badge badge-primary px-3 py-1">@Model.StudentCode</p>
 
@@ -119,7 +119,7 @@
                                                     <span class="badge badge-warning text-dark">@L["Còn nợ"]</span>
                                                 }
                                             </td>
-                                            <td><span class="badge badge-info">@L[e.LearningStatus ?? ""]</span></td>
+                                            <td><span class="badge badge-info">@L[DisplayLabels.LearningStatus(e.LearningStatus)]</span></td>
                                         </tr>
                                     }
                                 }

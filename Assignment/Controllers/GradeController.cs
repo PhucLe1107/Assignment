@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Assignment.Models;
 using Assignment.Models.Common;
 using Assignment.Models.Data;
+using Assignment.Localization;
 using Assignment.Models.Entities;
 using Microsoft.Extensions.Localization;
 
@@ -205,7 +206,7 @@ namespace Assignment.Controllers
                 }
 
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = _localizer["Lưu sổ điểm kỳ [{0}] thành công!", model.ExamType].Value;
+                TempData["SuccessMessage"] = _localizer["Lưu sổ điểm kỳ [{0}] thành công!", _localizer[DisplayLabels.ExamType(model.ExamType)]].Value;
                 return RedirectToAction(nameof(EnterGrades), new { classId = model.ClassId, examType = model.ExamType });
             }
 

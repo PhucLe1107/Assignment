@@ -25,7 +25,7 @@
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fas fa-check-circle mr-1"></i> @TempData["SuccessMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="@L["Đóng"]">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -34,7 +34,7 @@
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="fas fa-exclamation-triangle mr-1"></i> @TempData["ErrorMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="@L["Đóng"]">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -104,7 +104,7 @@
                                 <tr>
                                     <td class="text-center align-middle">
                                         <img src="@(string.IsNullOrEmpty(item.AvatarUrl) ? "/img/undraw_profile.svg" : item.AvatarUrl)"
-                                             class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;" alt="Avatar" />
+                                             class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;" alt="@L["Ảnh đại diện"]" />
                                     </td>
                                     <td class="align-middle"><strong>@item.StudentCode</strong></td>
                                     <td class="align-middle">@item.FullName</td>
@@ -200,7 +200,7 @@
                                 <a asp-action="Index" 
                                    asp-route-page="@((Model?.PageIndex ?? 1) + 1)" 
                                    asp-route-search="@ViewData["CurrentSearch"]" 
-                                   class="page-link">Sau</a>
+                                   class="page-link">@L["Sau"]</a>
                             </li>
                         </ul>
                     </div>

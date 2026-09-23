@@ -29,13 +29,13 @@
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label asp-for="ClassCode" class="font-weight-bold">@L["Mã lớp"] <span class="text-danger">*</span></label>
-                        <input asp-for="ClassCode" class="form-control" placeholder="VD: IELTS-2401" autofocus />
+                        <input asp-for="ClassCode" class="form-control" placeholder="@L["VD: {0}", "IELTS-2401"]" autofocus />
                         <span asp-validation-for="ClassCode" class="text-danger small"></span>
                     </div>
 
                     <div class="col-md-6 form-group">
                         <label asp-for="ClassName" class="font-weight-bold">@L["Tên lớp học"] <span class="text-danger">*</span></label>
-                        <input asp-for="ClassName" class="form-control" placeholder="VD: IELTS Intensive Sáng 2-4-6" />
+                        <input asp-for="ClassName" class="form-control" placeholder="@L["VD: IELTS Intensive Sáng 2-4-6"]" />
                         <span asp-validation-for="ClassName" class="text-danger small"></span>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
 
                     <div class="col-md-6 form-group">
                         <label asp-for="LecturerName" class="font-weight-bold">@L["Giảng viên phụ trách"]</label>
-                        <input asp-for="LecturerName" class="form-control" placeholder="VD: Thầy John Smith" />
+                        <input asp-for="LecturerName" class="form-control" placeholder="@L["VD: Thầy John Smith"]" />
                         <span asp-validation-for="LecturerName" class="text-danger small"></span>
                     </div>
                 </div>
@@ -59,13 +59,13 @@
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label asp-for="Schedule" class="font-weight-bold">@L["Thời khóa biểu"] <span class="text-danger">*</span></label>
-                        <input asp-for="Schedule" class="form-control" placeholder="VD: Thứ 2 - 4 - 6 (18:00 - 20:00)" />
+                        <input asp-for="Schedule" class="form-control" placeholder="@L["VD: Thứ 2 - 4 - 6 (18:00 - 20:00)"]" />
                         <span asp-validation-for="Schedule" class="text-danger small"></span>
                     </div>
 
                     <div class="col-md-6 form-group">
                         <label asp-for="Room" class="font-weight-bold">@L["Phòng học"]</label>
-                        <input asp-for="Room" class="form-control" placeholder="VD: Lab 202 (Cơ sở 1)" />
+                        <input asp-for="Room" class="form-control" placeholder="@L["VD: Lab 202 (Cơ sở 1)"]" />
                         <span asp-validation-for="Room" class="text-danger small"></span>
                     </div>
                 </div>
