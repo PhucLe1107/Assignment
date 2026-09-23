@@ -38,12 +38,12 @@ namespace Assignment.Models.Entities
         public string LearningStatus { get; set; } = "DangHoc";
 
         [ForeignKey("StudentId")]
-        public virtual Student Student { get; set; }
+        public virtual Student Student { get; set; } = null!;
 
         [ForeignKey("ClassId")]
-        public virtual Class Class { get; set; }
+        public virtual Class Class { get; set; } = null!;
 
-        public virtual ICollection<Attendance> Attendances { get; set; }
-        public virtual ICollection<Grade> Grades { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
+        public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
     }
 }

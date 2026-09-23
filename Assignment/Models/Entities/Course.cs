@@ -12,7 +12,7 @@ namespace Assignment.Models.Entities
         [Required(ErrorMessage = "Tên khóa học không được để trống")]
         [StringLength(100, ErrorMessage = "Tên khóa học không quá 100 ký tự")]
         [Display(Name = "Tên khóa học")]
-        public string CourseName { get; set; }
+        public string CourseName { get; set; } = string.Empty;
 
         [StringLength(255)]
         [Display(Name = "Ảnh bìa khóa học")]

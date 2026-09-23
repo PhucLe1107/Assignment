@@ -12,12 +12,12 @@ namespace Assignment.Models.Entities
         [Required(ErrorMessage = "Mã lớp không được để trống")]
         [StringLength(20, ErrorMessage = "Mã lớp không quá 20 ký tự")]
         [Display(Name = "Mã lớp")]
-        public string ClassCode { get; set; }
+        public string ClassCode { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Tên lớp không được để trống")]
         [StringLength(100)]
         [Display(Name = "Tên lớp học")]
-        public string ClassName { get; set; }
+        public string ClassName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Vui lòng chọn khóa học")]
         [Display(Name = "Khóa học")]
@@ -25,16 +25,16 @@ namespace Assignment.Models.Entities
 
         [StringLength(100)]
         [Display(Name = "Giáo viên đứng lớp")]
-        public string LecturerName { get; set; }
+        public string LecturerName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Lịch học không được để trống")]
         [StringLength(100)]
         [Display(Name = "Thời khóa biểu")]
-        public string Schedule { get; set; }
+        public string Schedule { get; set; } = string.Empty;
 
         [StringLength(50)]
         [Display(Name = "Phòng học")]
-        public string Room { get; set; }
+        public string Room { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Ngày khai giảng không được để trống")]
         [DataType(DataType.Date)]
@@ -50,8 +50,8 @@ namespace Assignment.Models.Entities
         public int MaxCapacity { get; set; } = 20;
 
         [ForeignKey("CourseId")]
-        public virtual Course Course { get; set; }
+        public virtual Course Course { get; set; } = null!;
 
-        public virtual ICollection<Enrollment> Enrollments { get; set; }
+        public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
     }
 }
