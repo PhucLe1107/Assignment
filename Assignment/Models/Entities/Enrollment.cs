@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Assignment.Models.Entities
@@ -23,10 +24,12 @@ namespace Assignment.Models.Entities
         [Required]
         [Display(Name = "Học phí thực tế (VNĐ)")]
         [Range(0, 100000000)]
+        [Precision(18, 2)]
         public decimal ActualFee { get; set; }
 
         [Display(Name = "Số tiền đã nộp (VNĐ)")]
         [Range(0, 100000000)]
+        [Precision(18, 2)]
         public decimal PaidAmount { get; set; } = 0;
 
         [StringLength(30)]
