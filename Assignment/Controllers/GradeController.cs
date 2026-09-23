@@ -6,6 +6,7 @@ using Assignment.Models;
 using Assignment.Models.Common;
 using Assignment.Models.Data;
 using Assignment.Models.Entities;
+using Microsoft.Extensions.Localization;
 
 namespace Assignment.Controllers
 {
@@ -13,10 +14,12 @@ namespace Assignment.Controllers
     public class GradeController : Controller
     {
         private readonly EnglishCenterDbContext _context;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
-        public GradeController(EnglishCenterDbContext context)
+        public GradeController(EnglishCenterDbContext context, IStringLocalizer<SharedResource> localizer)
         {
             _context = context;
+            _localizer = localizer;
         }
 
         // GET: /Grade?search=...&classId=1&examType=GiuaKy&page=1
@@ -147,7 +150,7 @@ namespace Assignment.Controllers
         {
             if (model.ClassId <= 0)
             {
-                ModelState.AddModelError("ClassId", "Vui lòng chọn lớp học!");
+                ModelState.AddModelError("ClassId", _localizer["Vui lòng chọn lớp học!"]);
             }
 
             if (ModelState.IsValid)
@@ -202,7 +205,7 @@ namespace Assignment.Controllers
                 }
 
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = $"Lưu sổ điểm kỳ [{model.ExamType}] thành công!";
+                TempData["SuccessMessage"] = _localizer["Lưu sổ điểm kỳ [{0}] thành công!", model.ExamType].Value;
                 return RedirectToAction(nameof(EnterGrades), new { classId = model.ClassId, examType = model.ExamType });
             }
 
@@ -239,7 +242,7 @@ namespace Assignment.Controllers
             {
                 _context.Grades.Remove(grade);
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Đã xóa bản ghi điểm thành công!";
+                TempData["SuccessMessage"] = _localizer["Đã xóa bản ghi điểm thành công!"].Value;
             }
             return RedirectToAction(nameof(Index));
         }

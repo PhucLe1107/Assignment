@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Assignment.Models.Common;
 using Assignment.Models.Data;
 using Assignment.Models.Entities;
+using Microsoft.Extensions.Localization;
 
 namespace Assignment.Controllers
 {
@@ -12,10 +13,12 @@ namespace Assignment.Controllers
     public class ClassController : Controller
     {
         private readonly EnglishCenterDbContext _context;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
-        public ClassController(EnglishCenterDbContext context)
+        public ClassController(EnglishCenterDbContext context, IStringLocalizer<SharedResource> localizer)
         {
             _context = context;
+            _localizer = localizer;
         }
 
         // GET: /Class?search=abc&courseId=1&page=1
@@ -87,7 +90,7 @@ namespace Assignment.Controllers
             // Kiểm tra trùng mã lớp
             if (await _context.Classes.AnyAsync(c => c.ClassCode == @class.ClassCode))
             {
-                ModelState.AddModelError("ClassCode", "Mã lớp này đã tồn tại trên hệ thống.");
+                ModelState.AddModelError("ClassCode", _localizer["Mã lớp này đã tồn tại trên hệ thống."]);
             }
 
             // Gỡ bỏ kiểm tra navigation property để tránh ModelState bị false
@@ -98,7 +101,7 @@ namespace Assignment.Controllers
             {
                 _context.Classes.Add(@class);
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Thêm mới lớp học thành công!";
+                TempData["SuccessMessage"] = _localizer["Thêm mới lớp học thành công!"].Value;
                 return RedirectToAction(nameof(Index));
             }
 
@@ -135,7 +138,7 @@ namespace Assignment.Controllers
                 {
                     _context.Classes.Update(@class);
                     await _context.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "Cập nhật lớp học thành công!";
+                    TempData["SuccessMessage"] = _localizer["Cập nhật lớp học thành công!"].Value;
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
@@ -179,13 +182,13 @@ namespace Assignment.Controllers
                 // Kiểm tra ràng buộc khóa ngoại với Enrollment
                 if (@class.Enrollments != null && @class.Enrollments.Any())
                 {
-                    TempData["ErrorMessage"] = "Không thể xóa lớp học vì đã có học viên đăng ký!";
+                    TempData["ErrorMessage"] = _localizer["Không thể xóa lớp học vì đã có học viên đăng ký!"].Value;
                     return RedirectToAction(nameof(Index));
                 }
 
                 _context.Classes.Remove(@class);
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Đã xóa lớp học thành công!";
+                TempData["SuccessMessage"] = _localizer["Đã xóa lớp học thành công!"].Value;
             }
 
             return RedirectToAction(nameof(Index));

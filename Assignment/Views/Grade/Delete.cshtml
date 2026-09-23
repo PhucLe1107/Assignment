@@ -4,38 +4,38 @@
 @model Assignment.Models.Entities.Grade
 
 @{
-    ViewData["Title"] = "Xóa Cột Điểm";
+    ViewData["Title"] = L["Xóa Cột Điểm"];
 }
 
 <div class="container-fluid">
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-danger">Xóa Điểm Học Viên</h1>
+        <h1 class="h3 mb-0 text-danger">@L["Xóa Điểm Học Viên"]</h1>
         <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
-            <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> Quay lại
+            <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> @L["Quay lại"]
         </a>
     </div>
 
     <div class="card shadow mb-4 col-lg-6 mx-auto border-left-danger p-0">
         <div class="card-header py-3 bg-danger text-white">
-            <h6 class="m-0 font-weight-bold">Xác nhận xóa bản ghi điểm</h6>
+            <h6 class="m-0 font-weight-bold">@L["Xác nhận xóa bản ghi điểm"]</h6>
         </div>
         <div class="card-body">
             <div class="bg-light p-3 rounded mb-3">
                 <div class="row mb-2">
-                    <div class="col-sm-4 font-weight-bold">Học viên:</div>
+                    <div class="col-sm-4 font-weight-bold">@L["Học viên"]:</div>
                     <div class="col-sm-8 text-primary font-weight-bold">@Model.Enrollment?.Student?.FullName (@Model.Enrollment?.Student?.StudentCode)</div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-sm-4 font-weight-bold">Lớp học:</div>
+                    <div class="col-sm-4 font-weight-bold">@L["Lớp học"]:</div>
                     <div class="col-sm-8">@Model.Enrollment?.Class?.ClassName</div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-sm-4 font-weight-bold">Kỳ thi:</div>
+                    <div class="col-sm-4 font-weight-bold">@L["Kỳ thi"]:</div>
                     <div class="col-sm-8 font-weight-bold text-dark">@Model.ExamType</div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-sm-4 font-weight-bold">Điểm 4 kỹ năng:</div>
+                    <div class="col-sm-4 font-weight-bold">@L["Điểm 4 kỹ năng"]:</div>
                     <div class="col-sm-8">
                         L: @(Model.ListeningScore?.ToString() ?? "-") | 
                         R: @(Model.ReadingScore?.ToString() ?? "-") | 
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-4 font-weight-bold">Điểm tổng kết:</div>
+                    <div class="col-sm-4 font-weight-bold">@L["Điểm tổng kết"]:</div>
                     <div class="col-sm-8 font-weight-bold text-danger">@(Model.OverallScore?.ToString() ?? "-")</div>
                 </div>
             </div>
@@ -53,9 +53,9 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" asp-for="GradeId" />
                 <div class="d-flex justify-content-between">
-                    <a asp-action="Index" class="btn btn-secondary shadow-sm">Hủy</a>
+                    <a asp-action="Index" class="btn btn-secondary shadow-sm">@L["Hủy"]</a>
                     <button type="submit" class="btn btn-danger shadow-sm">
-                        <i class="fas fa-trash mr-1"></i> Xác nhận xóa
+                        <i class="fas fa-trash mr-1"></i> @L["Xác nhận xóa"]
                     </button>
                 </div>
             </form>

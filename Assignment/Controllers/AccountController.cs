@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 
 namespace Assignment.Controllers
@@ -11,10 +12,12 @@ namespace Assignment.Controllers
     public class AccountController : Controller
     {
         private readonly EnglishCenterDbContext _context;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
-        public AccountController(EnglishCenterDbContext context)
+        public AccountController(EnglishCenterDbContext context, IStringLocalizer<SharedResource> localizer)
         {
             _context = context;
+            _localizer = localizer;
         }
 
         [HttpGet]
@@ -41,14 +44,14 @@ namespace Assignment.Controllers
             var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Username == model.Username);
             if (user == null || !user.IsActive)
             {
-                ModelState.AddModelError(string.Empty, "Tài khoản không tồn tại hoặc đã bị khóa.");
+                ModelState.AddModelError(string.Empty, _localizer["Tài khoản không tồn tại hoặc đã bị khóa."]);
                 return View(model);
             }
 
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(model.Password, user.Password);
             if (!isPasswordValid)
             {
-                ModelState.AddModelError(string.Empty, "Mật khẩu không đúng.");
+                ModelState.AddModelError(string.Empty, _localizer["Mật khẩu không đúng."]);
                 return View(model);
             }
 

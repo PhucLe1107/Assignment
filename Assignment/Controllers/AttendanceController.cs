@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace Assignment.Controllers
 {
@@ -13,10 +14,12 @@ namespace Assignment.Controllers
     public class AttendanceController : Controller
     {
         private readonly EnglishCenterDbContext _context;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
-        public AttendanceController(EnglishCenterDbContext context)
+        public AttendanceController(EnglishCenterDbContext context, IStringLocalizer<SharedResource> localizer)
         {
             _context = context;
+            _localizer = localizer;
         }
 
         // GET: /Attendance?search=...&classId=1&sessionNumber=1&date=...&page=1
@@ -157,7 +160,7 @@ namespace Assignment.Controllers
         {
             if (model.ClassId <= 0)
             {
-                ModelState.AddModelError("ClassId", "Vui lòng chọn lớp học!");
+                ModelState.AddModelError("ClassId", _localizer["Vui lòng chọn lớp học!"]);
             }
 
             if (ModelState.IsValid)
@@ -193,7 +196,7 @@ namespace Assignment.Controllers
                 }
 
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = $"Lưu điểm danh Buổi {model.SessionNumber} thành công!";
+                TempData["SuccessMessage"] = _localizer["Lưu điểm danh Buổi {0} thành công!", model.SessionNumber].Value;
                 return RedirectToAction(nameof(TakeAttendance), new { classId = model.ClassId, sessionNumber = model.SessionNumber });
             }
 
@@ -230,7 +233,7 @@ namespace Assignment.Controllers
             {
                 _context.Attendances.Remove(att);
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Đã xóa bản ghi điểm danh thành công!";
+                TempData["SuccessMessage"] = _localizer["Đã xóa bản ghi điểm danh thành công!"].Value;
             }
             return RedirectToAction(nameof(Index));
         }
