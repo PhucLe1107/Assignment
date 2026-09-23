@@ -1,0 +1,159 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Assignment.Models.Entities.Student
+
+@{
+    ViewData["Title"] = L["Thêm mới Học viên"];
+}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@L["Thêm mới Học viên"]</h1>
+        <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> @L["Quay lại danh sách"]
+        </a>
+    </div>
+
+    <div class="card shadow mb-4 p-0">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">@L["Thông tin cá nhân học viên"]</h6>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3" role="alert"></div>
+
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label asp-for="StudentCode" class="font-weight-bold">@L["Mã học viên"] <span class="text-danger">*</span></label>
+                        <input asp-for="StudentCode" id="StudentCode" class="form-control" placeholder="HV2026-001" autofocus />
+                        <span asp-validation-for="StudentCode" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-5 form-group">
+                        <label asp-for="FullName" class="font-weight-bold">@L["Họ và tên"] <span class="text-danger">*</span></label>
+                        <input asp-for="FullName" class="form-control" placeholder="@L["Nguyễn Văn A"]" />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                        <label asp-for="Gender" class="font-weight-bold">@L["Giới tính"]</label>
+                        <select asp-for="Gender" class="form-control">
+                            <option value="true">@L["Nam"]</option>
+                            <option value="false">@L["Nữ"]</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label asp-for="DateOfBirth" class="font-weight-bold">@L["Ngày sinh"]</label>
+                        <input asp-for="DateOfBirth" type="date" class="form-control" />
+                        <span asp-validation-for="DateOfBirth" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                        <label asp-for="Email" class="font-weight-bold">@L["Email liên lạc"] <span class="text-danger">*</span></label>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="example@email.com" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                        <label asp-for="PhoneNumber" class="font-weight-bold">@L["Số điện thoại"] <span class="text-danger">*</span></label>
+                        <input asp-for="PhoneNumber" class="form-control" placeholder="098xxxxxxx" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label asp-for="Address" class="font-weight-bold">@L["Địa chỉ cư trú"]</label>
+                        <input asp-for="Address" class="form-control" placeholder="@L["Số nhà, đường, quận/huyện, tỉnh/thành..."]" />
+                        <span asp-validation-for="Address" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                        <label asp-for="EntryLevel" class="font-weight-bold">@L["Trình độ đầu vào"]</label>
+                        <select asp-for="EntryLevel" class="form-control">
+                            <option value="Beginner">@L["Beginner (Mất gốc / Cơ bản)"]</option>
+                            <option value="Elementary">@L["Elementary (Sơ cấp)"]</option>
+                            <option value="Pre-Intermediate">@L["Pre-Intermediate (Tiền trung cấp)"]</option>
+                            <option value="Intermediate">@L["Intermediate (Trung cấp)"]</option>
+                            <option value="Upper-Intermediate">@L["Upper-Intermediate (Trung cao cấp)"]</option>
+                            <option value="Advanced">@L["Advanced (Nâng cao)"]</option>
+                        </select>
+                        <span asp-validation-for="EntryLevel" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                        <label asp-for="AvatarFile" class="font-weight-bold">@L["Ảnh chân dung"]</label>
+                        <div class="custom-file">
+                            <input asp-for="AvatarFile" type="file" accept="image/*" class="custom-file-input" id="avatarUpload" />
+                            <label class="custom-file-label" for="avatarUpload">@L["Chọn ảnh..."]</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Khối tự động cấp tài khoản đăng nhập cho Học viên -->
+                <div class="card bg-light border-left-info my-4">
+                    <div class="card-body">
+                        <div class="custom-control custom-checkbox mb-2">
+                            <input type="checkbox" class="custom-control-input" id="createAccountCheck" name="createAccount" value="true" checked>
+                            <label class="custom-control-label font-weight-bold text-gray-800" for="createAccountCheck">
+                                <i class="fas fa-user-lock mr-1 text-info"></i> @L["Tự động cấp tài khoản đăng nhập hệ thống cho học viên"]
+                            </label>
+                        </div>
+                        <small class="text-muted d-block mb-3">@L["Tài khoản này sẽ mang Role"] <strong>SinhVien</strong> @L["để học viên tự đăng nhập xem điểm, chuyên cần và khóa học."]</small>
+
+                        <div id="accountFields" class="row">
+                            <div class="col-md-6 form-group mb-0">
+                                <label class="font-weight-bold small">@L["Tên đăng nhập (Username)"]:</label>
+                                <input type="text" name="accountUsername" id="accountUsername" class="form-control form-control-sm" placeholder="@L["Mặc định lấy theo Mã HV"]" />
+                                <small class="text-muted">@L["Để trống hệ thống sẽ tự lấy theo"] <strong>@L["Mã học viên"]</strong>.</small>
+                            </div>
+                            <div class="col-md-6 form-group mb-0">
+                                <label class="font-weight-bold small">@L["Mật khẩu khởi tạo"]:</label>
+                                <input type="text" name="accountPassword" class="form-control form-control-sm" value="123456" />
+                                <small class="text-muted">@L["Mặc định"]: <code>123456</code>.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary shadow-sm">@L["Hủy bỏ"]</a>
+                    <button type="submit" class="btn btn-primary shadow-sm">
+                        <i class="fas fa-save mr-1"></i> @L["Lưu thông tin học viên"]
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $('#StudentCode').on('input', function () {
+            $('#accountUsername').val($(this).val().trim());
+        });
+
+        $('#createAccountCheck').on('change', function () {
+            if ($(this).is(':checked')) {
+                $('#accountFields').slideDown(200);
+            } else {
+                $('#accountFields').slideUp(200);
+            }
+        });
+
+        $('#avatarUpload').on('change', function () {
+            var fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').html(fileName);
+        });
+    </script>
+}

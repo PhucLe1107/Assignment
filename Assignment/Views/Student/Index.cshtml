@@ -1,0 +1,212 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Assignment.Models.Common.PagedList<Assignment.Models.Entities.Student>
+
+@{
+    ViewData["Title"] = L["Quản lý Học viên"];
+    var pageIndex = Model?.PageIndex ?? 1;
+    var totalPages = Math.Max(Model?.TotalPages ?? 0, 1);
+    var totalItems = Model?.TotalItems ?? 0;
+}
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@L["Quản lý Học viên"]</h1>
+        <a asp-controller="Student" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-user-plus fa-sm text-white-50"></i> @L["Thêm mới Học viên"]
+        </a>
+    </div>
+
+    <!-- Thông báo kết quả -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle mr-1"></i> @TempData["SuccessMessage"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle mr-1"></i> @TempData["ErrorMessage"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    <!-- DataTales Card -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">@L["Danh sách Hồ sơ Học viên"]</h6>
+        </div>
+        <div class="card-body">
+
+            <!-- Thanh tìm kiếm dữ liệu phía Server (search & page) -->
+            <div class="row mb-3">
+                <div class="col-sm-12 col-md-6">
+                    <form asp-controller="Student" asp-action="Index" method="get">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control form-control-sm" 
+                                   placeholder="@L["Tìm theo mã SV, họ tên, email, SĐT..."]" value="@ViewData["CurrentSearch"]" />
+                            <div class="input-group-append">
+                                <button class="btn btn-primary btn-sm" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                                @if (!string.IsNullOrEmpty(ViewData["CurrentSearch"] as string))
+                                {
+                                    <a asp-controller="Student" asp-action="Index" class="btn btn-secondary btn-sm">@L["Xóa lọc"]</a>
+                                }
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th style="width: 60px;">@L["Ảnh"]</th>
+                            <th>@L["Mã SV"]</th>
+                            <th>@L["Họ và tên"]</th>
+                            <th>@L["Tài khoản"]</th>
+                            <th>@L["Liên hệ"]</th>
+                            <th>@L["Giới tính"]</th>
+                            <th>@L["Ngày sinh"]</th>
+                            <th>@L["Trình độ"]</th>
+                            <th class="text-center" style="width: 170px;">@L["Thao tác"]</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>@L["Ảnh"]</th>
+                            <th>@L["Mã SV"]</th>
+                            <th>@L["Họ và tên"]</th>
+                            <th>@L["Tài khoản"]</th>
+                            <th>@L["Liên hệ"]</th>
+                            <th>@L["Giới tính"]</th>
+                            <th>@L["Ngày sinh"]</th>
+                            <th>@L["Trình độ"]</th>
+                            <th class="text-center">@L["Thao tác"]</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center align-middle">
+                                        <img src="@(string.IsNullOrEmpty(item.AvatarUrl) ? "/img/undraw_profile.svg" : item.AvatarUrl)"
+                                             class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;" alt="Avatar" />
+                                    </td>
+                                    <td class="align-middle"><strong>@item.StudentCode</strong></td>
+                                    <td class="align-middle">@item.FullName</td>
+                                    <td class="align-middle text-center">
+                                        @if (item.UserId != null)
+                                        {
+                                            <span class="badge badge-success px-2 py-1" title="@L["Đã có tài khoản đăng nhập (Role: SinhVien)"]">
+                                                <i class="fas fa-check-circle mr-1"></i>@L["Đã cấp TK"]
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-secondary px-2 py-1" title="@L["Chưa liên kết tài khoản"]">
+                                                @L["Chưa có TK"]
+                                            </span>
+                                        }
+                                    </td>
+                                    <td class="align-middle small">
+                                        <div><i class="fas fa-envelope text-gray-500 mr-1"></i>@item.Email</div>
+                                        <div><i class="fas fa-phone text-gray-500 mr-1"></i>@item.PhoneNumber</div>
+                                    </td>
+                                    <td class="align-middle">
+                                        @if (item.Gender)
+                                        {
+                                            <span class="badge badge-primary px-2 py-1"><i class="fas fa-mars mr-1"></i>@L["Nam"]</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-danger px-2 py-1"><i class="fas fa-venus mr-1"></i>@L["Nữ"]</span>
+                                        }
+                                    </td>
+                                    <td class="align-middle">
+                                        @(item.DateOfBirth.HasValue ? item.DateOfBirth.Value.ToString("dd/MM/yyyy") : "-")
+                                    </td>
+                                    <td class="align-middle">
+                                        <span class="badge badge-light border">@item.EntryLevel</span>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <a asp-action="Details" asp-route-id="@item.StudentId" class="btn btn-info btn-circle btn-sm" title="@L["Xem hồ sơ"]">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@item.StudentId" class="btn btn-warning btn-circle btn-sm" title="@L["Chỉnh sửa"]">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.StudentId" class="btn btn-danger btn-circle btn-sm" title="@L["Xóa"]">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="9" class="text-center text-muted py-3">@L["Không có hồ sơ học viên nào phù hợp."]</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Phân trang SB Admin 2 (search & page) -->
+            <div class="row mt-3">
+                <div class="col-sm-12 col-md-5">
+                    <div class="dataTables_info text-muted small" role="status" aria-live="polite">
+                        @L["Hiển thị trang {0} / {1} (Tổng số: {2} học viên)", pageIndex, totalPages, totalItems]
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-7">
+                    <div class="dataTables_paginate paging_simple_numbers d-flex justify-content-md-end">
+                        <ul class="pagination pagination-sm mb-0">
+                            <!-- Nút Trước -->
+                            <li class="paginate_button page-item previous @(Model != null && !Model.HasPreviousPage ? "disabled" : "")">
+                                <a asp-action="Index" 
+                                   asp-route-page="@((Model?.PageIndex ?? 1) - 1)" 
+                                   asp-route-search="@ViewData["CurrentSearch"]" 
+                                   class="page-link">@L["Trước"]</a>
+                            </li>
+
+                            <!-- Các số trang -->
+                            @for (int i = 1; i <= (Model?.TotalPages ?? 1); i++)
+                            {
+                                <li class="paginate_button page-item @(i == Model?.PageIndex ? "active" : "")">
+                                    <a asp-action="Index" 
+                                       asp-route-page="@i" 
+                                       asp-route-search="@ViewData["CurrentSearch"]" 
+                                       class="page-link">@i</a>
+                                </li>
+                            }
+
+                            <!-- Nút Sau -->
+                            <li class="paginate_button page-item next @(Model != null && !Model.HasNextPage ? "disabled" : "")">
+                                <a asp-action="Index" 
+                                   asp-route-page="@((Model?.PageIndex ?? 1) + 1)" 
+                                   asp-route-search="@ViewData["CurrentSearch"]" 
+                                   class="page-link">Sau</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

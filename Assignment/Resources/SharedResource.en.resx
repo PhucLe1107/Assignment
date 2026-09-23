@@ -369,4 +369,77 @@
   <data name="Ảnh đại diện" xml:space="preserve"><value>Avatar</value></data>
   <data name="{0} buổi" xml:space="preserve"><value>{0} sessions</value></data>
   <data name="{0} học viên" xml:space="preserve"><value>{0} students</value></data>
+  <data name="Advanced (Nâng cao)" xml:space="preserve"><value>Advanced</value></data>
+  <data name="Beginner (Cơ bản)" xml:space="preserve"><value>Beginner</value></data>
+  <data name="Beginner (Mất gốc / Cơ bản)" xml:space="preserve"><value>Beginner (starter / basic)</value></data>
+  <data name="Bạn có chắc chắn muốn xóa hồ sơ học viên này?" xml:space="preserve"><value>Are you sure you want to delete this student profile?</value></data>
+  <data name="Bảng điểm cá nhân" xml:space="preserve"><value>My grades</value></data>
+  <data name="Chi tiết Học viên" xml:space="preserve"><value>Student details</value></data>
+  <data name="Chưa có TK" xml:space="preserve"><value>No account</value></data>
+  <data name="Chưa cấp tài khoản" xml:space="preserve"><value>No account issued</value></data>
+  <data name="Chưa cập nhật" xml:space="preserve"><value>Not provided</value></data>
+  <data name="Chưa liên kết tài khoản" xml:space="preserve"><value>No linked account</value></data>
+  <data name="Chỉ có thể xóa nếu học viên chưa từng ghi danh vào bất kỳ lớp học nào." xml:space="preserve"><value>A student can only be deleted if they have never enrolled in any class.</value></data>
+  <data name="Chỉnh sửa Học viên" xml:space="preserve"><value>Edit student</value></data>
+  <data name="Chọn ảnh..." xml:space="preserve"><value>Choose image...</value></data>
+  <data name="Các lớp học đã tham gia ({0})" xml:space="preserve"><value>Enrolled classes ({0})</value></data>
+  <data name="Cập nhật Học viên" xml:space="preserve"><value>Update student</value></data>
+  <data name="Cập nhật thông tin học viên thành công!" xml:space="preserve"><value>Student updated successfully!</value></data>
+  <data name="Danh sách Hồ sơ Học viên" xml:space="preserve"><value>Student profiles</value></data>
+  <data name="Elementary (Sơ cấp)" xml:space="preserve"><value>Elementary</value></data>
+  <data name="Email liên lạc" xml:space="preserve"><value>Contact email</value></data>
+  <data name="Ghi danh lớp mới" xml:space="preserve"><value>Enroll in new class</value></data>
+  <data name="Hiển thị trang {0} / {1} (Tổng số: {2} học viên)" xml:space="preserve"><value>Page {0} of {1} ({2} students total)</value></data>
+  <data name="Học viên này chưa tham gia lớp học nào." xml:space="preserve"><value>This student has not joined any class yet.</value></data>
+  <data name="Hồ sơ Học viên" xml:space="preserve"><value>Student profile</value></data>
+  <data name="Intermediate (Trung cấp)" xml:space="preserve"><value>Intermediate</value></data>
+  <data name="Khóa học của tôi" xml:space="preserve"><value>My courses</value></data>
+  <data name="Không có hồ sơ học viên nào phù hợp." xml:space="preserve"><value>No matching student profiles found.</value></data>
+  <data name="Không thể xóa học viên này vì đang có dữ liệu đăng ký lớp học!" xml:space="preserve"><value>Cannot delete this student because they have class enrollments!</value></data>
+  <data name="Kết quả điểm danh" xml:space="preserve"><value>My attendance</value></data>
+  <data name="Liên hệ" xml:space="preserve"><value>Contact</value></data>
+  <data name="Lưu thông tin học viên" xml:space="preserve"><value>Save student</value></data>
+  <data name="Mã sinh viên này đã tồn tại trên hệ thống." xml:space="preserve"><value>This student ID already exists in the system.</value></data>
+  <data name="Mã sinh viên này đã tồn tại." xml:space="preserve"><value>This student ID already exists.</value></data>
+  <data name="Mật khẩu khởi tạo" xml:space="preserve"><value>Initial password</value></data>
+  <data name="Mặc định" xml:space="preserve"><value>Default</value></data>
+  <data name="Mặc định lấy theo Mã HV" xml:space="preserve"><value>Defaults to student ID</value></data>
+  <data name="Nam" xml:space="preserve"><value>Male</value></data>
+  <data name="Nguyễn Văn A" xml:space="preserve"><value>John Doe</value></data>
+  <data name="Nữ" xml:space="preserve"><value>Female</value></data>
+  <data name="Pre-Intermediate (Tiền trung cấp)" xml:space="preserve"><value>Pre-Intermediate</value></data>
+  <data name="Quản lý Học viên" xml:space="preserve"><value>Student management</value></data>
+  <data name="Số lớp đã đăng ký" xml:space="preserve"><value>Enrolled classes</value></data>
+  <data name="Số nhà, đường, quận/huyện, tỉnh/thành..." xml:space="preserve"><value>Street, district, city/province...</value></data>
+  <data name="Số điện thoại này đã được sử dụng bởi học viên khác." xml:space="preserve"><value>This phone number is already used by another student.</value></data>
+  <data name="Số điện thoại này đã được sử dụng." xml:space="preserve"><value>This phone number is already in use.</value></data>
+  <data name="Sổ điểm" xml:space="preserve"><value>Gradebook</value></data>
+  <data name="Thêm học viên thành công! Tài khoản: {0} (MK: 123456)" xml:space="preserve"><value>Student added successfully! Account: {0} (password: 123456)</value></data>
+  <data name="Thêm mới Học viên" xml:space="preserve"><value>Add student</value></data>
+  <data name="Thêm mới học viên thành công!" xml:space="preserve"><value>Student added successfully!</value></data>
+  <data name="Thông tin cá nhân học viên" xml:space="preserve"><value>Student personal information</value></data>
+  <data name="Trình độ" xml:space="preserve"><value>Level</value></data>
+  <data name="Tài khoản" xml:space="preserve"><value>Account</value></data>
+  <data name="Tài khoản này sẽ mang Role" xml:space="preserve"><value>This account will have the role</value></data>
+  <data name="Tên đăng nhập '{0}' đã có người sử dụng." xml:space="preserve"><value>Username '{0}' is already taken.</value></data>
+  <data name="Tên đăng nhập (Username)" xml:space="preserve"><value>Username</value></data>
+  <data name="Tìm theo mã SV, họ tên, email, SĐT..." xml:space="preserve"><value>Search by student ID, name, email, phone...</value></data>
+  <data name="Tải ảnh đại diện" xml:space="preserve"><value>Upload avatar</value></data>
+  <data name="Tự động cấp tài khoản đăng nhập hệ thống cho học viên" xml:space="preserve"><value>Automatically create a login account for the student</value></data>
+  <data name="Upper-Intermediate (Trung cao cấp)" xml:space="preserve"><value>Upper-Intermediate</value></data>
+  <data name="Xem hồ sơ" xml:space="preserve"><value>View profile</value></data>
+  <data name="Xác nhận xóa Học viên" xml:space="preserve"><value>Confirm student deletion</value></data>
+  <data name="Xóa Học viên" xml:space="preserve"><value>Delete student</value></data>
+  <data name="{0} lớp" xml:space="preserve"><value>{0} classes</value></data>
+  <data name="Đã có lỗi xảy ra: {0}" xml:space="preserve"><value>An error occurred: {0}</value></data>
+  <data name="Đã có tài khoản đăng nhập (Role: SinhVien)" xml:space="preserve"><value>Has a login account (Role: SinhVien)</value></data>
+  <data name="Đã cấp TK" xml:space="preserve"><value>Account issued</value></data>
+  <data name="Đã xóa hồ sơ học viên thành công!" xml:space="preserve"><value>Student profile deleted successfully!</value></data>
+  <data name="Để trống hệ thống sẽ tự lấy theo" xml:space="preserve"><value>If left blank, the system uses the</value></data>
+  <data name="Địa chỉ cư trú" xml:space="preserve"><value>Residential address</value></data>
+  <data name="Địa chỉ email này đã được sử dụng bởi học viên khác." xml:space="preserve"><value>This email is already used by another student.</value></data>
+  <data name="Địa chỉ email này đã được sử dụng." xml:space="preserve"><value>This email is already in use.</value></data>
+  <data name="Đổi ảnh..." xml:space="preserve"><value>Change image...</value></data>
+  <data name="để học viên tự đăng nhập xem điểm, chuyên cần và khóa học." xml:space="preserve"><value>so the student can sign in to view grades, attendance and courses.</value></data>
+  <data name="Ảnh chân dung" xml:space="preserve"><value>Portrait photo</value></data>
 </root>

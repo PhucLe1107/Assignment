@@ -15,52 +15,67 @@ For more information on enabling MVC for empty projects, visit https://go.micros
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item">
-        <a class="nav-link" href="/">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>@L["Bảng điều khiển"]</span>
-        </a>
-    </li>
-
-    <!-- Nav Item - Class -->
-    <li class="nav-item">
-        <a class="nav-link" href="/Class/Index">
-            <i class="fas fa-fw fa-users"></i>
-            <span>@L["Lớp học"]</span>
-        </a>
-    </li>
-
-    <!-- Nav Item - Enrollment -->
-    <li class="nav-item">
-        <a class="nav-link" href="/Enrollment/Index">
-            <i class="fas fa-fw fa-user-check"></i>
-            <span>@L["Ghi danh"]</span>
-        </a>
-    </li>
-
-    <!-- Nav Item - Course -->
-    <li class="nav-item">
-        <a class="nav-link" href="/Course/Index">
-            <i class="fas fa-fw fa-book-open"></i>
-            <span>@L["Khóa học"]</span>
-        </a>
-    </li>
-
-    <!-- Nav Item - Attendance -->
-    <li class="nav-item">
-        <a class="nav-link" asp-controller="Attendance" asp-action="Index">
-            <i class="fas fa-fw fa-calendar-check"></i>
-            <span>@L["Điểm danh"]</span>
-        </a>
-    </li>
-
-    <!-- Nav Item - Grade -->
-    <li class="nav-item">
-        <a class="nav-link" asp-controller="Grade" asp-action="Index">
-            <i class="fas fa-fw fa-chart-bar"></i>
-            <span>@L["Điểm số"]</span>
-        </a>
-    </li>
+    @if (User.IsInRole("SinhVien"))
+    {
+        <!-- Menu dành riêng cho Học viên -->
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="StudentPortal" asp-action="MyLearning">
+                <i class="fas fa-fw fa-book-reader"></i>
+                <span>@L["Khóa học của tôi"]</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="StudentPortal" asp-action="MyAttendance">
+                <i class="fas fa-fw fa-calendar-check"></i>
+                <span>@L["Kết quả điểm danh"]</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="StudentPortal" asp-action="MyGrades">
+                <i class="fas fa-fw fa-clipboard-list"></i>
+                <span>@L["Bảng điểm cá nhân"]</span>
+            </a>
+        </li>
+    }
+    else if (User.IsInRole("Admin") || User.IsInRole("GiaoVu"))
+    {
+        <!-- Menu quản lý dành cho Admin và Giáo vụ -->
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Course" asp-action="Index">
+                <i class="fas fa-fw fa-book-open"></i>
+                <span>@L["Khóa học"]</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Class" asp-action="Index">
+                <i class="fas fa-fw fa-chalkboard-teacher"></i>
+                <span>@L["Lớp học"]</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Student" asp-action="Index">
+                <i class="fas fa-fw fa-user-graduate"></i>
+                <span>@L["Học viên"]</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Enrollment" asp-action="Index">
+                <i class="fas fa-fw fa-user-check"></i>
+                <span>@L["Ghi danh"]</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Attendance" asp-action="Index">
+                <i class="fas fa-fw fa-calendar-alt"></i>
+                <span>@L["Điểm danh"]</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Grade" asp-action="Index">
+                <i class="fas fa-fw fa-award"></i>
+                <span>@L["Sổ điểm"]</span>
+            </a>
+        </li>
+    }
 
 </ul>

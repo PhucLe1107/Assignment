@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Assignment.Models.Entities
 {
+    [Table("Student")]
     public class Student
     {
         [Key]
@@ -24,7 +25,7 @@ namespace Assignment.Models.Entities
         public DateTime? DateOfBirth { get; set; }
 
         [Display(Name = "Giới tính")]
-        public bool Gender { get; set; }
+        public bool Gender { get; set; } = true; // true: Nam, false: Nữ
 
         [Required(ErrorMessage = "Email không được để trống")]
         [EmailAddress(ErrorMessage = "Địa chỉ email không đúng định dạng")]
@@ -40,22 +41,26 @@ namespace Assignment.Models.Entities
 
         [StringLength(200)]
         [Display(Name = "Địa chỉ")]
-        public string Address { get; set; }
+        public string? Address { get; set; } = string.Empty;
 
         [StringLength(255)]
         [Display(Name = "Ảnh đại diện")]
-        public string AvatarUrl { get; set; }
+        public string? AvatarUrl { get; set; } = "/img/undraw_profile.svg";
+
+        [NotMapped]
+        [Display(Name = "Tải ảnh đại diện")]
+        public IFormFile? AvatarFile { get; set; }
 
         [StringLength(50)]
         [Display(Name = "Trình độ đầu vào")]
-        public string EntryLevel { get; set; }
+        public string? EntryLevel { get; set; } = "Beginner";
 
         [Display(Name = "Tài khoản liên kết")]
         public int? UserId { get; set; }
 
         [ForeignKey("UserId")]
-        public virtual User User { get; set; }
+        public virtual User? User { get; set; }
 
-        public virtual ICollection<Enrollment> Enrollments { get; set; }
+        public virtual ICollection<Enrollment>? Enrollments { get; set; }
     }
 }
