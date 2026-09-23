@@ -24,7 +24,7 @@
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fas fa-check-circle mr-1"></i> @TempData["SuccessMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="@L["Đóng"]">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -33,7 +33,7 @@
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="fas fa-exclamation-triangle mr-1"></i> @TempData["ErrorMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="@L["Đóng"]">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -97,10 +97,10 @@
                                 <tr>
                                     <td class="text-center align-middle">
                                         <img src="@(string.IsNullOrEmpty(item.ThumbnailUrl) ? "https://placehold.co/80x50?text=Course" : item.ThumbnailUrl)"
-                                             class="img-thumbnail" style="width: 70px; height: 45px; object-fit: cover;" alt="Thumbnail" />
+                                             class="img-thumbnail" style="width: 70px; height: 45px; object-fit: cover;" alt="@L["Ảnh bìa"]" />
                                     </td>
                                     <td class="align-middle"><strong>@item.CourseName</strong></td>
-                                    <td class="align-middle">@item.BaseTuitionFee.ToString("N0") đ</td>
+                                    <td class="align-middle">@item.BaseTuitionFee.ToString("N0") @L["đ"]</td>
                                     <td class="align-middle">@L["{0} buổi", item.TotalSessions]</td>
                                     <td class="align-middle">
                                         @if (item.IsActive)

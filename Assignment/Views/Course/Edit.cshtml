@@ -51,7 +51,7 @@
                     <label class="font-weight-bold">@L["Ảnh bìa khóa học"]</label>
                     <div class="mb-2">
                         <img id="imgPreview" src="@(string.IsNullOrEmpty(Model.ThumbnailUrl) ? "https://placehold.co/300x160?text=Chua+Co+Anh" : Model.ThumbnailUrl)" 
-                             class="img-thumbnail" style="max-height: 180px;" alt="Current Thumbnail" />
+                             class="img-thumbnail" style="max-height: 180px;" alt="@L["Ảnh bìa hiện tại"]" />
                     </div>
                     <label asp-for="ThumbnailFile" class="font-weight-bold small text-muted">@L["Tải ảnh mới (bỏ trống nếu muốn giữ nguyên ảnh cũ):"]</label>
                     <input asp-for="ThumbnailFile" type="file" class="form-control-file border p-1 rounded" accept="image/*" onchange="previewImage(this);" />

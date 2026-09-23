@@ -4,15 +4,18 @@
 @model Assignment.Models.Common.PagedList<Assignment.Models.Entities.User>
 
 @{
-    ViewData["Title"] = "Quản lý Tài khoản Hệ thống";
+    ViewData["Title"] = L["Quản lý Tài khoản Hệ thống"];
+    var pageIndex = Model?.PageIndex ?? 1;
+    var totalPages = Math.Max(Model?.TotalPages ?? 0, 1);
+    var totalItems = Model?.TotalItems ?? 0;
 }
 
 <div class="container-fluid">
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Quản lý Tài khoản</h1>
+        <h1 class="h3 mb-0 text-gray-800">@L["Quản lý Tài khoản"]</h1>
         <a asp-action="Create" class="btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-user-plus fa-sm text-white-50 mr-1"></i> Tạo tài khoản mới
+            <i class="fas fa-user-plus fa-sm text-white-50 mr-1"></i> @L["Tạo tài khoản mới"]
         </a>
     </div>
 
@@ -20,7 +23,7 @@
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fas fa-check-circle mr-1"></i> @TempData["SuccessMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="@L["Đóng"]">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -29,7 +32,7 @@
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="fas fa-exclamation-triangle mr-1"></i> @TempData["ErrorMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="@L["Đóng"]">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -37,7 +40,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Danh sách Tài khoản Người dùng</h6>
+            <h6 class="m-0 font-weight-bold text-primary">@L["Danh sách Tài khoản Người dùng"]</h6>
         </div>
         <div class="card-body">
 
@@ -48,20 +51,20 @@
                         <div class="form-row">
                             <div class="col-md-5 mb-2">
                                 <input type="text" name="search" class="form-control form-control-sm"
-                                       placeholder="Tìm username, họ tên, mã SV..." value="@ViewData["CurrentSearch"]" />
+                                       placeholder="@L["Tìm username, họ tên, mã SV..."]" value="@ViewData["CurrentSearch"]" />
                             </div>
                             <div class="col-md-4 mb-2">
                                 <select name="roleId" asp-items="ViewBag.Roles" class="form-control form-control-sm">
-                                    <option value="">-- Tất cả vai trò --</option>
+                                    <option value="">-- @L["Tất cả vai trò"] --</option>
                                 </select>
                             </div>
                             <div class="col-md-3 mb-2">
                                 <button class="btn btn-primary btn-sm" type="submit">
-                                    <i class="fas fa-search fa-sm"></i> Lọc
+                                    <i class="fas fa-search fa-sm"></i> @L["Lọc"]
                                 </button>
                                 @if (!string.IsNullOrEmpty(ViewData["CurrentSearch"] as string) || ViewData["CurrentRoleId"] != null)
                                 {
-                                    <a asp-action="Index" class="btn btn-secondary btn-sm">Xóa lọc</a>
+                                    <a asp-action="Index" class="btn btn-secondary btn-sm">@L["Xóa lọc"]</a>
                                 }
                             </div>
                         </div>
@@ -73,13 +76,13 @@
                 <table class="table table-bordered table-hover" width="100%" cellspacing="0">
                     <thead class="thead-light">
                         <tr>
-                            <th style="width: 50px;" class="text-center">Mã</th>
-                            <th>Tên đăng nhập</th>
-                            <th style="width: 140px;">Vai trò</th>
-                            <th>Đối tượng liên kết</th>
-                            <th style="width: 140px;" class="text-center">Trạng thái</th>
-                            <th style="width: 150px;" class="text-center">Bảo mật</th>
-                            <th style="width: 110px;" class="text-center">Thao tác</th>
+                            <th style="width: 50px;" class="text-center">@L["Mã"]</th>
+                            <th>@L["Tên đăng nhập"]</th>
+                            <th style="width: 140px;">@L["Vai trò"]</th>
+                            <th>@L["Đối tượng liên kết"]</th>
+                            <th style="width: 140px;" class="text-center">@L["Trạng thái"]</th>
+                            <th style="width: 150px;" class="text-center">@L["Bảo mật"]</th>
+                            <th style="width: 110px;" class="text-center">@L["Thao tác"]</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -95,15 +98,15 @@
                                     <td class="align-middle">
                                         @if (item.Role?.RoleName == "Admin")
                                         {
-                                            <span class="badge badge-danger px-2 py-1"><i class="fas fa-shield-alt mr-1"></i>Admin</span>
+                                            <span class="badge badge-danger px-2 py-1"><i class="fas fa-shield-alt mr-1"></i>@L["Admin"]</span>
                                         }
                                         else if (item.Role?.RoleName == "GiaoVu")
                                         {
-                                            <span class="badge badge-primary px-2 py-1"><i class="fas fa-user-tie mr-1"></i>Giáo vụ</span>
+                                            <span class="badge badge-primary px-2 py-1"><i class="fas fa-user-tie mr-1"></i>@L["Giáo vụ"]</span>
                                         }
                                         else
                                         {
-                                            <span class="badge badge-info px-2 py-1"><i class="fas fa-user-graduate mr-1"></i>Sinh viên</span>
+                                            <span class="badge badge-info px-2 py-1"><i class="fas fa-user-graduate mr-1"></i>@L["Sinh viên"]</span>
                                         }
                                     </td>
                                     <td class="align-middle">
@@ -112,16 +115,16 @@
                                             @if (item.Student != null)
                                             {
                                                 <div><strong>@item.Student.FullName</strong></div>
-                                                <span class="badge badge-light border">Mã: @item.Student.StudentCode</span>
+                                                <span class="badge badge-light border">@L["Mã"]: @item.Student.StudentCode</span>
                                             }
                                             else
                                             {
-                                                <span class="text-danger small font-weight-bold"><i class="fas fa-exclamation-circle mr-1"></i>Chưa gắn hồ sơ</span>
+                                                <span class="text-danger small font-weight-bold"><i class="fas fa-exclamation-circle mr-1"></i>@L["Chưa gắn hồ sơ"]</span>
                                             }
                                         }
                                         else
                                         {
-                                            <span class="text-muted small font-italic">Không áp dụng (Cán bộ)</span>
+                                            <span class="text-muted small font-italic">@L["Không áp dụng (Cán bộ)"]</span>
                                         }
                                     </td>
                                     <td class="align-middle text-center">
@@ -129,34 +132,34 @@
                                             @Html.AntiForgeryToken()
                                             @if (item.IsActive)
                                             {
-                                                <button type="submit" class="btn btn-sm btn-success btn-icon-split py-0" title="Nhấn để khóa tài khoản">
+                                                <button type="submit" class="btn btn-sm btn-success btn-icon-split py-0" title="@L["Nhấn để khóa tài khoản"]">
                                                     <span class="icon text-white-50"><i class="fas fa-check"></i></span>
-                                                    <span class="text small">Hoạt động</span>
+                                                    <span class="text small">@L["Hoạt động"]</span>
                                                 </button>
                                             }
                                             else
                                             {
-                                                <button type="submit" class="btn btn-sm btn-secondary btn-icon-split py-0" title="Nhấn để mở khóa">
+                                                <button type="submit" class="btn btn-sm btn-secondary btn-icon-split py-0" title="@L["Nhấn để mở khóa"]">
                                                     <span class="icon text-white-50"><i class="fas fa-lock"></i></span>
-                                                    <span class="text small">Đã khóa</span>
+                                                    <span class="text small">@L["Đã khóa"]</span>
                                                 </button>
                                             }
                                         </form>
                                     </td>
                                     <td class="align-middle text-center">
                                         <form asp-action="ResetPassword" asp-route-id="@item.UserId" method="post"
-                                              onsubmit="return confirm('Bạn có chắc chắn muốn đặt lại mật khẩu cho tài khoản [@item.Username]?');">
+                                              onsubmit="return confirm(@System.Text.Json.JsonSerializer.Serialize(L["Bạn có chắc chắn muốn đặt lại mật khẩu cho tài khoản [{0}]?", item.Username].Value));">
                                             @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-outline-warning btn-sm" title="Đặt lại mật khẩu">
-                                                <i class="fas fa-key mr-1"></i> Đặt lại MK
+                                            <button type="submit" class="btn btn-outline-warning btn-sm" title="@L["Đặt lại mật khẩu"]">
+                                                <i class="fas fa-key mr-1"></i> @L["Đặt lại MK"]
                                             </button>
                                         </form>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <a asp-action="Edit" asp-route-id="@item.UserId" class="btn btn-warning btn-circle btn-sm" title="Chỉnh sửa vai trò">
+                                        <a asp-action="Edit" asp-route-id="@item.UserId" class="btn btn-warning btn-circle btn-sm" title="@L["Chỉnh sửa vai trò"]">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <a asp-action="Delete" asp-route-id="@item.UserId" class="btn btn-danger btn-circle btn-sm" title="Xóa tài khoản">
+                                        <a asp-action="Delete" asp-route-id="@item.UserId" class="btn btn-danger btn-circle btn-sm" title="@L["Xóa tài khoản"]">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
@@ -166,7 +169,7 @@
                         else
                         {
                             <tr>
-                                <td colspan="7" class="text-center text-muted py-3">Không tìm thấy tài khoản nào.</td>
+                                <td colspan="7" class="text-center text-muted py-3">@L["Không tìm thấy tài khoản nào."]</td>
                             </tr>
                         }
                     </tbody>
@@ -177,7 +180,7 @@
             <div class="row mt-3">
                 <div class="col-sm-12 col-md-5">
                     <div class="dataTables_info text-muted small">
-                        Hiển thị trang @(Model?.PageIndex ?? 1) / @(Model?.TotalPages == 0 ? 1 : Model?.TotalPages) (Tổng số: @(Model?.TotalItems ?? 0) tài khoản)
+                        @L["Hiển thị trang {0} / {1} (Tổng số: {2} tài khoản)", pageIndex, totalPages, totalItems]
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-7">
@@ -188,7 +191,7 @@
                                    asp-route-page="@((Model?.PageIndex ?? 1) - 1)"
                                    asp-route-search="@ViewData["CurrentSearch"]"
                                    asp-route-roleId="@ViewData["CurrentRoleId"]"
-                                   class="page-link">Trước</a>
+                                   class="page-link">@L["Trước"]</a>
                             </li>
 
                             @for (int i = 1; i <= (Model?.TotalPages ?? 1); i++)
@@ -207,7 +210,7 @@
                                    asp-route-page="@((Model?.PageIndex ?? 1) + 1)"
                                    asp-route-search="@ViewData["CurrentSearch"]"
                                    asp-route-roleId="@ViewData["CurrentRoleId"]"
-                                   class="page-link">Sau</a>
+                                   class="page-link">@L["Sau"]</a>
                             </li>
                         </ul>
                     </div>

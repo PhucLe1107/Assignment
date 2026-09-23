@@ -99,7 +99,7 @@
                                             <td><strong>@e.Student?.StudentCode</strong></td>
                                             <td>@e.Student?.FullName</td>
                                             <td>@e.EnrollmentDate.ToString("d")</td>
-                                            <td><span class="badge badge-info">@L[e.LearningStatus]</span></td>
+                                            <td><span class="badge badge-info">@L[DisplayLabels.LearningStatus(e.LearningStatus)]</span></td>
                                         </tr>
                                     }
                                 }

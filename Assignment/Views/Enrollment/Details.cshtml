@@ -59,7 +59,7 @@
                             </tr>
                             <tr>
                                 <th class="bg-light">@L["Trạng thái học"]</th>
-                                <td><span class="badge badge-info px-2 py-1">@L[Model.LearningStatus]</span></td>
+                                <td><span class="badge badge-info px-2 py-1">@L[DisplayLabels.LearningStatus(Model.LearningStatus)]</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -79,11 +79,11 @@
                             <tbody>
                                 <tr>
                                     <th class="bg-light" style="width: 45%;">@L["Học phí thực tế"]</th>
-                                    <td class="font-weight-bold text-dark">@Model.ActualFee.ToString("N0") VNĐ</td>
+                                    <td class="font-weight-bold text-dark">@Model.ActualFee.ToString("N0") @L["VNĐ"]</td>
                                 </tr>
                                 <tr>
                                     <th class="bg-light">@L["Đã thanh toán"]</th>
-                                    <td class="font-weight-bold text-success">@Model.PaidAmount.ToString("N0") VNĐ</td>
+                                    <td class="font-weight-bold text-success">@Model.PaidAmount.ToString("N0") @L["VNĐ"]</td>
                                 </tr>
                                 <tr>
                                     <th class="bg-light">@L["Số tiền còn nợ"]</th>

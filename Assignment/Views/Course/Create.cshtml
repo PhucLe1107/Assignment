@@ -26,20 +26,20 @@
 
                 <div class="form-group">
                     <label asp-for="CourseName" class="font-weight-bold">@L["Tên khóa học"] <span class="text-danger">*</span></label>
-                    <input asp-for="CourseName" class="form-control" placeholder="VD: IELTS Intensive 6.5+" autofocus />
+                    <input asp-for="CourseName" class="form-control" placeholder="@L["VD: {0}", "IELTS Intensive 6.5+"]" autofocus />
                     <span asp-validation-for="CourseName" class="text-danger small"></span>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label asp-for="BaseTuitionFee" class="font-weight-bold">@L["Học phí chuẩn (VNĐ)"] <span class="text-danger">*</span></label>
-                        <input asp-for="BaseTuitionFee" type="number" class="form-control" placeholder="VD: 6500000" />
+                        <input asp-for="BaseTuitionFee" type="number" class="form-control" placeholder="@L["VD: {0}", "6500000"]" />
                         <span asp-validation-for="BaseTuitionFee" class="text-danger small"></span>
                     </div>
 
                     <div class="col-md-6 form-group">
                         <label asp-for="TotalSessions" class="font-weight-bold">@L["Tổng số buổi"] <span class="text-danger">*</span></label>
-                        <input asp-for="TotalSessions" type="number" class="form-control" placeholder="VD: 36" />
+                        <input asp-for="TotalSessions" type="number" class="form-control" placeholder="@L["VD: {0}", "36"]" />
                         <span asp-validation-for="TotalSessions" class="text-danger small"></span>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                     
                     <div class="mt-2 text-center">
                         <img id="imgPreview" src="https://placehold.co/300x160?text=Chua+Chon+Anh" 
-                             class="img-thumbnail" style="max-height: 180px; display: none;" alt="Preview" />
+                             class="img-thumbnail" style="max-height: 180px; display: none;" alt="@L["Xem trước"]" />
                     </div>
                 </div>
 

@@ -27,7 +27,7 @@
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fas fa-check-circle mr-1"></i> @TempData["SuccessMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="@L["Đóng"]">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -36,7 +36,7 @@
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="fas fa-exclamation-triangle mr-1"></i> @TempData["ErrorMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="@L["Đóng"]">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -126,8 +126,8 @@
                                         <div class="small text-muted font-italic">@item.Class?.Course?.CourseName</div>
                                     </td>
                                     <td class="align-middle">@item.EnrollmentDate.ToString("d")</td>
-                                    <td class="align-middle font-weight-bold text-dark">@item.ActualFee.ToString("N0") đ</td>
-                                    <td class="align-middle text-success font-weight-bold">@item.PaidAmount.ToString("N0") đ</td>
+                                    <td class="align-middle font-weight-bold text-dark">@item.ActualFee.ToString("N0") @L["đ"]</td>
+                                    <td class="align-middle text-success font-weight-bold">@item.PaidAmount.ToString("N0") @L["đ"]</td>
                                     <td class="align-middle text-center">
                                         @if (item.PaymentStatus == "DaNopDu" || remaining <= 0)
                                         {
@@ -156,7 +156,7 @@
                                                 <span class="badge badge-danger px-2 py-1">@L["Nghỉ học"]</span>
                                                 break;
                                             default:
-                                                <span class="badge badge-secondary px-2 py-1">@item.LearningStatus</span>
+                                                <span class="badge badge-secondary px-2 py-1">@L[DisplayLabels.LearningStatus(item.LearningStatus)]</span>
                                                 break;
                                         }
                                     </td>
