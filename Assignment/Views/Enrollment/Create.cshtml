@@ -96,7 +96,7 @@
         $('#classSelect').change(function () {
             var selectedClassId = $(this).val();
             if (selectedClassId) {
-                $.getJSON('/Enrollment/GetClassDefaultFee?classId=' + selectedClassId, function (data) {
+                $.getJSON('@Url.Action("GetClassDefaultFee", "Enrollment")?classId=' + selectedClassId, function (data) {
                     if (data && data.success && data.fee > 0) {
                         $('#actualFeeInput').val(data.fee);
                     }
