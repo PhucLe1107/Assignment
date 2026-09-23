@@ -1,4 +1,5 @@
 using Assignment.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,9 +7,16 @@ namespace Assignment.Controllers
 {
     public class HomeController : Controller
     {
+        // Trang chủ "/" điều hướng người dùng tới màn hình chính theo vai trò
+        [Authorize]
         public IActionResult Index()
         {
-            return View();
+            if (User.IsInRole("SinhVien"))
+            {
+                return RedirectToAction("MyLearning", "StudentPortal");
+            }
+
+            return RedirectToAction("Index", "Course");
         }
 
         public IActionResult Privacy()
