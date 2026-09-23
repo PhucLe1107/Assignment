@@ -1,0 +1,129 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Assignment.Models.Entities.Student
+
+@{
+    ViewData["Title"] = "Chỉnh sửa Học viên";
+}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Cập nhật Học viên</h1>
+        <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> Quay lại danh sách
+        </a>
+    </div>
+
+    <div class="card shadow mb-4 p-0 border-left-warning">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-warning">Hồ sơ: @Model.FullName (@Model.StudentCode)</h6>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="StudentId" />
+                <input type="hidden" asp-for="AvatarUrl" />
+                <input type="hidden" asp-for="UserId" />
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3" role="alert"></div>
+
+                <div class="row">
+                    <div class="col-md-3 text-center mb-3">
+                        <img src="@(string.IsNullOrEmpty(Model.AvatarUrl) ? "/img/undraw_profile.svg" : Model.AvatarUrl)" 
+                             class="img-profile rounded-circle mb-2" style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #e3e6f0;" alt="Avatar" />
+                        <div class="custom-file">
+                            <input asp-for="AvatarFile" type="file" accept="image/*" class="custom-file-input" id="avatarUpload" />
+                            <label class="custom-file-label text-left small" for="avatarUpload">Đổi ảnh...</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label asp-for="StudentCode" class="font-weight-bold">Mã học viên <span class="text-danger">*</span></label>
+                                <input asp-for="StudentCode" class="form-control" />
+                                <span asp-validation-for="StudentCode" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6 form-group">
+                                <label asp-for="FullName" class="font-weight-bold">Họ và Tên <span class="text-danger">*</span></label>
+                                <input asp-for="FullName" class="form-control" />
+                                <span asp-validation-for="FullName" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label asp-for="Gender" class="font-weight-bold">Giới tính</label>
+                                <select asp-for="Gender" class="form-control">
+                                    <option value="true">Nam</option>
+                                    <option value="false">Nữ</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 form-group">
+                                <label asp-for="DateOfBirth" class="font-weight-bold">Ngày sinh</label>
+                                <input asp-for="DateOfBirth" type="date" class="form-control" value="@(Model.DateOfBirth?.ToString("yyyy-MM-dd"))" />
+                                <span asp-validation-for="DateOfBirth" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-4 form-group">
+                                <label asp-for="EntryLevel" class="font-weight-bold">Trình độ đầu vào</label>
+                                <select asp-for="EntryLevel" class="form-control">
+                                    <option value="Beginner">Beginner (Cơ bản)</option>
+                                    <option value="Elementary">Elementary (Sơ cấp)</option>
+                                    <option value="Pre-Intermediate">Pre-Intermediate</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Upper-Intermediate">Upper-Intermediate</option>
+                                    <option value="Advanced">Advanced (Nâng cao)</option>
+                                </select>
+                                <span asp-validation-for="EntryLevel" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label asp-for="Email" class="font-weight-bold">Email <span class="text-danger">*</span></label>
+                        <input asp-for="Email" type="email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <label asp-for="PhoneNumber" class="font-weight-bold">Số điện thoại <span class="text-danger">*</span></label>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Address" class="font-weight-bold">Địa chỉ</label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger small"></span>
+                </div>
+
+                <hr />
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary shadow-sm">Hủy bỏ</a>
+                    <button type="submit" class="btn btn-warning shadow-sm">
+                        <i class="fas fa-check mr-1"></i> Lưu thay đổi
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $('#avatarUpload').on('change', function () {
+            var fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').html(fileName);
+        });
+    </script>
+}
