@@ -4,20 +4,20 @@
 @model Assignment.Models.Entities.Course
 
 @{
-    ViewData["Title"] = "Chỉnh sửa Khóa học";
+    ViewData["Title"] = L["Chỉnh sửa Khóa học"];
 }
 
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Cập nhật Khóa học</h1>
+        <h1 class="h3 mb-0 text-gray-800">@L["Cập nhật Khóa học"]</h1>
         <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
-            <i class="fas fa-arrow-left fa-sm text-white-50"></i> Quay lại danh sách
+            <i class="fas fa-arrow-left fa-sm text-white-50"></i> @L["Quay lại danh sách"]
         </a>
     </div>
 
     <div class="card shadow mb-4 mx-auto p-0 border-left-warning">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-warning">Thông tin: @Model.CourseName</h6>
+            <h6 class="m-0 font-weight-bold text-warning">@L["Thông tin"]: @Model.CourseName</h6>
         </div>
         <div class="card-body">
             <form asp-action="Edit" method="post" enctype="multipart/form-data">
@@ -28,38 +28,38 @@
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3" role="alert"></div>
 
                 <div class="form-group">
-                    <label asp-for="CourseName" class="font-weight-bold">Tên khóa học <span class="text-danger">*</span></label>
+                    <label asp-for="CourseName" class="font-weight-bold">@L["Tên khóa học"] <span class="text-danger">*</span></label>
                     <input asp-for="CourseName" class="form-control" />
                     <span asp-validation-for="CourseName" class="text-danger small"></span>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label asp-for="BaseTuitionFee" class="font-weight-bold">Học phí chuẩn (VNĐ) <span class="text-danger">*</span></label>
+                        <label asp-for="BaseTuitionFee" class="font-weight-bold">@L["Học phí chuẩn (VNĐ)"] <span class="text-danger">*</span></label>
                         <input asp-for="BaseTuitionFee" type="number" class="form-control" />
                         <span asp-validation-for="BaseTuitionFee" class="text-danger small"></span>
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <label asp-for="TotalSessions" class="font-weight-bold">Tổng số buổi <span class="text-danger">*</span></label>
+                        <label asp-for="TotalSessions" class="font-weight-bold">@L["Tổng số buổi"] <span class="text-danger">*</span></label>
                         <input asp-for="TotalSessions" type="number" class="form-control" />
                         <span asp-validation-for="TotalSessions" class="text-danger small"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="font-weight-bold">Ảnh bìa khóa học</label>
+                    <label class="font-weight-bold">@L["Ảnh bìa khóa học"]</label>
                     <div class="mb-2">
                         <img id="imgPreview" src="@(string.IsNullOrEmpty(Model.ThumbnailUrl) ? "https://placehold.co/300x160?text=Chua+Co+Anh" : Model.ThumbnailUrl)" 
-                             class="img-thumbnail" style="max-height: 180px;" alt="Current Thumbnail" />
+                             class="img-thumbnail" style="max-height: 180px;" alt="@L["Ảnh bìa hiện tại"]" />
                     </div>
-                    <label asp-for="ThumbnailFile" class="font-weight-bold small text-muted">Tải ảnh mới (bỏ trống nếu muốn giữ nguyên ảnh cũ):</label>
+                    <label asp-for="ThumbnailFile" class="font-weight-bold small text-muted">@L["Tải ảnh mới (bỏ trống nếu muốn giữ nguyên ảnh cũ):"]</label>
                     <input asp-for="ThumbnailFile" type="file" class="form-control-file border p-1 rounded" accept="image/*" onchange="previewImage(this);" />
                     <span asp-validation-for="ThumbnailFile" class="text-danger small"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="DescriptionHtml" class="font-weight-bold">Giáo trình chi tiết</label>
+                    <label asp-for="DescriptionHtml" class="font-weight-bold">@L["Giáo trình chi tiết"]</label>
                     <textarea asp-for="DescriptionHtml" id="editor" class="form-control" rows="4"></textarea>
                     <span asp-validation-for="DescriptionHtml" class="text-danger small"></span>
                 </div>
@@ -68,7 +68,7 @@
                     <div class="custom-control custom-checkbox small">
                         <input asp-for="IsActive" class="custom-control-input" id="customCheckActive" />
                         <label class="custom-control-label font-weight-bold text-gray-900" for="customCheckActive">
-                            Đang tuyển sinh
+                            @L["Đang tuyển sinh"]
                         </label>
                     </div>
                 </div>
@@ -76,9 +76,9 @@
                 <hr />
 
                 <div class="d-flex justify-content-between">
-                    <a asp-action="Index" class="btn btn-secondary shadow-sm">Hủy bỏ</a>
+                    <a asp-action="Index" class="btn btn-secondary shadow-sm">@L["Hủy bỏ"]</a>
                     <button type="submit" class="btn btn-warning shadow-sm">
-                        <i class="fas fa-check mr-1"></i> Cập nhật thay đổi
+                        <i class="fas fa-check mr-1"></i> @L["Cập nhật thay đổi"]
                     </button>
                 </div>
             </form>

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Assignment.Models.Data;
 using Assignment.Models.Entities;
 using Assignment.Models.Common;
+using Microsoft.Extensions.Localization;
 
 namespace Assignment.Controllers
 {
@@ -12,11 +13,16 @@ namespace Assignment.Controllers
     {
         private readonly EnglishCenterDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IStringLocalizer<SharedResource> _localizer;
 
-        public CourseController(EnglishCenterDbContext context, IWebHostEnvironment webHostEnvironment)
+        public CourseController(
+            EnglishCenterDbContext context,
+            IWebHostEnvironment webHostEnvironment,
+            IStringLocalizer<SharedResource> localizer)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _localizer = localizer;
         }
 
         // GET: /Course
@@ -79,7 +85,7 @@ namespace Assignment.Controllers
 
                 _context.Courses.Add(course);
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Thêm mới khóa học thành công!";
+                TempData["SuccessMessage"] = _localizer["Thêm mới khóa học thành công!"].Value;
                 return RedirectToAction(nameof(Index));
             }
             return View(course);
@@ -132,7 +138,7 @@ namespace Assignment.Controllers
                     _context.Courses.Update(course);
                     await _context.SaveChangesAsync();
 
-                    TempData["SuccessMessage"] = "Cập nhật khóa học thành công!";
+                    TempData["SuccessMessage"] = _localizer["Cập nhật khóa học thành công!"].Value;
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
@@ -171,7 +177,7 @@ namespace Assignment.Controllers
             {
                 if (course.Classes != null && course.Classes.Any())
                 {
-                    TempData["ErrorMessage"] = "Không thể xóa vì khóa học đã có các lớp học liên kết!";
+                    TempData["ErrorMessage"] = _localizer["Không thể xóa vì khóa học đã có các lớp học liên kết!"].Value;
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -180,7 +186,7 @@ namespace Assignment.Controllers
 
                 _context.Courses.Remove(course);
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Đã xóa khóa học thành công!";
+                TempData["SuccessMessage"] = _localizer["Đã xóa khóa học thành công!"].Value;
             }
 
             return RedirectToAction(nameof(Index));

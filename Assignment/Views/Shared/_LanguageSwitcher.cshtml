@@ -1,0 +1,20 @@
+@{
+    var currentCulture = CultureInfo.CurrentUICulture.Name;
+    var returnUrl = Context.Request.PathBase + Context.Request.Path + Context.Request.QueryString;
+}
+
+<form asp-controller="Language" asp-action="SetLanguage" method="post" class="d-inline-flex align-items-center" aria-label="@L["Chọn ngôn ngữ"]">
+    <input type="hidden" name="returnUrl" value="@returnUrl" />
+    <div class="btn-group btn-group-sm" role="group" aria-label="@L["Chọn ngôn ngữ"]">
+        <button type="submit" name="culture" value="vi-VN"
+                class="btn @(currentCulture.StartsWith("vi", StringComparison.OrdinalIgnoreCase) ? "btn-primary" : "btn-outline-secondary")"
+                aria-pressed="@(currentCulture.StartsWith("vi", StringComparison.OrdinalIgnoreCase).ToString().ToLowerInvariant())">
+            VI
+        </button>
+        <button type="submit" name="culture" value="en-US"
+                class="btn @(currentCulture.StartsWith("en", StringComparison.OrdinalIgnoreCase) ? "btn-primary" : "btn-outline-secondary")"
+                aria-pressed="@(currentCulture.StartsWith("en", StringComparison.OrdinalIgnoreCase).ToString().ToLowerInvariant())">
+            EN
+        </button>
+    </div>
+</form>

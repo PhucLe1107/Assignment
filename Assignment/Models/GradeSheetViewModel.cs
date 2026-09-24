@@ -26,15 +26,19 @@ namespace Assignment.Models
         public string FullName { get; set; } = string.Empty;
 
         [Range(0, 990, ErrorMessage = "Điểm không hợp lệ (0 - 990)")]
+        [Display(Name = "Điểm Nghe (Listening)")]
         public double? ListeningScore { get; set; }
 
         [Range(0, 990, ErrorMessage = "Điểm không hợp lệ (0 - 990)")]
+        [Display(Name = "Điểm Đọc (Reading)")]
         public double? ReadingScore { get; set; }
 
         [Range(0, 990, ErrorMessage = "Điểm không hợp lệ (0 - 990)")]
+        [Display(Name = "Điểm Viết (Writing)")]
         public double? WritingScore { get; set; }
 
         [Range(0, 990, ErrorMessage = "Điểm không hợp lệ (0 - 990)")]
+        [Display(Name = "Điểm Nói (Speaking)")]
         public double? SpeakingScore { get; set; }
 
         public double? OverallScore { get; set; }

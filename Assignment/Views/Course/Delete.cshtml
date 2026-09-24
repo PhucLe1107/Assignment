@@ -4,7 +4,7 @@
 @model Assignment.Models.Entities.Course
 
 @{
-    ViewData["Title"] = "Xóa Khóa học";
+    ViewData["Title"] = L["Xóa Khóa học"];
     Layout = "_Layout";
 }
 
@@ -12,35 +12,35 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-danger">Xác nhận xóa Khóa học</h1>
+        <h1 class="h3 mb-0 text-danger">@L["Xác nhận xóa Khóa học"]</h1>
         <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
-            <i class="fas fa-arrow-left fa-sm text-white-50"></i> Quay lại
+            <i class="fas fa-arrow-left fa-sm text-white-50"></i> @L["Quay lại"]
         </a>
     </div>
 
     <div class="card shadow mb-4 col-lg-6 mx-auto border-left-danger p-0">
         <div class="card-header py-3 bg-danger text-white">
-            <h6 class="m-0 font-weight-bold">Cảnh báo hành động xóa</h6>
+            <h6 class="m-0 font-weight-bold">@L["Cảnh báo hành động xóa"]</h6>
         </div>
         <div class="card-body">
             <div class="text-center mb-3">
                 <i class="fas fa-exclamation-triangle fa-3x text-warning mb-2"></i>
-                <h5 class="text-gray-900 font-weight-bold">Bạn có chắc chắn muốn xóa khóa học này?</h5>
-                <p class="text-muted small">Hành động này sẽ xóa dữ liệu vĩnh viễn khỏi CSDL nếu khóa học chưa có lớp liên kết.</p>
+                <h5 class="text-gray-900 font-weight-bold">@L["Bạn có chắc chắn muốn xóa khóa học này?"]</h5>
+                <p class="text-muted small">@L["Hành động này sẽ xóa dữ liệu vĩnh viễn khỏi CSDL nếu khóa học chưa có lớp liên kết."]</p>
             </div>
 
             <div class="bg-light p-3 rounded mb-3">
                 <div class="row mb-2">
-                    <div class="col-sm-4 font-weight-bold">Tên khóa học:</div>
+                    <div class="col-sm-4 font-weight-bold">@L["Tên khóa học"]:</div>
                     <div class="col-sm-8 text-primary">@Model.CourseName</div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-sm-4 font-weight-bold">Học phí:</div>
-                    <div class="col-sm-8">@Model.BaseTuitionFee.ToString("N0") VNĐ</div>
+                    <div class="col-sm-4 font-weight-bold">@L["Học phí"]:</div>
+                    <div class="col-sm-8">@Model.BaseTuitionFee.ToString("N0") @L["VNĐ"]</div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-4 font-weight-bold">Số buổi:</div>
-                    <div class="col-sm-8">@Model.TotalSessions buổi</div>
+                    <div class="col-sm-4 font-weight-bold">@L["Số buổi"]:</div>
+                    <div class="col-sm-8">@L["{0} buổi", Model.TotalSessions]</div>
                 </div>
             </div>
 
@@ -48,9 +48,9 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" asp-for="CourseId" />
                 <div class="d-flex justify-content-between">
-                    <a asp-action="Index" class="btn btn-secondary shadow-sm">Hủy bỏ</a>
+                    <a asp-action="Index" class="btn btn-secondary shadow-sm">@L["Hủy bỏ"]</a>
                     <button type="submit" class="btn btn-danger shadow-sm">
-                        <i class="fas fa-trash mr-1"></i> Đồng ý xóa
+                        <i class="fas fa-trash mr-1"></i> @L["Đồng ý xóa"]
                     </button>
                 </div>
             </form>

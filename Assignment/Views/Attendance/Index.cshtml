@@ -4,16 +4,19 @@
 @model Assignment.Models.Common.PagedList<Assignment.Models.Entities.Attendance>
 
 @{
-    ViewData["Title"] = "Lịch sử Điểm danh";
+    ViewData["Title"] = L["Lịch sử Điểm danh"];
+    var pageIndex = Model?.PageIndex ?? 1;
+    var totalPages = Math.Max(Model?.TotalPages ?? 0, 1);
+    var totalItems = Model?.TotalItems ?? 0;
 }
 
 <div class="container-fluid">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Lịch sử Điểm danh</h1>
+        <h1 class="h3 mb-0 text-gray-800">@L["Lịch sử Điểm danh"]</h1>
         <a asp-action="TakeAttendance" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-calendar-check fa-sm text-white-50 mr-1"></i> Điểm danh theo lớp
+            <i class="fas fa-calendar-check fa-sm text-white-50 mr-1"></i> @L["Điểm danh theo lớp"]
         </a>
     </div>
 
@@ -21,7 +24,7 @@
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fas fa-check-circle mr-1"></i> @TempData["SuccessMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="@L["Đóng"]">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -29,7 +32,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Nhật ký Điểm danh học viên</h6>
+            <h6 class="m-0 font-weight-bold text-primary">@L["Nhật ký Điểm danh học viên"]</h6>
         </div>
         <div class="card-body">
 
@@ -40,27 +43,27 @@
                         <div class="form-row">
                             <div class="col-md-3 mb-2">
                                 <input type="text" name="search" class="form-control form-control-sm" 
-                                       placeholder="Tìm theo tên/mã học viên, mã lớp..." value="@ViewData["CurrentSearch"]" />
+                                       placeholder="@L["Tìm theo tên/mã học viên, mã lớp..."]" value="@ViewData["CurrentSearch"]" />
                             </div>
                             <div class="col-md-3 mb-2">
                                 <select name="classId" asp-items="ViewBag.ClassList" class="form-control form-control-sm">
-                                    <option value="">-- Tất cả lớp học --</option>
+                                    <option value="">-- @L["Tất cả lớp học"] --</option>
                                 </select>
                             </div>
                             <div class="col-md-2 mb-2">
                                 <input type="number" name="sessionNumber" class="form-control form-control-sm" 
-                                       placeholder="Buổi số..." value="@ViewData["CurrentSession"]" />
+                                       placeholder="@L["Buổi số..."]" value="@ViewData["CurrentSession"]" />
                             </div>
                             <div class="col-md-2 mb-2">
                                 <input type="date" name="date" class="form-control form-control-sm" value="@ViewData["CurrentDate"]" />
                             </div>
                             <div class="col-md-2 mb-2">
                                 <button class="btn btn-primary btn-sm" type="submit">
-                                    <i class="fas fa-search fa-sm"></i> Lọc
+                                    <i class="fas fa-search fa-sm"></i> @L["Lọc"]
                                 </button>
                                 @if (!string.IsNullOrEmpty(ViewData["CurrentSearch"] as string) || ViewData["CurrentClassId"] != null || ViewData["CurrentSession"] != null || ViewData["CurrentDate"] != null)
                                 {
-                                    <a asp-action="Index" class="btn btn-secondary btn-sm">Xóa</a>
+                                    <a asp-action="Index" class="btn btn-secondary btn-sm">@L["Xóa lọc"]</a>
                                 }
                             </div>
                         </div>
@@ -72,24 +75,24 @@
                 <table class="table table-bordered table-hover" width="100%" cellspacing="0">
                     <thead class="thead-light">
                         <tr>
-                            <th>Học viên</th>
-                            <th>Lớp học</th>
-                            <th>Buổi số</th>
-                            <th>Ngày điểm danh</th>
-                            <th class="text-center">Chuyên cần</th>
-                            <th>Ghi chú</th>
-                            <th class="text-center" style="width: 120px;">Thao tác</th>
+                            <th>@L["Học viên"]</th>
+                            <th>@L["Lớp học"]</th>
+                            <th>@L["Buổi số"]</th>
+                            <th>@L["Ngày điểm danh"]</th>
+                            <th class="text-center">@L["Chuyên cần"]</th>
+                            <th>@L["Ghi chú"]</th>
+                            <th class="text-center" style="width: 120px;">@L["Thao tác"]</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Học viên</th>
-                            <th>Lớp học</th>
-                            <th>Buổi số</th>
-                            <th>Ngày điểm danh</th>
-                            <th class="text-center">Chuyên cần</th>
-                            <th>Ghi chú</th>
-                            <th class="text-center">Thao tác</th>
+                            <th>@L["Học viên"]</th>
+                            <th>@L["Lớp học"]</th>
+                            <th>@L["Buổi số"]</th>
+                            <th>@L["Ngày điểm danh"]</th>
+                            <th class="text-center">@L["Chuyên cần"]</th>
+                            <th>@L["Ghi chú"]</th>
+                            <th class="text-center">@L["Thao tác"]</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -106,17 +109,17 @@
                                         <strong>@item.Enrollment?.Class?.ClassCode</strong> - @item.Enrollment?.Class?.ClassName
                                     </td>
                                     <td class="align-middle text-center font-weight-bold">
-                                        Buổi @item.SessionNumber
+                                        @L["Buổi"] @item.SessionNumber
                                     </td>
-                                    <td class="align-middle">@item.AttendanceDate.ToString("dd/MM/yyyy")</td>
+                                    <td class="align-middle">@item.AttendanceDate.ToString("d")</td>
                                     <td class="align-middle text-center">
                                         @if (item.IsPresent)
                                         {
-                                            <span class="badge badge-success px-2 py-1"><i class="fas fa-check mr-1"></i> Có mặt</span>
+                                            <span class="badge badge-success px-2 py-1"><i class="fas fa-check mr-1"></i> @L["Có mặt"]</span>
                                         }
                                         else
                                         {
-                                            <span class="badge badge-danger px-2 py-1"><i class="fas fa-times mr-1"></i> Vắng mặt</span>
+                                            <span class="badge badge-danger px-2 py-1"><i class="fas fa-times mr-1"></i> @L["Vắng mặt"]</span>
                                         }
                                     </td>
                                     <td class="align-middle text-muted small">@(string.IsNullOrEmpty(item.Note) ? "-" : item.Note)</td>
@@ -124,10 +127,10 @@
                                         <a asp-action="TakeAttendance" 
                                            asp-route-classId="@item.Enrollment?.ClassId" 
                                            asp-route-sessionNumber="@item.SessionNumber" 
-                                           class="btn btn-warning btn-circle btn-sm" title="Sửa cả buổi này">
+                                           class="btn btn-warning btn-circle btn-sm" title="@L["Sửa cả buổi này"]">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <a asp-action="Delete" asp-route-id="@item.AttendanceId" class="btn btn-danger btn-circle btn-sm" title="Xóa dòng này">
+                                        <a asp-action="Delete" asp-route-id="@item.AttendanceId" class="btn btn-danger btn-circle btn-sm" title="@L["Xóa dòng này"]">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
@@ -137,7 +140,7 @@
                         else
                         {
                             <tr>
-                                <td colspan="7" class="text-center text-muted py-3">Không tìm thấy dữ liệu điểm danh nào.</td>
+                                <td colspan="7" class="text-center text-muted py-3">@L["Không tìm thấy dữ liệu điểm danh nào."]</td>
                             </tr>
                         }
                     </tbody>
@@ -148,7 +151,7 @@
             <div class="row mt-3">
                 <div class="col-sm-12 col-md-5">
                     <div class="dataTables_info text-muted small" role="status" aria-live="polite">
-                        Hiển thị trang @(Model?.PageIndex ?? 1) / @(Model?.TotalPages == 0 ? 1 : Model?.TotalPages) (Tổng số: @(Model?.TotalItems ?? 0) bản ghi)
+                        @L["Hiển thị trang {0} / {1} (Tổng số: {2} bản ghi)", pageIndex, totalPages, totalItems]
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-7">
@@ -161,7 +164,7 @@
                                    asp-route-classId="@ViewData["CurrentClassId"]"
                                    asp-route-sessionNumber="@ViewData["CurrentSession"]"
                                    asp-route-date="@ViewData["CurrentDate"]"
-                                   class="page-link">Trước</a>
+                                   class="page-link">@L["Trước"]</a>
                             </li>
 
                             @for (int i = 1; i <= (Model?.TotalPages ?? 1); i++)
@@ -184,7 +187,7 @@
                                    asp-route-classId="@ViewData["CurrentClassId"]"
                                    asp-route-sessionNumber="@ViewData["CurrentSession"]"
                                    asp-route-date="@ViewData["CurrentDate"]"
-                                   class="page-link">Sau</a>
+                                   class="page-link">@L["Sau"]</a>
                             </li>
                         </ul>
                     </div>

@@ -4,15 +4,15 @@
 @model Assignment.Models.GradeSheetViewModel
 
 @{
-    ViewData["Title"] = "Nhập điểm Lớp học";
+    ViewData["Title"] = L["Nhập điểm Lớp học"];
 }
 
 <div class="container-fluid">
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Nhập điểm Lớp học</h1>
+        <h1 class="h3 mb-0 text-gray-800">@L["Nhập điểm Lớp học"]</h1>
         <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
-            <i class="fas fa-list fa-sm text-white-50 mr-1"></i> Sổ điểm tổng hợp
+            <i class="fas fa-list fa-sm text-white-50 mr-1"></i> @L["Sổ điểm tổng hợp"]
         </a>
     </div>
 
@@ -20,7 +20,7 @@
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fas fa-check-circle mr-1"></i> @TempData["SuccessMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="@L["Đóng"]">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -29,30 +29,30 @@
     <!-- Form Chọn lớp & kỳ thi -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Chọn Lớp học và Kỳ kiểm tra</h6>
+            <h6 class="m-0 font-weight-bold text-primary">@L["Chọn Lớp học và Kỳ kiểm tra"]</h6>
         </div>
         <div class="card-body">
             <form asp-action="EnterGrades" method="get">
                 <div class="form-row align-items-end">
                     <div class="col-md-6 mb-2">
-                        <label class="font-weight-bold">Lớp học:</label>
+                        <label class="font-weight-bold">@L["Lớp học"]:</label>
                         <select name="classId" asp-items="ViewBag.ClassId" class="form-control form-control-sm" required>
-                            <option value="">-- Chọn lớp học --</option>
+                            <option value="">-- @L["Chọn lớp học"] --</option>
                         </select>
                     </div>
                     <div class="col-md-4 mb-2">
-                        <label class="font-weight-bold">Kỳ kiểm tra:</label>
+                        <label class="font-weight-bold">@L["Kỳ kiểm tra"]:</label>
                         <select name="examType" class="form-control form-control-sm">
-                            <option value="GiuaKy" selected="@(Model.ExamType == "GiuaKy")">Kiểm tra giữa kỳ (Mid-term)</option>
-                            <option value="CuoiKy" selected="@(Model.ExamType == "CuoiKy")">Thi cuối khóa (Final Exam)</option>
-                            <option value="PlacementTest" selected="@(Model.ExamType == "PlacementTest")">Kiểm tra đầu vào (Placement)</option>
-                            <option value="ProgressTest1" selected="@(Model.ExamType == "ProgressTest1")">Test tiến độ 1</option>
-                            <option value="ProgressTest2" selected="@(Model.ExamType == "ProgressTest2")">Test tiến độ 2</option>
+                            <option value="GiuaKy" selected="@(Model.ExamType == "GiuaKy")">@L["Kiểm tra giữa kỳ (Mid-term)"]</option>
+                            <option value="CuoiKy" selected="@(Model.ExamType == "CuoiKy")">@L["Thi cuối khóa (Final Exam)"]</option>
+                            <option value="PlacementTest" selected="@(Model.ExamType == "PlacementTest")">@L["Kiểm tra đầu vào (Placement)"]</option>
+                            <option value="ProgressTest1" selected="@(Model.ExamType == "ProgressTest1")">@L["Test tiến độ 1"]</option>
+                            <option value="ProgressTest2" selected="@(Model.ExamType == "ProgressTest2")">@L["Test tiến độ 2"]</option>
                         </select>
                     </div>
                     <div class="col-md-2 mb-2">
                         <button type="submit" class="btn btn-primary btn-sm btn-block">
-                            <i class="fas fa-table fa-sm mr-1"></i> Tải bảng điểm
+                            <i class="fas fa-table fa-sm mr-1"></i> @L["Tải bảng điểm"]
                         </button>
                     </div>
                 </div>
@@ -66,12 +66,12 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary">
-                    Bảng điểm: <span class="text-dark">@Model.ClassName (@Model.ClassCode)</span>
+                    @L["Bảng điểm"]: <span class="text-dark">@Model.ClassName (@Model.ClassCode)</span>
                     @if (!string.IsNullOrEmpty(Model.CourseName))
                     {
                         <span class="badge badge-info ml-1">@Model.CourseName</span>
                     }
-                    - Kỳ: <span class="badge badge-warning text-dark font-weight-bold">@Model.ExamType</span>
+                    - @L["Kỳ"]: <span class="badge badge-warning text-dark font-weight-bold">@L[DisplayLabels.ExamType(Model.ExamType)]</span>
                 </h6>
             </div>
             <div class="card-body">
@@ -89,15 +89,15 @@
                             <table class="table table-bordered table-hover" width="100%" cellspacing="0">
                                 <thead class="thead-light text-center">
                                     <tr>
-                                        <th style="width: 50px;">STT</th>
-                                        <th style="width: 120px;">Mã HV</th>
-                                        <th class="text-left">Họ và Tên</th>
-                                        <th style="width: 105px;">Nghe (L)</th>
-                                        <th style="width: 105px;">Đọc (R)</th>
-                                        <th style="width: 105px;">Viết (W)</th>
-                                        <th style="width: 105px;">Nói (S)</th>
+                                        <th style="width: 50px;">@L["STT"]</th>
+                                        <th style="width: 120px;">@L["Mã HV"]</th>
+                                        <th class="text-left">@L["Họ và tên"]</th>
+                                        <th style="width: 105px;">@L["Nghe (L)"]</th>
+                                        <th style="width: 105px;">@L["Đọc (R)"]</th>
+                                        <th style="width: 105px;">@L["Viết (W)"]</th>
+                                        <th style="width: 105px;">@L["Nói (S)"]</th>
                                         <th style="width: 90px;">Overall</th>
-                                        <th>Nhận xét của giáo viên</th>
+                                        <th>@L["Nhận xét của giáo viên"]</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -135,7 +135,7 @@
                                                 @(Model.Students[i].OverallScore?.ToString() ?? "-")
                                             </td>
                                             <td>
-                                                <input asp-for="@Model.Students[i].TeacherFeedback" class="form-control form-control-sm" placeholder="Nhận xét tiến bộ..." />
+                                                <input asp-for="@Model.Students[i].TeacherFeedback" class="form-control form-control-sm" placeholder="@L["Nhận xét tiến bộ..."]" />
                                             </td>
                                         </tr>
                                     }
@@ -145,7 +145,7 @@
 
                         <div class="d-flex justify-content-end mt-3">
                             <button type="submit" class="btn btn-primary shadow-sm px-4">
-                                <i class="fas fa-save mr-1"></i> Lưu toàn bộ bảng điểm
+                                <i class="fas fa-save mr-1"></i> @L["Lưu toàn bộ bảng điểm"]
                             </button>
                         </div>
                     </form>
@@ -154,7 +154,7 @@
                 {
                     <div class="text-center text-muted py-4">
                         <i class="fas fa-user-slash fa-3x mb-2 text-gray-300"></i>
-                        <p>Lớp học này hiện chưa có học viên nào đang theo học.</p>
+                        <p>@L["Lớp học này hiện chưa có học viên nào đang theo học."]</p>
                     </div>
                 }
             </div>

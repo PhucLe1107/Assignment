@@ -4,7 +4,7 @@
 @model Assignment.Models.LoginViewModel
 @{
     Layout = "~/Views/Shared/LoginLayout.cshtml";
-    ViewData["Title"] = "Đăng nhập";
+    ViewData["Title"] = L["Đăng nhập"];
 }
 
 <div class="row justify-content-center">
@@ -17,7 +17,7 @@
                     <div class="col-lg-6">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Chào mừng trở lại!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">@L["Chào mừng trở lại!"]</h1>
                             </div>
 
                             <form class="user" asp-action="Login" asp-controller="Account" method="post">
@@ -30,13 +30,13 @@
                                 <div class="form-group">
                                     <input type="text" class="form-control form-control-user"
                                            id="exampleInputEmail"
-                                           placeholder="Tên đăng nhập..." asp-for="Username">
+                                           placeholder="@L["Tên đăng nhập..."]" asp-for="Username">
                                     <span asp-validation-for="Username" class="text-danger small pl-3"></span>
                                 </div>
 
                                 <div class="form-group">
                                     <input type="password" class="form-control form-control-user"
-                                           id="exampleInputPassword" placeholder="Mật khẩu" asp-for="Password">
+                                           id="exampleInputPassword" placeholder="@L["Mật khẩu"]" asp-for="Password">
                                     <span asp-validation-for="Password" class="text-danger small pl-3"></span>
                                 </div>
 
@@ -44,22 +44,22 @@
                                     <div class="custom-control custom-checkbox small">
                                         <input type="checkbox" class="custom-control-input" id="customCheck" asp-for="RememberMe">
                                         <label class="custom-control-label" for="customCheck">
-                                            Ghi nhớ đăng nhập
+                                            @L["Ghi nhớ đăng nhập"]
                                         </label>
                                     </div>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Đăng nhập
+                                    @L["Đăng nhập"]
                                 </button>
                             </form>
 
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="#">Quên mật khẩu?</a>
+                                <a class="small" href="#">@L["Quên mật khẩu?"]</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="#">Tạo tài khoản!</a>
+                                <a class="small" href="#">@L["Tạo tài khoản!"]</a>
                             </div>
                         </div>
                     </div>
