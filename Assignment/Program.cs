@@ -2,6 +2,9 @@ using Assignment;
 using Assignment.Localization;
 using Assignment.Models.Data;
 using Assignment.Routing;
+using Assignment.Storage;
+using Amazon.Runtime;
+using Amazon.S3;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +37,31 @@ builder.Services
     });
 
 builder.Services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureModelBindingLocalization>();
+
+builder.Services
+    .AddOptions<R2Options>()
+    .Bind(builder.Configuration.GetSection(R2Options.SectionName))
+    .ValidateDataAnnotations()
+    .Validate(
+        options => Uri.TryCreate(options.PublicBaseUrl, UriKind.Absolute, out var uri)
+                   && uri.Scheme == Uri.UriSchemeHttps
+                   && !uri.Host.EndsWith(".r2.cloudflarestorage.com", StringComparison.OrdinalIgnoreCase),
+        "R2:PublicBaseUrl must be a public custom domain or r2.dev URL, not the S3 API endpoint.")
+    .ValidateOnStart();
+
+builder.Services.AddSingleton<IAmazonS3>(serviceProvider =>
+{
+    var options = serviceProvider.GetRequiredService<IOptions<R2Options>>().Value;
+    var credentials = new BasicAWSCredentials(options.AccessKeyId, options.SecretAccessKey);
+
+    return new AmazonS3Client(credentials, new AmazonS3Config
+    {
+        ServiceURL = $"https://{options.AccountId}.r2.cloudflarestorage.com",
+        AuthenticationRegion = "auto",
+        ForcePathStyle = true
+    });
+});
+builder.Services.AddSingleton<IImageStorage, R2ImageStorage>();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Localization;
 using Assignment.Models.Common;
 using Assignment.Models.Data;
 using Assignment.Models.Entities;
+using Assignment.Storage;
 
 namespace Assignment.Controllers
 {
@@ -12,14 +13,20 @@ namespace Assignment.Controllers
     public class StudentController : Controller
     {
         private readonly EnglishCenterDbContext _context;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IImageStorage _imageStorage;
         private readonly IStringLocalizer<SharedResource> _localizer;
+        private readonly ILogger<StudentController> _logger;
 
-        public StudentController(EnglishCenterDbContext context, IWebHostEnvironment webHostEnvironment, IStringLocalizer<SharedResource> localizer)
+        public StudentController(
+            EnglishCenterDbContext context,
+            IImageStorage imageStorage,
+            IStringLocalizer<SharedResource> localizer,
+            ILogger<StudentController> logger)
         {
             _context = context;
-            _webHostEnvironment = webHostEnvironment;
+            _imageStorage = imageStorage;
             _localizer = localizer;
+            _logger = logger;
         }
 
         // GET: /Student?search=abc&page=1
@@ -106,26 +113,7 @@ namespace Assignment.Controllers
                 ModelState.AddModelError("", _localizer["Tên đăng nhập '{0}' đã có người sử dụng.", usernameToCreate]);
             }
 
-            // Xử lý upload Avatar
-            if (student.AvatarFile != null && student.AvatarFile.Length > 0)
-            {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", "avatars");
-                if (!Directory.Exists(uploadsFolder)) Directory.CreateDirectory(uploadsFolder);
-
-                string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(student.AvatarFile.FileName);
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await student.AvatarFile.CopyToAsync(fileStream);
-                }
-                student.AvatarUrl = "/uploads/avatars/" + uniqueFileName;
-            }
-            else
-            {
-                student.AvatarUrl ??= "/img/undraw_profile.svg";
-            }
-
+            student.AvatarUrl ??= "/img/undraw_profile.svg";
             student.Address ??= string.Empty;
             student.EntryLevel ??= "Beginner";
 
@@ -135,8 +123,17 @@ namespace Assignment.Controllers
             if (ModelState.IsValid)
             {
                 using var transaction = await _context.Database.BeginTransactionAsync();
+                string? uploadedImageUrl = null;
                 try
                 {
+                    if (student.AvatarFile != null && student.AvatarFile.Length > 0)
+                    {
+                        uploadedImageUrl = await _imageStorage.UploadAsync(
+                            student.AvatarFile,
+                            ImageStoragePaths.StudentAvatars);
+                        student.AvatarUrl = uploadedImageUrl;
+                    }
+
                     if (createAccount)
                     {
                         var newUser = new User
@@ -166,6 +163,7 @@ namespace Assignment.Controllers
                 catch (Exception ex)
                 {
                     await transaction.RollbackAsync();
+                    await TryDeleteImageAsync(uploadedImageUrl);
                     ModelState.AddModelError("", _localizer["Đã có lỗi xảy ra: {0}", ex.Message]);
                 }
             }
@@ -192,6 +190,11 @@ namespace Assignment.Controllers
         {
             if (id != student.StudentId) return NotFound();
 
+            var existingStudent = await _context.Students
+                .AsNoTracking()
+                .FirstOrDefaultAsync(s => s.StudentId == id);
+            if (existingStudent == null) return NotFound();
+
             if (await _context.Students.AnyAsync(s => s.StudentCode == student.StudentCode && s.StudentId != id))
             {
                 ModelState.AddModelError("StudentCode", _localizer["Mã sinh viên này đã tồn tại trên hệ thống."]);
@@ -207,26 +210,7 @@ namespace Assignment.Controllers
                 ModelState.AddModelError("PhoneNumber", _localizer["Số điện thoại này đã được sử dụng bởi học viên khác."]);
             }
 
-            // Xử lý upload ảnh mới nếu có
-            if (student.AvatarFile != null && student.AvatarFile.Length > 0)
-            {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", "avatars");
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-
-                string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(student.AvatarFile.FileName);
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await student.AvatarFile.CopyToAsync(fileStream);
-                }
-                student.AvatarUrl = "/uploads/avatars/" + uniqueFileName;
-            }
-
-            student.AvatarUrl ??= "/img/undraw_profile.svg";
+            student.AvatarUrl = existingStudent.AvatarUrl ?? "/img/undraw_profile.svg";
             student.Address ??= string.Empty;
             student.EntryLevel ??= "Beginner";
 
@@ -235,16 +219,37 @@ namespace Assignment.Controllers
 
             if (ModelState.IsValid)
             {
+                string? uploadedImageUrl = null;
                 try
                 {
+                    if (student.AvatarFile != null && student.AvatarFile.Length > 0)
+                    {
+                        uploadedImageUrl = await _imageStorage.UploadAsync(
+                            student.AvatarFile,
+                            ImageStoragePaths.StudentAvatars);
+                        student.AvatarUrl = uploadedImageUrl;
+                    }
+
                     _context.Students.Update(student);
                     await _context.SaveChangesAsync();
+
+                    if (uploadedImageUrl != null)
+                    {
+                        await TryDeleteImageAsync(existingStudent.AvatarUrl);
+                    }
+
                     TempData["SuccessMessage"] = _localizer["Cập nhật thông tin học viên thành công!"].Value;
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
+                    await TryDeleteImageAsync(uploadedImageUrl);
                     if (!StudentExists(student.StudentId)) return NotFound();
+                    throw;
+                }
+                catch
+                {
+                    await TryDeleteImageAsync(uploadedImageUrl);
                     throw;
                 }
             }
@@ -287,6 +292,7 @@ namespace Assignment.Controllers
 
                 _context.Students.Remove(student);
                 await _context.SaveChangesAsync();
+                await TryDeleteImageAsync(student.AvatarUrl);
                 TempData["SuccessMessage"] = _localizer["Đã xóa hồ sơ học viên thành công!"].Value;
             }
 
@@ -296,6 +302,18 @@ namespace Assignment.Controllers
         private bool StudentExists(int id)
         {
             return _context.Students.Any(e => e.StudentId == id);
+        }
+
+        private async Task TryDeleteImageAsync(string? imageUrl)
+        {
+            try
+            {
+                await _imageStorage.DeleteAsync(imageUrl);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogWarning(exception, "Could not delete student image {ImageUrl} from R2.", imageUrl);
+            }
         }
     }
 }
