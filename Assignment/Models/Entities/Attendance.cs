@@ -26,9 +26,9 @@ namespace Assignment.Models.Entities
 
         [StringLength(255)]
         [Display(Name = "Ghi chú")]
-        public string Note { get; set; }
+        public string Note { get; set; } = string.Empty;
 
         [ForeignKey("EnrollmentId")]
-        public virtual Enrollment Enrollment { get; set; }
+        public virtual Enrollment Enrollment { get; set; } = null!;
     }
 }

@@ -4,16 +4,19 @@
 @model Assignment.Models.Common.PagedList<Assignment.Models.Entities.Grade>
 
 @{
-    ViewData["Title"] = "Sổ điểm Học viên";
+    ViewData["Title"] = L["Sổ điểm Học viên"];
+    var pageIndex = Model?.PageIndex ?? 1;
+    var totalPages = Math.Max(Model?.TotalPages ?? 0, 1);
+    var totalItems = Model?.TotalItems ?? 0;
 }
 
 <div class="container-fluid">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Sổ điểm Học viên</h1>
+        <h1 class="h3 mb-0 text-gray-800">@L["Sổ điểm Học viên"]</h1>
         <a asp-controller="Grade" asp-action="EnterGrades" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-clipboard-check fa-sm text-white-50 mr-1"></i> Nhập điểm theo lớp
+            <i class="fas fa-clipboard-check fa-sm text-white-50 mr-1"></i> @L["Nhập điểm theo lớp"]
         </a>
     </div>
 
@@ -22,7 +25,7 @@
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fas fa-check-circle mr-1"></i> @TempData["SuccessMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="@L["Đóng"]">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -31,7 +34,7 @@
     <!-- DataTales Card -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary">Danh sách Kết quả học tập</h6>
+            <h6 class="m-0 font-weight-bold text-primary">@L["Danh sách Kết quả học tập"]</h6>
         </div>
         <div class="card-body">
 
@@ -42,30 +45,30 @@
                         <div class="form-row">
                             <div class="col-md-4 mb-2">
                                 <input type="text" name="search" class="form-control form-control-sm" 
-                                       placeholder="Tìm tên/mã học viên, mã lớp..." value="@ViewData["CurrentSearch"]" />
+                                       placeholder="@L["Tìm tên/mã học viên, mã lớp..."]" value="@ViewData["CurrentSearch"]" />
                             </div>
                             <div class="col-md-3 mb-2">
                                 <select name="classId" asp-items="ViewBag.ClassList" class="form-control form-control-sm">
-                                    <option value="">-- Tất cả lớp học --</option>
+                                    <option value="">-- @L["Tất cả lớp học"] --</option>
                                 </select>
                             </div>
                             <div class="col-md-3 mb-2">
                                 <select name="examType" class="form-control form-control-sm">
-                                    <option value="">-- Tất cả kỳ thi --</option>
-                                    <option value="GiuaKy" selected="@((string?)ViewData["CurrentExamType"] == "GiuaKy")">Giữa kỳ</option>
-                                    <option value="CuoiKy" selected="@((string?)ViewData["CurrentExamType"] == "CuoiKy")">Cuối khóa</option>
-                                    <option value="PlacementTest" selected="@((string?)ViewData["CurrentExamType"] == "PlacementTest")">Đầu vào</option>
-                                    <option value="ProgressTest1" selected="@((string?)ViewData["CurrentExamType"] == "ProgressTest1")">Test tiến độ 1</option>
-                                    <option value="ProgressTest2" selected="@((string?)ViewData["CurrentExamType"] == "ProgressTest2")">Test tiến độ 2</option>
+                                    <option value="">-- @L["Tất cả kỳ thi"] --</option>
+                                    <option value="GiuaKy" selected="@((string?)ViewData["CurrentExamType"] == "GiuaKy")">@L["Giữa kỳ"]</option>
+                                    <option value="CuoiKy" selected="@((string?)ViewData["CurrentExamType"] == "CuoiKy")">@L["Cuối khóa"]</option>
+                                    <option value="PlacementTest" selected="@((string?)ViewData["CurrentExamType"] == "PlacementTest")">@L["Đầu vào"]</option>
+                                    <option value="ProgressTest1" selected="@((string?)ViewData["CurrentExamType"] == "ProgressTest1")">@L["Test tiến độ 1"]</option>
+                                    <option value="ProgressTest2" selected="@((string?)ViewData["CurrentExamType"] == "ProgressTest2")">@L["Test tiến độ 2"]</option>
                                 </select>
                             </div>
                             <div class="col-md-2 mb-2">
                                 <button class="btn btn-primary btn-sm" type="submit">
-                                    <i class="fas fa-search fa-sm"></i> Lọc
+                                    <i class="fas fa-search fa-sm"></i> @L["Lọc"]
                                 </button>
                                 @if (!string.IsNullOrEmpty(ViewData["CurrentSearch"] as string) || ViewData["CurrentClassId"] != null || !string.IsNullOrEmpty(ViewData["CurrentExamType"] as string))
                                 {
-                                    <a asp-controller="Grade" asp-action="Index" class="btn btn-secondary btn-sm">Xóa</a>
+                                    <a asp-controller="Grade" asp-action="Index" class="btn btn-secondary btn-sm">@L["Xóa lọc"]</a>
                                 }
                             </div>
                         </div>
@@ -77,30 +80,30 @@
                 <table class="table table-bordered table-hover" width="100%" cellspacing="0">
                     <thead class="thead-light text-center">
                         <tr>
-                            <th class="text-left">Học viên</th>
-                            <th class="text-left">Lớp học</th>
-                            <th>Kỳ thi</th>
-                            <th style="width: 75px;">Nghe (L)</th>
-                            <th style="width: 75px;">Đọc (R)</th>
-                            <th style="width: 75px;">Viết (W)</th>
-                            <th style="width: 75px;">Nói (S)</th>
+                            <th class="text-left">@L["Học viên"]</th>
+                            <th class="text-left">@L["Lớp học"]</th>
+                            <th>@L["Kỳ thi"]</th>
+                            <th style="width: 75px;">@L["Nghe (L)"]</th>
+                            <th style="width: 75px;">@L["Đọc (R)"]</th>
+                            <th style="width: 75px;">@L["Viết (W)"]</th>
+                            <th style="width: 75px;">@L["Nói (S)"]</th>
                             <th style="width: 85px;">Overall</th>
-                            <th class="text-left">Nhận xét</th>
-                            <th style="width: 110px;">Thao tác</th>
+                            <th class="text-left">@L["Nhận xét"]</th>
+                            <th style="width: 110px;">@L["Thao tác"]</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr class="text-center">
-                            <th class="text-left">Học viên</th>
-                            <th class="text-left">Lớp học</th>
-                            <th>Kỳ thi</th>
-                            <th>Nghe (L)</th>
-                            <th>Đọc (R)</th>
-                            <th>Viết (W)</th>
-                            <th>Nói (S)</th>
+                            <th class="text-left">@L["Học viên"]</th>
+                            <th class="text-left">@L["Lớp học"]</th>
+                            <th>@L["Kỳ thi"]</th>
+                            <th>@L["Nghe (L)"]</th>
+                            <th>@L["Đọc (R)"]</th>
+                            <th>@L["Viết (W)"]</th>
+                            <th>@L["Nói (S)"]</th>
                             <th>Overall</th>
-                            <th class="text-left">Nhận xét</th>
-                            <th>Thao tác</th>
+                            <th class="text-left">@L["Nhận xét"]</th>
+                            <th>@L["Thao tác"]</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -118,7 +121,7 @@
                                         <div class="small text-muted">@item.Enrollment?.Class?.ClassName</div>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="badge badge-light border">@item.ExamType</span>
+                                        <span class="badge badge-light border">@L[DisplayLabels.ExamType(item.ExamType)]</span>
                                     </td>
                                     <td class="align-middle text-center">@(item.ListeningScore?.ToString() ?? "-")</td>
                                     <td class="align-middle text-center">@(item.ReadingScore?.ToString() ?? "-")</td>
@@ -132,10 +135,10 @@
                                         <a asp-action="EnterGrades" 
                                            asp-route-classId="@item.Enrollment?.ClassId" 
                                            asp-route-examType="@item.ExamType" 
-                                           class="btn btn-warning btn-circle btn-sm" title="Sửa cả bảng điểm kỳ này">
+                                           class="btn btn-warning btn-circle btn-sm" title="@L["Sửa cả bảng điểm kỳ này"]">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <a asp-action="Delete" asp-route-id="@item.GradeId" class="btn btn-danger btn-circle btn-sm" title="Xóa dòng điểm này">
+                                        <a asp-action="Delete" asp-route-id="@item.GradeId" class="btn btn-danger btn-circle btn-sm" title="@L["Xóa dòng điểm này"]">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
@@ -145,7 +148,7 @@
                         else
                         {
                             <tr>
-                                <td colspan="10" class="text-center text-muted py-3">Chưa có kết quả điểm số nào phù hợp.</td>
+                                <td colspan="10" class="text-center text-muted py-3">@L["Chưa có kết quả điểm số nào phù hợp."]</td>
                             </tr>
                         }
                     </tbody>
@@ -156,7 +159,7 @@
             <div class="row mt-3">
                 <div class="col-sm-12 col-md-5">
                     <div class="dataTables_info text-muted small" role="status" aria-live="polite">
-                        Hiển thị trang @(Model?.PageIndex ?? 1) / @(Model?.TotalPages == 0 ? 1 : Model?.TotalPages) (Tổng: @(Model?.TotalItems ?? 0) kết quả)
+                        @L["Hiển thị trang {0} / {1} (Tổng: {2} kết quả)", pageIndex, totalPages, totalItems]
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-7">
@@ -169,7 +172,7 @@
                                    asp-route-search="@ViewData["CurrentSearch"]" 
                                    asp-route-classId="@ViewData["CurrentClassId"]"
                                    asp-route-examType="@ViewData["CurrentExamType"]"
-                                   class="page-link">Trước</a>
+                                   class="page-link">@L["Trước"]</a>
                             </li>
 
                             <!-- Các số trang -->
@@ -192,7 +195,7 @@
                                    asp-route-search="@ViewData["CurrentSearch"]" 
                                    asp-route-classId="@ViewData["CurrentClassId"]"
                                    asp-route-examType="@ViewData["CurrentExamType"]"
-                                   class="page-link">Sau</a>
+                                   class="page-link">@L["Sau"]</a>
                             </li>
                         </ul>
                     </div>

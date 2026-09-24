@@ -1,0 +1,112 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Assignment.Models.UserCreateViewModel
+
+@{
+    ViewData["Title"] = L["Tạo mới Tài khoản"];
+}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@L["Tạo mới Tài khoản Người dùng"]</h1>
+        <a asp-action="Index" class="btn btn-sm btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left fa-sm text-white-50 mr-1"></i> @L["Quay lại"]
+        </a>
+    </div>
+
+    <div class="card shadow mb-4 mx-auto p-0">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">@L["Thông tin tài khoản"]</h6>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <div class="form-group">
+                    <label asp-for="RoleId" class="font-weight-bold">@L["Vai trò hệ thống"] <span class="text-danger">*</span></label>
+                    <select asp-for="RoleId" asp-items="ViewBag.RoleId" class="form-control" id="roleSelect"></select>
+                    <span asp-validation-for="RoleId" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group" id="studentLinkGroup" style="display: none;">
+                    <div class="card bg-light border-left-info p-3">
+                        <label asp-for="StudentId" class="font-weight-bold text-gray-800">
+                            <i class="fas fa-user-graduate text-info mr-1"></i> @L["Chọn Học viên liên kết"] <span class="text-danger">*</span>
+                        </label>
+                        <select asp-for="StudentId" asp-items="ViewBag.UnlinkedStudents" class="form-control" id="studentSelect">
+                            <option value="">-- @L["Chọn hồ sơ học viên chưa có tài khoản"] --</option>
+                        </select>
+                        <small class="text-muted mt-1 d-block">
+                            @L["Chỉ hiển thị các học viên chưa được cấp tài khoản. Chọn học viên sẽ tự điền tên đăng nhập theo Mã học viên."]
+                        </small>
+                        <span asp-validation-for="StudentId" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Username" class="font-weight-bold">@L["Tên đăng nhập"] <span class="text-danger">*</span></label>
+                    <input asp-for="Username" id="usernameInput" class="form-control" placeholder="@L["VD: giaovu_lananh hoặc HV2026-001"]" autofocus />
+                    <span asp-validation-for="Username" class="text-danger small"></span>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6 form-group">
+                        <label asp-for="Password" class="font-weight-bold">@L["Mật khẩu"] <span class="text-danger">*</span></label>
+                        <input asp-for="Password" class="form-control" placeholder="@L["Tối thiểu 6 ký tự"]" />
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label asp-for="ConfirmPassword" class="font-weight-bold">@L["Xác nhận mật khẩu"] <span class="text-danger">*</span></label>
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="@L["Nhập lại mật khẩu trên"]" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input asp-for="IsActive" class="custom-control-input" id="isActiveCheck" />
+                        <label class="custom-control-label font-weight-bold" for="isActiveCheck">@L["Kích hoạt tài khoản ngay"]</label>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary shadow-sm">@L["Hủy bỏ"]</a>
+                    <button type="submit" class="btn btn-primary shadow-sm">
+                        <i class="fas fa-save mr-1"></i> @L["Lưu tài khoản"]
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function checkRole() {
+            if ($('#roleSelect').val() === '@ViewBag.StudentRoleId') {
+                $('#studentLinkGroup').slideDown(200);
+            } else {
+                $('#studentLinkGroup').slideUp(200);
+                $('#studentSelect').val('');
+            }
+        }
+
+        checkRole();
+        $('#roleSelect').on('change', checkRole);
+
+        $('#studentSelect').on('change', function () {
+            var text = $('#studentSelect option:selected').text();
+            if (text && text.indexOf(' - ') !== -1) {
+                var studentCode = text.split(' - ')[0].trim();
+                $('#usernameInput').val(studentCode);
+            }
+        });
+    </script>
+}

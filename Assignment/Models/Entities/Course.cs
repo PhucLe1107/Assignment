@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http;
 
@@ -12,7 +13,7 @@ namespace Assignment.Models.Entities
         [Required(ErrorMessage = "Tên khóa học không được để trống")]
         [StringLength(100, ErrorMessage = "Tên khóa học không quá 100 ký tự")]
         [Display(Name = "Tên khóa học")]
-        public string CourseName { get; set; }
+        public string CourseName { get; set; } = string.Empty;
 
         [StringLength(255)]
         [Display(Name = "Ảnh bìa khóa học")]
@@ -25,6 +26,7 @@ namespace Assignment.Models.Entities
         [Required(ErrorMessage = "Học phí chuẩn không được để trống")]
         [Range(0, 100000000, ErrorMessage = "Học phí phải lớn hơn hoặc bằng 0")]
         [Display(Name = "Học phí niêm yết (VNĐ)")]
+        [Precision(18, 2)]
         public decimal BaseTuitionFee { get; set; }
 
         [Required(ErrorMessage = "Tổng số buổi không được để trống")]

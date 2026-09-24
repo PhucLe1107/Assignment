@@ -4,15 +4,18 @@
 @model Assignment.Models.Common.PagedList<Assignment.Models.Entities.Course>
 
 @{
-    ViewData["Title"] = "Quản lý Khóa học";
+    ViewData["Title"] = L["Quản lý Khóa học"];
+    var pageIndex = Model?.PageIndex ?? 1;
+    var totalPages = Math.Max(Model?.TotalPages ?? 0, 1);
+    var totalItems = Model?.TotalItems ?? 0;
 }
 <div class="container-fluid">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Quản lý Khóa học</h1>
+        <h1 class="h3 mb-0 text-gray-800">@L["Quản lý Khóa học"]</h1>
         <a asp-controller="Course" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-plus fa-sm text-white-50"></i> Thêm mới Khóa học
+            <i class="fas fa-plus fa-sm text-white-50"></i> @L["Thêm mới Khóa học"]
         </a>
     </div>
 
@@ -21,7 +24,7 @@
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fas fa-check-circle mr-1"></i> @TempData["SuccessMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="@L["Đóng"]">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -30,7 +33,7 @@
     {
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="fas fa-exclamation-triangle mr-1"></i> @TempData["ErrorMessage"]
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="@L["Đóng"]">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -39,7 +42,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary">Danh sách Khóa học hiện có</h6>
+            <h6 class="m-0 font-weight-bold text-primary">@L["Danh sách Khóa học hiện có"]</h6>
         </div>
         <div class="card-body">
 
@@ -49,14 +52,14 @@
                     <form asp-controller="Course" asp-action="Index" method="get">
                         <div class="input-group">
                             <input type="text" name="search" class="form-control form-control-sm"
-                                   placeholder="Tìm kiếm khóa học..." value="@ViewData["CurrentFilter"]" />
+                                   placeholder="@L["Tìm kiếm khóa học..."]" value="@ViewData["CurrentFilter"]" />
                             <div class="input-group-append">
                                 <button class="btn btn-primary btn-sm" type="submit">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                                 @if (!string.IsNullOrEmpty(ViewData["CurrentFilter"] as string))
                                 {
-                                    <a asp-controller="Course" asp-action="Index" class="btn btn-secondary btn-sm">Xóa lọc</a>
+                                    <a asp-controller="Course" asp-action="Index" class="btn btn-secondary btn-sm">@L["Xóa lọc"]</a>
                                 }
                             </div>
                         </div>
@@ -68,22 +71,22 @@
                 <table class="table table-bordered" width="100%" cellspacing="0">
                     <thead class="thead-light">
                         <tr>
-                            <th style="width: 70px;">Ảnh</th>
-                            <th>Tên khóa học</th>
-                            <th>Học phí gốc</th>
-                            <th>Số buổi</th>
-                            <th>Trạng thái</th>
-                            <th class="text-center" style="width: 170px;">Thao tác</th>
+                            <th style="width: 70px;">@L["Ảnh"]</th>
+                            <th>@L["Tên khóa học"]</th>
+                            <th>@L["Học phí gốc"]</th>
+                            <th>@L["Số buổi"]</th>
+                            <th>@L["Trạng thái"]</th>
+                            <th class="text-center" style="width: 170px;">@L["Thao tác"]</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Ảnh</th>
-                            <th>Tên khóa học</th>
-                            <th>Học phí gốc</th>
-                            <th>Số buổi</th>
-                            <th>Trạng thái</th>
-                            <th class="text-center">Thao tác</th>
+                            <th>@L["Ảnh"]</th>
+                            <th>@L["Tên khóa học"]</th>
+                            <th>@L["Học phí gốc"]</th>
+                            <th>@L["Số buổi"]</th>
+                            <th>@L["Trạng thái"]</th>
+                            <th class="text-center">@L["Thao tác"]</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -94,29 +97,29 @@
                                 <tr>
                                     <td class="text-center align-middle">
                                         <img src="@(string.IsNullOrEmpty(item.ThumbnailUrl) ? "https://placehold.co/80x50?text=Course" : item.ThumbnailUrl)"
-                                             class="img-thumbnail" style="width: 70px; height: 45px; object-fit: cover;" alt="Thumbnail" />
+                                             class="img-thumbnail" style="width: 70px; height: 45px; object-fit: cover;" alt="@L["Ảnh bìa"]" />
                                     </td>
                                     <td class="align-middle"><strong>@item.CourseName</strong></td>
-                                    <td class="align-middle">@item.BaseTuitionFee.ToString("N0") đ</td>
-                                    <td class="align-middle">@item.TotalSessions buổi</td>
+                                    <td class="align-middle">@item.BaseTuitionFee.ToString("N0") @L["đ"]</td>
+                                    <td class="align-middle">@L["{0} buổi", item.TotalSessions]</td>
                                     <td class="align-middle">
                                         @if (item.IsActive)
                                         {
-                                            <span class="badge badge-success px-2 py-1">Đang mở</span>
+                                            <span class="badge badge-success px-2 py-1">@L["Đang mở"]</span>
                                         }
                                         else
                                         {
-                                            <span class="badge badge-secondary px-2 py-1">Tạm đóng</span>
+                                            <span class="badge badge-secondary px-2 py-1">@L["Tạm đóng"]</span>
                                         }
                                     </td>
                                     <td class="text-center align-middle">
-                                        <a asp-action="Details" asp-route-id="@item.CourseId" class="btn btn-info btn-circle btn-sm" title="Xem chi tiết">
+                                        <a asp-action="Details" asp-route-id="@item.CourseId" class="btn btn-info btn-circle btn-sm" title="@L["Xem chi tiết"]">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a asp-action="Edit" asp-route-id="@item.CourseId" class="btn btn-warning btn-circle btn-sm" title="Chỉnh sửa">
+                                        <a asp-action="Edit" asp-route-id="@item.CourseId" class="btn btn-warning btn-circle btn-sm" title="@L["Chỉnh sửa"]">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <a asp-action="Delete" asp-route-id="@item.CourseId" class="btn btn-danger btn-circle btn-sm" title="Xóa">
+                                        <a asp-action="Delete" asp-route-id="@item.CourseId" class="btn btn-danger btn-circle btn-sm" title="@L["Xóa"]">
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
@@ -126,7 +129,7 @@
                         else
                         {
                             <tr>
-                                <td colspan="6" class="text-center text-muted py-3">Không có dữ liệu phù hợp.</td>
+                                <td colspan="6" class="text-center text-muted py-3">@L["Không có dữ liệu phù hợp."]</td>
                             </tr>
                         }
                     </tbody>
@@ -137,7 +140,7 @@
             <div class="row mt-3">
                 <div class="col-sm-12 col-md-5">
                     <div class="dataTables_info text-muted small" role="status" aria-live="polite">
-                        Hiển thị trang @(Model?.PageIndex ?? 1) / @(Model?.TotalPages == 0 ? 1 : Model?.TotalPages) (Tổng số: @(Model?.TotalItems ?? 0) khóa học)
+                        @L["Hiển thị trang {0} / {1} (Tổng số: {2} khóa học)", pageIndex, totalPages, totalItems]
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-7">
@@ -148,7 +151,7 @@
                                 <a asp-action="Index"
                                    asp-route-page="@((Model?.PageIndex ?? 1) - 1)"
                                    asp-route-search="@ViewData["CurrentFilter"]"
-                                   class="page-link">Trước</a>
+                                   class="page-link">@L["Trước"]</a>
                             </li>
 
                             <!-- Danh sách số trang -->
@@ -167,7 +170,7 @@
                                 <a asp-action="Index"
                                    asp-route-page="@((Model?.PageIndex ?? 1) + 1)"
                                    asp-route-search="@ViewData["CurrentFilter"]"
-                                   class="page-link">Sau</a>
+                                   class="page-link">@L["Sau"]</a>
                             </li>
                         </ul>
                     </div>
