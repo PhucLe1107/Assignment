@@ -1,5 +1,6 @@
 ﻿using Assignment.Models.Data;
 using Assignment.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -9,7 +10,7 @@ namespace EnglishCenter.Models.Data
     {
         public static void Initialize(EnglishCenterDbContext context)
         {
-            context.Database.EnsureCreated();
+            context.Database.Migrate();
 
             if (context.Roles.Any())
             {
