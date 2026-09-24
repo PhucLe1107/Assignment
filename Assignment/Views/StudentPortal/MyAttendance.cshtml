@@ -1,0 +1,108 @@
+@model Assignment.Models.Entities.Student?
+
+@{
+    ViewData["Title"] = L["Kết quả điểm danh"];
+    var enrollments = Model?.Enrollments?
+        .OrderByDescending(e => e.EnrollmentDate)
+        .ToList() ?? new List<Assignment.Models.Entities.Enrollment>();
+}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@L["Kết quả điểm danh"]</h1>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle mr-1"></i> @L["Tài khoản chưa được liên kết với hồ sơ học viên"]
+        </div>
+    }
+    else if (!enrollments.Any())
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle mr-1"></i> @L["Bạn chưa đăng ký lớp học nào"]
+        </div>
+    }
+    else
+    {
+        @foreach (var item in enrollments)
+        {
+            var sessions = item.Attendances?.OrderBy(a => a.SessionNumber).ToList() ?? new List<Assignment.Models.Entities.Attendance>();
+            int presentCount = sessions.Count(a => a.IsPresent);
+            int absentCount = sessions.Count - presentCount;
+            int rate = sessions.Count > 0 ? presentCount * 100 / sessions.Count : 0;
+
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        @item.Class?.Course?.CourseName
+                        <small class="text-muted ml-1">(@item.Class?.ClassCode - @item.Class?.ClassName)</small>
+                    </h6>
+                    <span class="badge badge-info px-2 py-1">@L[DisplayLabels.LearningStatus(item.LearningStatus)]</span>
+                </div>
+                <div class="card-body">
+                    <!-- Tổng hợp chuyên cần -->
+                    <div class="row text-center mb-3">
+                        <div class="col-4">
+                            <div class="small text-muted">@L["Có mặt"]</div>
+                            <div class="h5 font-weight-bold text-success mb-0">@presentCount</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="small text-muted">@L["Số buổi vắng"]</div>
+                            <div class="h5 font-weight-bold text-danger mb-0">@absentCount</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="small text-muted">@L["Chuyên cần"]</div>
+                            <div class="h5 font-weight-bold @(rate >= 80 ? "text-success" : "text-warning") mb-0">@rate%</div>
+                        </div>
+                    </div>
+
+                    @if (!sessions.Any())
+                    {
+                        <div class="alert alert-light border small text-muted mb-0">
+                            <i class="fas fa-info-circle mr-1"></i> @L["Chưa điểm danh buổi nào"]
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm mb-0">
+                                <thead class="thead-light text-center">
+                                    <tr>
+                                        <th style="width: 90px;">@L["Buổi số"]</th>
+                                        <th style="width: 140px;">@L["Ngày điểm danh"]</th>
+                                        <th style="width: 120px;">@L["Trạng thái"]</th>
+                                        <th class="text-left">@L["Ghi chú"]</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var a in sessions)
+                                    {
+                                        <tr>
+                                            <td class="text-center">@a.SessionNumber</td>
+                                            <td class="text-center">@a.AttendanceDate.ToString("dd/MM/yyyy")</td>
+                                            <td class="text-center">
+                                                @if (a.IsPresent)
+                                                {
+                                                    <span class="badge badge-success px-2 py-1">@L["Có mặt"]</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-danger px-2 py-1">@L["Vắng"]</span>
+                                                }
+                                            </td>
+                                            <td>@a.Note</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+
+</div>

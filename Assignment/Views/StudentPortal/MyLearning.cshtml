@@ -1,0 +1,140 @@
+@model Assignment.Models.Entities.Student?
+
+@{
+    ViewData["Title"] = L["Khóa học của tôi"];
+    var enrollments = Model?.Enrollments?
+        .OrderByDescending(e => e.EnrollmentDate)
+        .ToList() ?? new List<Assignment.Models.Entities.Enrollment>();
+}
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@L["Khóa học của tôi"]</h1>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle mr-1"></i> @L["Tài khoản chưa được liên kết với hồ sơ học viên"]
+        </div>
+    }
+    else
+    {
+        <!-- Thông tin học viên -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">@L["Thông tin học viên"]</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="font-weight-bold text-gray-800 mb-1">@Model.FullName</h5>
+                        <div class="text-muted small">@L["Mã học viên"]: <strong>@Model.StudentCode</strong></div>
+                    </div>
+                    <div class="col-md-6 small">
+                        <div><i class="fas fa-envelope fa-fw text-gray-400 mr-1"></i> @L["Email"]: @Model.Email</div>
+                        <div><i class="fas fa-phone fa-fw text-gray-400 mr-1"></i> @L["SĐT"]: @Model.PhoneNumber</div>
+                        <div><i class="fas fa-signal fa-fw text-gray-400 mr-1"></i> @L["Trình độ đầu vào"]: @(string.IsNullOrWhiteSpace(Model.EntryLevel) ? L["Chưa cập nhật"].Value : Model.EntryLevel)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (!enrollments.Any())
+        {
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle mr-1"></i> @L["Bạn chưa đăng ký lớp học nào"]
+            </div>
+        }
+
+        <div class="row">
+            @foreach (var item in enrollments)
+            {
+                decimal debt = item.ActualFee - item.PaidAmount;
+                int totalSessions = item.Class?.Course?.TotalSessions ?? 0;
+                int presentCount = item.Attendances?.Count(a => a.IsPresent) ?? 0;
+                int percent = totalSessions > 0 ? Math.Min(100, presentCount * 100 / totalSessions) : 0;
+
+                <div class="col-xl-6 col-lg-12 mb-4">
+                    <div class="card shadow h-100">
+                        <div class="card-header py-3 d-flex align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">@item.Class?.Course?.CourseName</h6>
+                            <span class="badge badge-info px-2 py-1">@L[DisplayLabels.LearningStatus(item.LearningStatus)]</span>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-sm mb-3">
+                                <tbody>
+                                    <tr>
+                                        <th class="bg-light" style="width: 35%;">@L["Lớp học"]</th>
+                                        <td><strong>@item.Class?.ClassCode</strong> - @item.Class?.ClassName</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">@L["Giảng viên"]</th>
+                                        <td>@item.Class?.LecturerName</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">@L["Lịch học / Phòng"]</th>
+                                        <td>@item.Class?.Schedule | @L["Phòng"]: @(string.IsNullOrWhiteSpace(item.Class?.Room) ? L["Chưa xếp"].Value : item.Class.Room)</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">@L["Khai giảng"]</th>
+                                        <td>
+                                            @item.Class?.StartDate.ToString("dd/MM/yyyy")
+                                            @if (item.Class?.EndDate != null)
+                                            {
+                                                <span>- @item.Class.EndDate.Value.ToString("dd/MM/yyyy")</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">@L["Ngày đăng ký"]</th>
+                                        <td>@item.EnrollmentDate.ToString("dd/MM/yyyy")</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Tiến độ học: số buổi có mặt / tổng số buổi của khóa -->
+                            <div class="small font-weight-bold mb-1">
+                                @L["Tiến độ học"] <span class="float-right">@presentCount / @totalSessions @L["buổi"]</span>
+                            </div>
+                            <div class="progress mb-3">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: @percent%"
+                                     aria-valuenow="@percent" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+
+                            <!-- Học phí -->
+                            <table class="table table-bordered table-sm mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="bg-light" style="width: 35%;">@L["Học phí thực tế"]</th>
+                                        <td class="font-weight-bold text-dark">@item.ActualFee.ToString("N0") @L["VNĐ"]</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">@L["Đã thanh toán"]</th>
+                                        <td class="font-weight-bold text-success">@item.PaidAmount.ToString("N0") @L["VNĐ"]</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light">@L["Số tiền còn nợ"]</th>
+                                        <td>
+                                            @if (item.PaymentStatus == "DaNopDu" || debt <= 0)
+                                            {
+                                                <span class="badge badge-success px-2 py-1">@L["Đã nộp đủ"]</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="font-weight-bold text-danger mr-2">@debt.ToString("N0") @L["VNĐ"]</span>
+                                                <span class="badge badge-warning text-dark px-2 py-1">@L["Còn nợ học phí"]</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+</div>

@@ -365,3 +365,6 @@ FodyWeavers.xsd
 **/wwwroot/uploads/
 
 **/appsettings.json
+# Claude Code personal files
+CLAUDE.local.md
+.claude/settings.local.json
