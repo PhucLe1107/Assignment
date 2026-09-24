@@ -15,6 +15,7 @@ Lưu ý: Chỉnh xong chuỗi kết nối chỉ cần nhấn F5 chạy dự án,
 
 ---
 
+
 ## 2. Dữ liệu mẫu bảng User (Tài khoản test đăng nhập)
 
 Mật khẩu trong CSDL đã được mã hóa băm bằng BCrypt. Khi đăng nhập trên giao diện web, sử dụng Mật khẩu gốc sau:

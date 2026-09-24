@@ -526,4 +526,12 @@
   <data name="Để trống nếu không muốn đổi mật khẩu" xml:space="preserve"><value>Leave blank to keep the current password</value></data>
   <data name="Đối tượng liên kết" xml:space="preserve"><value>Linked to</value></data>
   <data name="Đổi sang học viên khác (nếu cần)" xml:space="preserve"><value>Switch to another student (if needed)</value></data>
+  <data name="Tài khoản chưa được liên kết với hồ sơ học viên" xml:space="preserve"><value>Your account is not linked to a student profile yet</value></data>
+  <data name="Thông tin học viên" xml:space="preserve"><value>Student information</value></data>
+  <data name="Bạn chưa đăng ký lớp học nào" xml:space="preserve"><value>You have not enrolled in any class yet</value></data>
+  <data name="Tiến độ học" xml:space="preserve"><value>Progress</value></data>
+  <data name="buổi" xml:space="preserve"><value>sessions</value></data>
+  <data name="Số buổi vắng" xml:space="preserve"><value>Absences</value></data>
+  <data name="Chưa điểm danh buổi nào" xml:space="preserve"><value>No sessions have been recorded yet</value></data>
+  <data name="Chưa có cột điểm nào" xml:space="preserve"><value>No grades yet</value></data>
 </root>
