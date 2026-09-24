@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Assignment.Models.Data;
 using Assignment.Models.Entities;
 using Assignment.Models.Common;
+using Assignment.Storage;
 using Microsoft.Extensions.Localization;
 
 namespace Assignment.Controllers
@@ -12,17 +13,20 @@ namespace Assignment.Controllers
     public class CourseController : Controller
     {
         private readonly EnglishCenterDbContext _context;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IImageStorage _imageStorage;
         private readonly IStringLocalizer<SharedResource> _localizer;
+        private readonly ILogger<CourseController> _logger;
 
         public CourseController(
             EnglishCenterDbContext context,
-            IWebHostEnvironment webHostEnvironment,
-            IStringLocalizer<SharedResource> localizer)
+            IImageStorage imageStorage,
+            IStringLocalizer<SharedResource> localizer,
+            ILogger<CourseController> logger)
         {
             _context = context;
-            _webHostEnvironment = webHostEnvironment;
+            _imageStorage = imageStorage;
             _localizer = localizer;
+            _logger = logger;
         }
 
         // GET: /Course
@@ -74,19 +78,31 @@ namespace Assignment.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (course.ThumbnailFile != null)
+                string? uploadedImageUrl = null;
+                try
                 {
-                    course.ThumbnailUrl = await UploadImageAsync(course.ThumbnailFile);
-                }
-                else
-                {
-                    course.ThumbnailUrl = "/img/default-course.jpg";
-                }
+                    if (course.ThumbnailFile != null)
+                    {
+                        uploadedImageUrl = await _imageStorage.UploadAsync(
+                            course.ThumbnailFile,
+                            ImageStoragePaths.CourseThumbnails);
+                        course.ThumbnailUrl = uploadedImageUrl;
+                    }
+                    else
+                    {
+                        course.ThumbnailUrl = "/img/default-course.jpg";
+                    }
 
-                _context.Courses.Add(course);
-                await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = _localizer["Thêm mới khóa học thành công!"].Value;
-                return RedirectToAction(nameof(Index));
+                    _context.Courses.Add(course);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = _localizer["Thêm mới khóa học thành công!"].Value;
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    await TryDeleteImageAsync(uploadedImageUrl);
+                    throw;
+                }
             }
             return View(course);
         }
@@ -114,6 +130,7 @@ namespace Assignment.Controllers
 
             if (ModelState.IsValid)
             {
+                string? uploadedImageUrl = null;
                 try
                 {
                     var existingCourse = await _context.Courses.AsNoTracking().FirstOrDefaultAsync(c => c.CourseId == id);
@@ -121,12 +138,10 @@ namespace Assignment.Controllers
 
                     if (course.ThumbnailFile != null)
                     {
-                        if (!string.IsNullOrEmpty(existingCourse.ThumbnailUrl) && !existingCourse.ThumbnailUrl.Contains("default-course.jpg"))
-                        {
-                            DeleteImageFile(existingCourse.ThumbnailUrl);
-                        }
-
-                        course.ThumbnailUrl = await UploadImageAsync(course.ThumbnailFile);
+                        uploadedImageUrl = await _imageStorage.UploadAsync(
+                            course.ThumbnailFile,
+                            ImageStoragePaths.CourseThumbnails);
+                        course.ThumbnailUrl = uploadedImageUrl;
                     }
                     else
                     {
@@ -138,12 +153,23 @@ namespace Assignment.Controllers
                     _context.Courses.Update(course);
                     await _context.SaveChangesAsync();
 
+                    if (course.ThumbnailFile != null)
+                    {
+                        await TryDeleteImageAsync(existingCourse.ThumbnailUrl);
+                    }
+
                     TempData["SuccessMessage"] = _localizer["Cập nhật khóa học thành công!"].Value;
                     return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
+                    await TryDeleteImageAsync(uploadedImageUrl);
                     if (!CourseExists(course.CourseId)) return NotFound();
+                    throw;
+                }
+                catch
+                {
+                    await TryDeleteImageAsync(uploadedImageUrl);
                     throw;
                 }
             }
@@ -181,11 +207,9 @@ namespace Assignment.Controllers
                     return RedirectToAction(nameof(Index));
                 }
 
-                // Xóa file ảnh trên ổ cứng
-                DeleteImageFile(course.ThumbnailUrl);
-
                 _context.Courses.Remove(course);
                 await _context.SaveChangesAsync();
+                await TryDeleteImageAsync(course.ThumbnailUrl);
                 TempData["SuccessMessage"] = _localizer["Đã xóa khóa học thành công!"].Value;
             }
 
@@ -197,33 +221,15 @@ namespace Assignment.Controllers
             return _context.Courses.Any(e => e.CourseId == id);
         }
 
-        private async Task<string> UploadImageAsync(IFormFile file)
+        private async Task TryDeleteImageAsync(string? imageUrl)
         {
-            string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "uploads", "courses");
-            if (!Directory.Exists(uploadsFolder))
+            try
             {
-                Directory.CreateDirectory(uploadsFolder);
+                await _imageStorage.DeleteAsync(imageUrl);
             }
-
-            string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(file.FileName);
-            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            catch (Exception exception)
             {
-                await file.CopyToAsync(fileStream);
-            }
-
-            return "/uploads/courses/" + uniqueFileName;
-        }
-
-        private void DeleteImageFile(string? relativePath)
-        {
-            if (string.IsNullOrEmpty(relativePath)) return;
-
-            string fullPath = Path.Combine(_webHostEnvironment.WebRootPath, relativePath.TrimStart('/'));
-            if (System.IO.File.Exists(fullPath))
-            {
-                System.IO.File.Delete(fullPath);
+                _logger.LogWarning(exception, "Could not delete course image {ImageUrl} from R2.", imageUrl);
             }
         }
     }
