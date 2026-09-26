@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Assignment.Controllers
 {
-    [Authorize] // Yêu cầu sinh viên phải đăng nhập
+    [Authorize]
     public class ProfileController : Controller
     {
         private readonly EnglishCenterDbContext _context;
@@ -18,72 +18,61 @@ namespace Assignment.Controllers
             _environment = environment;
         }
 
-        // 1. GET: Lấy thông tin học viên hiển thị ra trang Hồ sơ
+        // 1. GET: Hiển thị hồ sơ
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var username = User.Identity?.Name;
+            if (string.IsNullOrEmpty(username)) return RedirectToAction("Login", "Account");
 
-            if (string.IsNullOrEmpty(username))
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            // Tìm thông tin sinh viên theo tài khoản đang đăng nhập
+            // Kiểm tra Học viên
             var student = await _context.Students
                 .Include(s => s.User)
                 .FirstOrDefaultAsync(s => (s.User != null && s.User.Username == username) || s.StudentCode == username);
 
-            if (student == null)
+            if (student != null)
             {
-                return NotFound("Không tìm thấy dữ liệu hồ sơ học viên.");
+                ViewBag.RoleName = "Học viên";
+                return View(student);
             }
 
-            return View(student);
+            // Nếu là Admin / Giáo vụ
+            var user = await _context.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Username == username);
+            if (user != null)
+            {
+                var role = user.Role?.RoleName ?? "Admin";
+
+                // Chuẩn hóa tên vai trò
+                ViewBag.RoleName = role.Equals("GiaoVu", StringComparison.OrdinalIgnoreCase) || role.Equals("Giáo vụ", StringComparison.OrdinalIgnoreCase)
+                    ? "Giáo vụ"
+                    : "Admin";
+
+                return View(new Student { StudentCode = user.Username, FullName = user.Username });
+            }
+
+            return NotFound("Không tìm thấy dữ liệu.");
         }
 
-        // 2. POST: Chỉ cập nhật Ảnh đại diện
+        // 2. POST: Đổi avatar (Chỉ cho Học viên)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(int studentId, IFormFile? avatarFile)
         {
-            // Lấy thông tin sinh viên gốc từ CSDL
             var student = await _context.Students.FindAsync(studentId);
-
-            if (student == null)
+            if (student != null && avatarFile?.Length > 0)
             {
-                return NotFound("Không tìm thấy dữ liệu học viên.");
-            }
+                var folder = Path.Combine(_environment.WebRootPath, "uploads", "avatars");
+                Directory.CreateDirectory(folder);
 
-            // Kiểm tra xem người dùng có chọn file ảnh mới không
-            if (avatarFile != null && avatarFile.Length > 0)
-            {
-                var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "avatars");
-                if (!Directory.Exists(uploadsFolder))
+                var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(avatarFile.FileName)}";
+                using (var stream = new FileStream(Path.Combine(folder, fileName), FileMode.Create))
                 {
-                    Directory.CreateDirectory(uploadsFolder);
+                    await avatarFile.CopyToAsync(stream);
                 }
 
-                // Tạo tên file duy nhất tránh bị trùng tên
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(avatarFile.FileName);
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await avatarFile.CopyToAsync(fileStream);
-                }
-
-                // Chỉ cập nhật đường dẫn Avatar
-                student.AvatarUrl = "/uploads/avatars/" + uniqueFileName;
-
-                _context.Update(student);
+                student.AvatarUrl = $"/uploads/avatars/{fileName}";
                 await _context.SaveChangesAsync();
-
-                TempData["SuccessMessage"] = "Cập nhật ảnh đại diện thành công!";
-            }
-            else
-            {
-                TempData["SuccessMessage"] = "Bạn chưa chọn ảnh mới nào.";
+                TempData["SuccessMessage"] = "Cập nhật ảnh thành công!";
             }
 
             return RedirectToAction(nameof(Index));
