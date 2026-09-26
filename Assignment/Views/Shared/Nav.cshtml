@@ -1,4 +1,14 @@
-﻿@*
+﻿@using System.Linq
+@using Assignment.Models.Data
+@inject EnglishCenterDbContext _dbContext
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L
+
+@{
+    var username = User.Identity?.Name;
+    var student = _dbContext.Students.FirstOrDefault(s => s.StudentCode == username || s.Email == username);
+    var avatarUrl = string.IsNullOrEmpty(student?.AvatarUrl) ? "~/img/undraw_profile_1.svg" : student.AvatarUrl;
+}
+@*
 For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -20,15 +30,19 @@ For more information on enabling MVC for empty projects, visit https://go.micros
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">@User.Identity?.Name</span>
+                @* <img class="img-profile rounded-circle"
+                     src="~/img/undraw_profile_1.svg"> *@
                 <img class="img-profile rounded-circle"
-                    src="~/img/undraw_profile_1.svg">
+                     src="@Url.Content(avatarUrl)"
+                     asp-append-version="true"
+                     style="width: 32px; height: 32px; object-fit: cover;" />
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                 aria-labelledby="userDropdown">
+                <a class="dropdown-item" asp-controller="Profile" asp-action="Index">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     @L["Hồ sơ"]
                 </a>
