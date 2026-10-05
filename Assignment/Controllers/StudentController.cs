@@ -92,7 +92,7 @@ namespace Assignment.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Student student, bool createAccount = false, string? accountUsername = null, string? accountPassword = null)
         {
-            // 1. Kiểm tra trùng thông tin
+            // Kiểm tra trùng thông tin
             if (await _context.Students.AnyAsync(s => s.StudentCode == student.StudentCode))
             {
                 ModelState.AddModelError("StudentCode", _localizer["Mã sinh viên này đã tồn tại."]);
