@@ -31,7 +31,7 @@
                 </div>
                 <div class="card-body text-center">
                     <div class="mb-3">
-                        <img src="@(string.IsNullOrEmpty(Model.ThumbnailUrl) ? "https://placehold.co/400x250?text=No+Image" : Model.ThumbnailUrl)" 
+                        <img src="@(string.IsNullOrEmpty(Model.ThumbnailUrl) ? "/img/banner-default.png" : Model.ThumbnailUrl)"
                              class="img-fluid rounded shadow-sm" 
                              style="max-height: 230px; width: 100%; object-fit: cover;" 
                              alt="@Model.CourseName" />
