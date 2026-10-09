@@ -93,15 +93,32 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         // Tự động lấy học phí chuẩn của khóa học khi đổi lớp học
-        $('#classSelect').change(function () {
+        $('#classSelect').on('change', function () {
             var selectedClassId = $(this).val();
-            if (selectedClassId) {
-                $.getJSON('@Url.Action("GetClassDefaultFee", "Enrollment")?classId=' + selectedClassId, function (data) {
-                    if (data && data.success && data.fee > 0) {
+
+            if (!selectedClassId) {
+                $('#actualFeeInput').val('');
+                return;
+            }
+
+            $.ajax({
+                url: '/api/classes/' + encodeURIComponent(selectedClassId) + '/fee',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    if (data && data.fee !== undefined) {
                         $('#actualFeeInput').val(data.fee);
                     }
-                });
-            }
+                },
+                error: function (xhr) {
+                    $('#actualFeeInput').val('');
+                    if (xhr.status === 404) {
+                        console.warn(xhr.responseJSON?.message || 'Không tìm thấy lớp học.');
+                    } else {
+                        console.error('Lỗi khi tải học phí:', xhr.responseJSON?.message || xhr.statusText);
+                    }
+                }
+            });
         });
     </script>
 }
