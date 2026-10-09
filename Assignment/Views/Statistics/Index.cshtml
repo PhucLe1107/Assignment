@@ -1,0 +1,197 @@
+@{
+    ViewData["Title"] = L["Thống kê"].Value;
+    var statisticsText = new Dictionary<string, string>
+    {
+        ["Learning"] = L["Đang học"].Value,
+        ["Completed"] = L["Hoàn thành"].Value,
+        ["Reserved"] = L["Bảo lưu"].Value,
+        ["Dropped"] = L["Nghỉ học"].Value,
+        ["Paid"] = L["Đã nộp đủ"].Value,
+        ["Debt"] = L["Còn nợ"].Value,
+        ["Deposit"] = L["Đặt cọc"].Value,
+        ["Male"] = L["Nam"].Value,
+        ["Female"] = L["Nữ"].Value,
+        ["Students"] = L["Học viên"].Value,
+        ["Courses"] = L["Khóa học"].Value,
+        ["Classes"] = L["Lớp học"].Value,
+        ["AverageScore"] = L["Điểm tổng kết trung bình"].Value,
+        ["Active"] = L["Đang mở"].Value,
+        ["Total"] = L["tổng"].Value,
+        ["NoScore"] = L["Chưa có điểm"].Value,
+        ["Count"] = L["Số lượng"].Value,
+        ["Expected"] = L["Dự kiến"].Value,
+        ["Collected"] = L["Đã thu"].Value,
+        ["Outstanding"] = L["Còn phải thu"].Value,
+        ["Attendance"] = L["Lượt điểm danh"].Value,
+        ["Present"] = L["Có mặt"].Value,
+        ["Absent"] = L["Vắng"].Value,
+        ["Times"] = L["lượt"].Value,
+        ["Loading"] = L["Đang tải dữ liệu thống kê..."].Value,
+        ["LoadError"] = L["Không tải được dữ liệu thống kê. Vui lòng thử tải lại."].Value,
+        ["AllCourses"] = L["Tất cả khóa học"].Value,
+        ["AllClasses"] = L["Tất cả lớp"].Value,
+        ["PageTitle"] = L["Thống kê trung tâm"].Value,
+        ["Reload"] = L["Tải lại"].Value,
+        ["From"] = L["Từ ngày"].Value,
+        ["To"] = L["Đến ngày"].Value,
+        ["Apply"] = L["Áp dụng bộ lọc"].Value,
+        ["Clear"] = L["Xóa bộ lọc"].Value,
+        ["LearningStatus"] = L["Trạng thái học tập"].Value,
+        ["PaymentStatus"] = L["Trạng thái học phí"].Value,
+        ["Gender"] = L["Học viên theo giới tính"].Value,
+        ["ByCourse"] = L["Ghi danh theo khóa học"].Value,
+        ["Tuition"] = L["Tình hình thu học phí"].Value,
+        ["TuitionFee"] = L["Học phí"].Value
+    };
+    var statisticsTextJson = System.Text.Json.JsonSerializer.Serialize(statisticsText);
+    var uiCulture = CultureInfo.CurrentUICulture.Name;
+}
+<div class="container-fluid">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">@statisticsText["PageTitle"]</h1>
+        <button type="button" class="btn btn-sm btn-outline-primary" id="reloadStatistics">@statisticsText["Reload"]</button>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="form-row align-items-end">
+                <div class="form-group col-md-3 mb-2"><label for="filterFrom">@L["Từ ngày"]</label><input type="date" class="form-control" id="filterFrom" /></div>
+                <div class="form-group col-md-3 mb-2"><label for="filterTo">@L["Đến ngày"]</label><input type="date" class="form-control" id="filterTo" /></div>
+                <div class="form-group col-md-3 mb-2"><label for="filterCourse">@L["Khóa học"]</label><select class="form-control" id="filterCourse"><option value="">@statisticsText["AllCourses"]</option></select></div>
+                <div class="form-group col-md-3 mb-2"><label for="filterClass">@L["Lớp học"]</label><select class="form-control" id="filterClass"><option value="">@statisticsText["AllClasses"]</option></select></div>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm mt-2" id="applyFilters">@statisticsText["Apply"]</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm mt-2" id="clearFilters">@statisticsText["Clear"]</button>
+        </div>
+    </div>
+    <div id="statisticsError" class="alert alert-danger d-none" role="alert"></div>
+    <div id="statisticsLoading" class="text-center text-muted py-5">@statisticsText["Loading"]</div>
+    <div id="statisticsContent" class="d-none">
+        <div class="row" id="summaryCards"></div>
+        <div class="row">
+            <div class="col-lg-6 mb-4"><div class="card shadow h-100"><div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">@statisticsText["LearningStatus"]</h6></div><div class="card-body"><div class="chart-pie pt-4 pb-2"><canvas id="learningChart"></canvas></div></div></div></div>
+            <div class="col-lg-6 mb-4"><div class="card shadow h-100"><div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">@statisticsText["PaymentStatus"]</h6></div><div class="card-body"><div class="chart-pie pt-4 pb-2"><canvas id="paymentChart"></canvas></div></div></div></div>
+            <div class="col-lg-6 mb-4"><div class="card shadow h-100"><div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">@statisticsText["Gender"]</h6></div><div class="card-body"><div class="chart-pie pt-4 pb-2"><canvas id="genderChart"></canvas></div></div></div></div>
+            <div class="col-lg-6 mb-4"><div class="card shadow h-100"><div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">@statisticsText["ByCourse"]</h6></div><div class="card-body"><div class="chart-bar"><canvas id="courseChart"></canvas></div></div></div></div>
+            <div class="col-12 mb-4"><div class="card shadow h-100"><div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">@statisticsText["Tuition"]</h6></div><div class="card-body"><div class="chart-bar"><canvas id="tuitionChart"></canvas></div></div></div></div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+<script>
+(() => {
+    const number = new Intl.NumberFormat('@uiCulture');
+    const money = new Intl.NumberFormat('@uiCulture', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 });
+    const text = @Html.Raw(statisticsTextJson);
+    const labels = { DangHoc: text.Learning, HoanThanh: text.Completed, BaoLuu: text.Reserved, NghiHoc: text.Dropped, DaNopDu: text.Paid, ConNo: text.Debt, DatCoc: text.Deposit, Nam: text.Male, 'Nữ': text.Female };
+    let availableClasses = [];
+
+    function refreshClasses(selectedId) {
+        const courseId = $('#filterCourse').val();
+        const $classes = $('#filterClass').empty().append($('<option>').val('').text(text.AllClasses));
+        availableClasses.filter(item => !courseId || String(item.courseId) === courseId).forEach(item =>
+            $classes.append($('<option>').val(item.id).text(item.name)));
+        if (selectedId) $classes.val(String(selectedId));
+    }
+
+    const charts = {};
+    function drawChart(key, canvasId, type, items, labelKey, horizontal, customData) {
+        if (charts[key]) charts[key].destroy();
+        const colors = ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796', '#5a5c69'];
+        charts[key] = new Chart(document.getElementById(canvasId), {
+            type,
+            data: {
+                labels: customData ? customData.labels : items.map(item => labels[item[labelKey]] || item[labelKey]),
+                datasets: customData ? customData.datasets : [{
+                label: text.Count, data: items.map(item => item.count),
+                    backgroundColor: items.map((_, index) => colors[index % colors.length]),
+                    hoverBackgroundColor: items.map((_, index) => colors[index % colors.length]),
+                    borderColor: '#fff', borderWidth: 2
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                legend: { display: type === 'doughnut', position: 'bottom', labels: { padding: 18, usePointStyle: true } },
+                cutoutPercentage: type === 'doughnut' ? 65 : undefined,
+                scales: type === 'horizontalBar' ? {
+                    xAxes: [horizontal ? { ticks: { beginAtZero: true, precision: 0 }, gridLines: { color: '#eaecf4' } } : { ticks: { beginAtZero: true, precision: 0 } }],
+                    yAxes: [horizontal ? { barPercentage: 0.65, gridLines: { display: false } } : { ticks: { beginAtZero: true, precision: 0 } }]
+                } : {},
+                tooltips: {
+                    backgroundColor: 'rgb(255,255,255)', bodyFontColor: '#858796', titleFontColor: '#6e707e',
+                    borderColor: '#dddfeb', borderWidth: 1, xPadding: 12, yPadding: 12,
+                    callbacks: {
+                        label: (item, chartData) => {
+                            const value = chartData.datasets[item.datasetIndex].data[item.index];
+                            const label = chartData.datasets[item.datasetIndex].label || chartData.labels[item.index] || '';
+                            return ` ${label}: ${customData && customData.currency ? money.format(value) : `${number.format(value)} ${text.Times}`}`;
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function loadStatistics() {
+        $('#statisticsError').addClass('d-none').text('');
+        $('#statisticsContent').addClass('d-none');
+        $('#statisticsLoading').removeClass('d-none');
+
+        const filters = {};
+
+        if ($('#filterFrom').val()) filters.from = $('#filterFrom').val();
+        if ($('#filterTo').val()) filters.to = $('#filterTo').val();
+        if ($('#filterCourse').val()) filters.courseId = $('#filterCourse').val();
+        if ($('#filterClass').val()) filters.classId = $('#filterClass').val();
+
+        $.ajax({ url: '/api/statistics', method: 'GET', data: filters, dataType: 'json' })
+            .done(data => {
+                const selectedClass = $('#filterClass').val();
+                const selectedCourse = $('#filterCourse').val();
+                const $courses = $('#filterCourse').empty().append($('<option>').val('').text(text.AllCourses));
+                data.filters.courses.forEach(item => $courses.append($('<option>').val(item.id).text(item.name)));
+                $courses.val(selectedCourse);
+                availableClasses = data.filters.classes;
+                refreshClasses(selectedClass);
+                const s = data.summary;
+                const cards = [
+                    [text.Students, number.format(s.studentCount)], [text.Courses, `${number.format(s.activeCourseCount)} ${text.Active} / ${number.format(s.courseCount)} ${text.Total}`],
+                    [text.Classes, number.format(s.classCount)],
+                    [text.AverageScore, s.averageScore == null ? text.NoScore : number.format(s.averageScore)]
+                ];
+                const $cards = $('#summaryCards').empty();
+                cards.forEach(([title, value]) => $cards.append($('<div>').addClass('col-xl-3 col-md-6 mb-4').append(
+                    $('<div>').addClass('card border-left-primary shadow h-100 py-2').append(
+                        $('<div>').addClass('card-body').append($('<div>').addClass('small font-weight-bold text-primary text-uppercase mb-1').text(title), $('<div>').addClass('h5 mb-0 font-weight-bold text-gray-800').text(value))))));
+                drawChart('learning', 'learningChart', 'doughnut', data.learningStatuses, 'status');
+                drawChart('payment', 'paymentChart', 'doughnut', data.paymentStatuses, 'status');
+                drawChart('gender', 'genderChart', 'doughnut', data.studentsByGender, 'label');
+                drawChart('course', 'courseChart', 'horizontalBar', data.enrollmentsByCourse, 'course', true);
+                drawChart('tuition', 'tuitionChart', 'horizontalBar', [], '', true, {
+                    currency: true,
+                    labels: [text.TuitionFee],
+                    datasets: [
+                        { label: text.Expected, data: [s.expectedTuition], backgroundColor: '#4e73df' },
+                        { label: text.Collected, data: [s.collectedTuition], backgroundColor: '#1cc88a' },
+                        { label: text.Outstanding, data: [s.outstandingTuition], backgroundColor: '#f6c23e' }
+                    ]
+                });
+                $('#statisticsLoading').addClass('d-none');
+                $('#statisticsContent').removeClass('d-none');
+            })
+            .fail(() => {
+                $('#statisticsLoading').addClass('d-none');
+            $('#statisticsError').text(text.LoadError).removeClass('d-none');
+            });
+    }
+
+    $('#applyFilters, #reloadStatistics').on('click', loadStatistics);
+    $('#filterCourse').on('change', () => { refreshClasses(); });
+    $('#clearFilters').on('click', () => {
+        $('#filterFrom, #filterTo').val('');
+        $('#filterCourse, #filterClass').val('');
+        loadStatistics();
+    });
+    loadStatistics();
+})();
+</script>
+}

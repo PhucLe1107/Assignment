@@ -35,7 +35,7 @@
 
                     <div class="col-md-6 form-group">
                         <label asp-for="ClassId" class="font-weight-bold">@L["Lớp học"] <span class="text-danger">*</span></label>
-                        <select asp-for="ClassId" class="form-control" asp-items="ViewBag.ClassId"></select>
+                        <select asp-for="ClassId" id="classSelect" class="form-control" asp-items="ViewBag.ClassId"></select>
                         <span asp-validation-for="ClassId" class="text-danger small"></span>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label asp-for="ActualFee" class="font-weight-bold">@L["Học phí thực tế (VNĐ)"] <span class="text-danger">*</span></label>
-                        <input asp-for="ActualFee" type="number" class="form-control" />
+                        <input asp-for="ActualFee" id="actualFeeInput" type="number" class="form-control" />
                         <span asp-validation-for="ActualFee" class="text-danger small"></span>
                     </div>
 
@@ -89,4 +89,35 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        // Tự động lấy học phí chuẩn của khóa học khi đổi lớp học
+        $('#classSelect').on('change', function () {
+            var selectedClassId = $(this).val();
+
+            if (!selectedClassId) {
+                $('#actualFeeInput').val('');
+                return;
+            }
+
+            $.ajax({
+                url: '/api/classes/' + encodeURIComponent(selectedClassId) + '/fee',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    if (data && data.fee !== undefined) {
+                        $('#actualFeeInput').val(data.fee);
+                    }
+                },
+                error: function (xhr) {
+                    $('#actualFeeInput').val('');
+                    if (xhr.status === 404) {
+                        console.warn(xhr.responseJSON?.message || 'Không tìm thấy lớp học.');
+                    } else {
+                        console.error('Lỗi khi tải học phí:', xhr.responseJSON?.message || xhr.statusText);
+                    }
+                }
+            });
+        });
+    </script>
 }

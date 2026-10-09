@@ -285,18 +285,27 @@ namespace Assignment.Controllers
         }
 
         // Lấy học phí gốc của lớp học qua JSON khi thay đổi dropdown
-        [HttpGet]
+        [HttpGet("api/classes/{classId:int}/fee")]
+        [Produces("application/json")]
         public async Task<IActionResult> GetClassDefaultFee(int classId)
         {
-            var target = await _context.Classes
-                .Include(c => c.Course)
-                .FirstOrDefaultAsync(c => c.ClassId == classId);
-
-            if (target?.Course != null)
+            if (classId <= 0)
             {
-                return Json(new { success = true, fee = target.Course.BaseTuitionFee });
+                return BadRequest(new { message = _localizer["Mã lớp học không hợp lệ."].Value });
             }
-            return Json(new { success = false, fee = 0 });
+
+            var baseFee = await _context.Classes
+                .AsNoTracking()
+                .Where(c => c.ClassId == classId)
+                .Select(c => c.Course != null ? (decimal?)c.Course.BaseTuitionFee : null)
+                .FirstOrDefaultAsync();
+
+            if (baseFee == null)
+            {
+                return NotFound(new { message = _localizer["Không tìm thấy thông tin học phí cho lớp học này."].Value });
+            }
+
+            return Ok(new { fee = baseFee.Value });
         }
 
         private bool EnrollmentExists(int id)
